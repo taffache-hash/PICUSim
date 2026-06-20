@@ -1,0 +1,110 @@
+# PDT v0.16 credibility plan.
+# Built around ASME V&V 40 / FDA CM&S concepts, adapted to a non-clinical educational/research simulator.
+
+context_of_use:
+  intended:
+    - educational exploration of pediatric PICU physiology
+    - hypothesis generation
+    - scenario-based sensitivity and uncertainty analysis
+    - synthetic data generation for teaching/model development
+  explicitly_not_intended:
+    - bedside clinical decision support
+    - patient-specific prediction
+    - dosing recommendation
+    - regulatory-grade device evaluation
+
+quantities_of_interest:
+  respiratory:
+    - PaO2
+    - PaCO2
+    - pH
+    - SaO2
+    - Vt_mL_kg
+    - driving_pressure
+    - VILI_risk
+    - auto_PEEP_obstructive
+  hemodynamic:
+    - MAP
+    - HR
+    - CO
+    - SVR
+    - PVR
+    - PAP_mean
+    - fluid_responsiveness
+  metabolic_renal:
+    - lactate
+    - DO2
+    - VO2
+    - urine_output
+    - GFR
+    - fluid_balance
+  neurologic:
+    - ICP
+    - CPP
+    - PbtO2
+  clinical_axes:
+    - pain_score
+    - sedation_score
+    - stress_index
+    - airway_obstruction_index
+    - sepsis_severity_score
+
+verification_layers:
+  code_verification:
+    current:
+      - unit/regression tests for modules and perturbations
+      - scenario strict validator
+      - Monte Carlo smoke tests
+    next:
+      - deterministic seed reproducibility tests
+      - mass/volume conservation tests where applicable
+      - no-NaN/no-infinite checks across all scenarios
+  calculation_verification:
+    current:
+      - physiological plausibility ranges
+      - perturbation directionality tests
+    next:
+      - step-size convergence tests: dt 0.2 vs 0.1 vs 0.05
+      - conservation checks for fluid/Hb/transfusion
+      - monotonic dose-response checks for selected drugs
+
+validation_layers:
+  face_validity:
+    current:
+      - clinician-readable scenarios
+      - broad pediatric reference ranges
+    next:
+      - structured expert review checklist per scenario
+  internal_validity:
+    current:
+      - strict scenario checks
+      - perturbation tests
+      - sensitivity analysis
+    next:
+      - predefined benchmark cases with expected trajectories
+  external_validity:
+    current:
+      - not yet available
+    next:
+      - compare synthetic scenario trajectories with published aggregate values
+      - optional anonymized local PICU cases after ethics/governance approval
+
+risk_assessment:
+  current_model_risk: low_to_moderate
+  reason: "Exploratory simulator only; no direct clinical decision use."
+  required_credibility_for_current_use: moderate
+  required_before_patient_specific_use: high
+
+release_gate_checklist:
+  every_release:
+    - all tests pass
+    - strict scenario validator passes
+    - changelog updated
+    - new assumptions documented
+    - new parameters added to literature_reference_values.yaml or explicitly marked assumption
+  before_publication:
+    - model registry included
+    - context of use included
+    - validation plan included
+    - uncertainty and sensitivity report generated for core scenarios
+    - limitations explicitly stated

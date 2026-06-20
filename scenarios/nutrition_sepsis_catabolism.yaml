@@ -1,0 +1,63 @@
+name: nutrition_sepsis_catabolism
+version: v0.23
+category: nutrition_catabolism
+summary: >
+  Septic PICU catabolism with insufficient protein, partial enteral intolerance, and later nutrition optimization.
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 21
+  sex: M
+  diagnosis: septic_catabolism
+respiratory:
+  mode: PCV
+  Paw: 19
+  PEEP: 6
+  FiO2: 0.35
+  RR: 26
+  C_rs: 0.72
+  R_rs: 9
+  SaO2: 0.94
+  PaO2: 75
+  PaCO2: 42
+cardiovascular:
+  HR: 148
+  MAP: 58
+  CO: 4.2
+  CVP: 8
+  Hb: 9.8
+metabolism:
+  T_core: 38.9
+  VO2: 160
+  lactate: 4.2
+sepsis:
+  phenotype: warm
+  infection_load: 0.72
+  source_control: 0.15
+  antibiotic_effect: 0.25
+endocrine:
+  cortisol_activity: 0.45
+  catecholamine_tone: 0.40
+nutrition:
+  glucose_mmol_L: 9.5
+  GIR_mg_kg_min: 4.0
+  enteral_feed_mL_h: 12
+  enteral_kcal_mL: 1.0
+  parenteral_kcal_kg_day: 18
+  protein_g_kg_day: 0.8
+  lipid_g_kg_day: 0.7
+  phosphate_mmol_L: 1.10
+  magnesium_mmol_L: 0.72
+perturbations:
+  - {t: 120, action: set_norad, value: 0.18, label: noradrenaline}
+  - {t: 240, action: set_enteral_feed, value: 20, label: cautious enteral increase}
+  - {t: 420, action: set_protein, value: 1.8, label: protein optimization}
+  - {t: 420, action: set_parenteral_kcal, value: 25, label: PN optimization}
+outputs:
+  - catabolism_index
+  - feeding_intolerance_index
+  - energy_balance_kcal_day
+  - protein_balance_g_day
+  - triglycerides_mmol_L
+  - nutrition_severity_score
+simulation_time_s: 900

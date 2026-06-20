@@ -1,0 +1,123 @@
+name: airway_aspiration_during_rsi_v1_25
+description: 'Educational v1.25 scenario: aspiration event during RSI with worsening oxygenation and secured
+  airway.'
+version: v1.25-alpha
+patient:
+  profile: child_20kg
+  age_y: 7.0
+  weight_kg: 22.0
+  sex: F
+  diagnosis: septic abdomen requiring urgent airway control
+simulation_time_s: 420
+airway_interface:
+  interface: HFNC
+  intubated: false
+  ventilator_connected: false
+  oxygen_interface: HFNC
+  HFNC_flow_L_min: 35.0
+  HFNC_FiO2_set: 0.8
+  mouth_leak_fraction: 0.25
+respiratory:
+  mode: NONE
+  FiO2: 0.8
+  PEEP: 0.0
+  RR: 38
+  Vt: 120
+  C_rs: 0.7
+  R_rs: 10.0
+  SaO2: 0.92
+  PaO2: 64.0
+  PaCO2: 45.0
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: NONE
+cardiovascular:
+  HR: 150
+  MAP: 56
+  CO: 3.7
+metabolism:
+  VO2: 150
+  lactate: 2.8
+  T_core: 38.4
+drugs:
+  ketamine_mg_kg_h: 0.0
+  midazolam_mcg_kg_h: 0.0
+  rocuronium_mg_kg_h: 0.0
+perturbations:
+- t: 55
+  action: set_ketamine
+  value: 1.0
+  label: RSI sedative proxy
+- t: 55
+  action: set_rocuronium
+  value: 1.2
+  label: NMB proxy
+- t: 55
+  action: set_midazolam
+  value: 120
+  label: additional sedation proxy
+airway_events:
+- t: 95
+  name: aspiration_event
+  severity: severe
+  label: aspiration during airway attempt
+- t: 125
+  name: failed_intubation_attempt
+  severity: moderate
+  label: initial attempt delayed by contamination
+- t: 175
+  name: start_bag_mask_ventilation
+  severity: adequate
+  label: rescue oxygenation
+- t: 250
+  name: perform_intubation
+  severity: emergency
+  label: airway secured after aspiration
+  tube_internal_diameter_mm: 5.5
+  tube_length_cm: 17.0
+  PEEP: 7.0
+  Pinsp_cmH2O: 20.0
+  FiO2: 1.0
+clinical_narrative: A child with sepsis and aspiration risk undergoes RSI, aspirates during the airway
+  attempt, receives rescue ventilation, and is intubated.
+decision_focus:
+- recognize aspiration risk
+- track oxygenation burden
+- secure/protect airway
+- separate aspiration from failed laryngoscopy
+debrief_questions:
+- Which fields quantify aspiration risk and airway protection?
+- How does the model separate aspiration from failed intubation?
+- What changed after securing the airway?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP

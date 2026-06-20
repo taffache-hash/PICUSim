@@ -1,0 +1,7 @@
+{
+  "release": "v1.16-alpha",
+  "status": "PASS",
+  "rows": 5,
+  "review_items": [],
+  "csv": "/mnt/data/pccsim_step39/pccsim_step38_package/outputs/pkpd_insulin_v1.16/pkpd_insulin_audit_v116.csv"
+}

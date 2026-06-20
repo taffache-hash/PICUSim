@@ -1,0 +1,91 @@
+name: picu_priority_drugs_v1_08
+version: v1.08-alpha
+category: pharmacology
+summary: >
+  Educational PICU pharmacology scenario showing the new v1.08 priority drugs:
+  adrenaline, dopamine, fentanyl and dexmedetomidine. This is not a dosing guide.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  age_group: child
+  weight_kg: 20
+  sex: F
+  diagnosis: mixed_shock_with_sedoanalgesia_need
+
+respiratory:
+  mode: PCV
+  PEEP: 7
+  Paw: 20
+  FiO2: 0.45
+  RR: 26
+  C_rs: 0.80
+  R_rs: 9.0
+  PaO2: 82
+  PaCO2: 42
+  SaO2: 0.95
+  non_recruitable_frac: 0.15
+
+cardiovascular:
+  HR: 145
+  MAP: 48
+  CVP: 4
+  PAWP: 7
+  PAP_mean: 18
+  Hb: 10.0
+  preload_mod: 0.70
+
+metabolism:
+  T_core: 38.8
+  VO2: 150
+  lactate: 3.5
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.65
+  source_control: 0.2
+  antibiotic_effect: 0.2
+
+drugs:
+  norad_mcg_kg_min: 0.05
+  adrenaline_mcg_kg_min: 0.00
+  dopamine_mcg_kg_min: 0.00
+  fentanyl_mcg_kg_h: 0.00
+  dexmedetomidine_mcg_kg_h: 0.00
+  midazolam_mcg_kg_h: 0.00
+  propofol_mg_kg_h: 0.00
+
+perturbations:
+  - {t: 30, action: set_fentanyl, value: 1.5, label: "Start fentanyl analgesia"}
+  - {t: 90, action: set_dexmedetomidine, value: 0.5, label: "Start dexmedetomidine sedation"}
+  - {t: 150, action: set_dopamine, value: 5.0, label: "Add dopamine for myocardial support"}
+  - {t: 240, action: set_adrenaline, value: 0.05, label: "Add low-dose adrenaline"}
+  - {t: 360, action: set_dopamine, value: 0.0, label: "Stop dopamine after adrenaline response"}
+
+outputs:
+  - MAP
+  - HR
+  - CO
+  - SVR
+  - PaCO2
+  - SaO2
+  - C_adrenaline_ng_mL
+  - C_dopamine_ng_mL
+  - C_fentanyl_ng_mL
+  - C_dexmedetomidine_ng_mL
+  - drug_MAP_mod
+  - drug_HR_mod
+  - drug_drive_mod
+  - drug_inotropy_mod
+  - sedation_score
+  - analgesia_score
+  - opioid_resp_depression
+  - pk_supported_drug_count
+  - pk_extension_revision
+
+limitations:
+  - The v1.08 drug models are educational, qualitative and not dose-prescriptive.
+  - Adrenaline and dopamine physiology is simplified and should not be interpreted as a validated hemodynamic model.
+  - Fentanyl, dexmedetomidine, morphine and clonidine PK are centralized in PharmacologyModule in current releases; remifentanil remains in the analgosedation module.
+
+simulation_time_s: 480

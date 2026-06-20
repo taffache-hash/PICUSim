@@ -1,0 +1,52 @@
+name: airway_ett_partial_obstruction_v1_23_3
+description: Educational intubated child with progressive tube obstruction proxy from
+  secretions/kinking.
+patient:
+  profile: child_20kg
+  age_y: 5.0
+  weight_kg: 20.0
+  sex: M
+simulation:
+  T: 420
+respiratory:
+  FiO2: 0.45
+  PEEP: 5.0
+  RR: 24
+  Paw: 18.0
+  PaO2: 82.0
+  PaCO2: 44.0
+  SaO2: 0.94
+  C_rs: 15.0
+  R_rs: 8.0
+ventilator:
+  mode: PCV
+  Pinsp: 13.0
+  IE_ratio: 0.35
+  T_rise_s: 0.15
+airway_interface:
+  interface: ETT
+  intubated: true
+  ventilator_connected: true
+  tube_internal_diameter_mm: 5.0
+  tube_length_cm: 17.0
+  tube_obstruction_score: 0.65
+  cuff_leak_fraction: 0.1
+  cuff_pressure_cmH2O: 18.0
+  ETT_position_score: 0.9
+  oxygen_interface: VENTILATOR
+  FiO2_set: 0.45
+airway:
+  bronchospasm_index: 0.05
+  mucus_load: 0.25
+  small_airway_obstruction: 0.1
+outputs:
+- airway_interface
+- tube_obstruction_score
+- tube_resistance_cmH2O_L_s
+- tube_resistance_factor
+- airway_resistance_mod
+- tube_VdVt_add
+- PaCO2
+- ETT_failure_risk
+notes: Tube obstruction is a bounded educational proxy; it is not a flow-resistance
+  measurement.

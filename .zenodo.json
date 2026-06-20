@@ -1,0 +1,37 @@
+{
+  "title": "PICUSim / Pediatric Critical Care Sim: modular pediatric critical-care physiology simulation framework",
+  "upload_type": "software",
+  "publication_date": "2026-06-20",
+  "version": "3.1-step5.9-final-public-release-candidate",
+  "creators": [
+    {
+      "name": "Taffache, Paolo",
+      "affiliation": "Independent / to be confirmed before deposition",
+      "orcid": ""
+    }
+  ],
+  "description": "final-public-release-candidate Apache-2.0 release candidate for educational/research pediatric critical-care physiology simulation. Not for clinical use and not a medical device.",
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "keywords": [
+    "pediatric intensive care",
+    "critical care simulation",
+    "physiology simulation",
+    "medical education",
+    "in-silico research",
+    "scenario-based training"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "OSF project URL pending Step 5.7",
+      "relation": "isSupplementTo",
+      "resource_type": "project"
+    },
+    {
+      "identifier": "Cureus/JMIR manuscript DOI pending Step 5.8/publication",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication"
+    }
+  ],
+  "notes": "DOI, ORCID, affiliation and final related identifiers must be completed during actual deposition. Safety disclaimer must remain visible."
+}

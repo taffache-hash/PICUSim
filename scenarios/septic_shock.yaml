@@ -1,0 +1,82 @@
+name: septic_shock
+description: >
+  Shock settico caldo in bambino 8 anni, 25 kg.
+  Scenario: ipotensione + vasodilatazione, risposta a noradrenalina.
+  Ventilazione: ARDS + ipossiemia moderata.
+
+patient:
+  age_y: 8
+  weight_kg: 25
+  sex: F
+  diagnosis: septic_shock_warm
+
+respiratory:
+  PEEP: 8
+  Paw: 22
+  FiO2: 0.60
+  RR: 32
+  C_rs: 0.55
+  R_rs: 12.0
+  PaO2: 60.0
+  PaCO2: 35.0      # iperventilazione compensatoria
+  SaO2: 0.88
+  non_recruitable_frac: 0.25  # 25% consolidamento settico
+
+cardiovascular:
+  HR: 155
+  MAP: 45           # ipotensione franca
+  CVP: 3            # ipovolemia relativa
+  Hb: 9.5
+  preload_mod: 0.75 # deficit di preload
+
+metabolism:
+  T_core: 39.1
+  VO2: 200          # consumo aumentato per febbre + sepsi
+  lactate: 4.2      # iperlattacidemia
+
+sepsis:
+  phenotype: warm
+  infection_load: 0.75
+  source_control: 0.0
+  antibiotic_effect: 0.0
+
+drugs:
+  norad_mcg_kg_min: 0.0   # partenza senza vasopressori
+
+perturbations:
+  - t: 30
+    action: fluid_bolus_mL
+    value: 250
+    label: "Bolo 250 mL (10 mL/kg)"
+  - t: 60
+    action: set_norad
+    value: 0.1
+    label: "Norad 0.1 mcg/kg/min"
+  - t: 120
+    action: set_norad
+    value: 0.3
+    label: "Norad 0.3 mcg/kg/min"
+  - t: 200
+    action: fluid_bolus_mL
+    value: 250
+    label: "Secondo bolo 250 mL"
+  - t: 300
+    action: set_norad
+    value: 0.5
+    label: "Norad 0.5 mcg/kg/min"
+
+outputs:
+  - MAP
+  - HR
+  - CO
+  - CVP
+  - SVR
+  - SaO2
+  - PaO2
+  - lactate
+  - DO2
+  - VO2
+  - ERO2
+  - fluid_balance
+
+simulation_time_s: 480

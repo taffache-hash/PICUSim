@@ -1,0 +1,85 @@
+name: picu_analgosedation_stress__event_sedative_bolus_hypotension_severe
+simulation_time_s: 600
+patient:
+  profile: child_20kg
+  age_y: 5
+  weight_kg: 20
+  sex: M
+respiratory:
+  mode: PCV
+  Paw: 17
+  PEEP: 6
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.75
+  R_rs: 9
+  SaO2: 0.95
+  PaO2: 80
+  PaCO2: 42
+  non_recruitable_frac: 0.05
+ventilator:
+  mode: PCV
+  IE_ratio: 0.38
+cardiovascular:
+  HR: 128
+  MAP: 68
+  CO: 4.1
+  CVP: 6
+  PAWP: 9
+  Hb: 10.5
+  SVR: 900
+  PVR: 110
+metabolism:
+  T_core: 38.2
+  SIRS_factor: 1.15
+  lactate: 2.2
+drugs:
+  norad_mcg_kg_min: 0.03
+  ketamine_mg_kg_h: 0.35
+  midazolam_mcg_kg_h: 30
+  fentanyl_mcg_kg_h: 0
+  remifentanil_mcg_kg_min: 0
+  dexmedetomidine_mcg_kg_h: 0
+analgosedation:
+  baseline_pain: 7.0
+perturbations:
+- t: 60
+  action: set_remifentanil
+  value: 0.12
+  label: Start remifentanil analgesia
+- t: 120
+  action: set_dexmedetomidine
+  value: 0.5
+  label: Start dexmedetomidine
+- t: 240
+  action: set_midazolam
+  value: 10
+  label: Reduce midazolam
+- t: 360
+  action: set_remifentanil
+  value: 0.03
+  label: Wean remifentanil
+- t: 420
+  action: set_dexmedetomidine
+  value: 0.2
+  label: Wean dexmedetomidine
+outputs:
+- pain_score
+- stress_index
+- sedation_score
+- analgesia_score
+- sympathetic_tone
+- delirium_risk
+- withdrawal_risk
+- PaCO2
+- MAP
+- HR
+- VO2
+description: '
+
+
+  Injected acute event v0.43: sedative_bolus_hypotension/severe at t=180.0s.'
+events:
+- t: 180.0
+  name: sedative_bolus_hypotension
+  severity: severe

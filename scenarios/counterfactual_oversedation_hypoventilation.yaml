@@ -1,0 +1,83 @@
+name: counterfactual_oversedation_hypoventilation
+description: 'Counterfactual PICU sedation: excessive sedative/opioid burden. Expected:
+  sedation score increases, respiratory drive decreases, PaCO2 rises and pH falls.'
+patient:
+  age_y: 6
+  weight_kg: 22
+  sex: M
+  diagnosis: ARDS_moderate_septic_shock
+respiratory:
+  PEEP: 8
+  Paw: 22
+  FiO2: 0.55
+  RR: 28
+  C_rs: 0.5
+  R_rs: 11.0
+  PaO2: 62.0
+  PaCO2: 44.0
+  SaO2: 0.9
+cardiovascular:
+  HR: 135
+  MAP: 52
+  CVP: 4
+  Hb: 10.0
+metabolism:
+  T_core: 38.8
+  T_setpoint: 39.0
+  SIRS_factor: 1.35
+  VO2: 160
+  lactate: 3.2
+drugs:
+  norad_mcg_kg_min: 0.2
+  midazolam_mcg_kg_h: 100
+perturbations:
+- t: 30
+  action: set_midazolam
+  value: 180
+  label: high midazolam
+- t: 30
+  action: set_propofol
+  value: 6.0
+  label: high propofol
+- t: 60
+  action: set_fentanyl
+  value: 6.0
+  label: high fentanyl
+- t: 60
+  action: set_RR
+  value: 16
+  label: insufficient support
+- t: 120
+  action: set_Paw
+  value: 18
+  label: lower pressure support
+outputs:
+- Paw
+- SaO2
+- PaO2
+- PaCO2
+- pH_a
+- MAP
+- CO
+- HR
+- EELV
+- C_ketamine_mg_L
+- C_midazolam_ng_mL
+- C_norad_ng_mL
+- drug_drive_mod
+- drug_MAP_mod
+- VO2
+- T_core
+- lactate
+- GFR
+- urine_rate_mL_h
+- fluid_balance
+- AKI_index
+- Hb
+- sedation_score
+- opioid_resp_depression
+- sed_resp_mod
+- GCS_proxy
+simulation_time_s: 720
+version: '0.42'
+counterfactual: true

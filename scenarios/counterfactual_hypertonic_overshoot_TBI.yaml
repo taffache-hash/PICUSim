@@ -1,0 +1,71 @@
+name: counterfactual_hypertonic_overshoot_TBI
+simulation_time_s: 720
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 22
+respiratory:
+  mode: PCV
+  Paw: 16
+  PEEP: 5
+  FiO2: 0.35
+  RR: 22
+  C_rs: 0.85
+  R_rs: 8
+  SaO2: 0.97
+  PaO2: 90
+  PaCO2: 40
+ventilator:
+  mode: PCV
+  Pinsp: 11
+  IE_ratio: 0.35
+cardiovascular:
+  HR: 105
+  MAP: 72
+  CO: 4.1
+  CVP: 6
+  Hb: 10.8
+neurology:
+  ICP: 23
+  V_edema: 25
+  autoregulation: 0.75
+metabolism:
+  T_core: 37.8
+  T_setpoint: 37.8
+  lactate: 2.6
+acidbase:
+  Na_mmol_L: 139
+  K_mmol_L: 3.8
+  Cl_mmol_L: 104
+  HCO3_mmol_L: 22
+perturbations:
+- t: 30
+  action: set_hypertonic_saline_3pct
+  value: 180
+  label: large 3% saline bolus
+- t: 80
+  action: set_hypertonic_saline_3pct
+  value: 180
+  label: repeat 3% saline
+- t: 140
+  action: set_hypertonic_saline_3pct
+  value: 160
+  label: third 3% saline
+- t: 160
+  action: osmo_therapy
+  value: true
+  label: osmotherapy active
+outputs:
+- ICP_mmHg
+- CPP_mmHg
+- PbtO2_mmHg
+- Na_mmol_L
+- Cl_mmol_L
+- osmolarity_mOsm_L
+- pH_a
+- PaCO2
+- GCS_proxy
+version: '0.42'
+counterfactual: true
+description: 'Counterfactual TBI: excessive hypertonic saline/osmotherapy. Expected:
+  ICP may improve but Na/osmolarity overshoot and metabolic-neuro risk rise.'

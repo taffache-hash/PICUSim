@@ -1,0 +1,56 @@
+# v0.44 profile/age-scaling refactor priorities.
+# This is a governance file, not a clinical validation source.
+version: "0.44"
+purpose: >
+  Prioritize future refactoring of modules that remain weight-only or fixed-constant
+  despite pediatric profile support in the scenario loader.
+priority_levels:
+  P0:
+    meaning: "Must be addressed before claiming broad pediatric age generalization."
+    modules:
+      - modules/pharmacology/pk_pd.py
+      - modules/respiratory/mechanics.py
+      - modules/respiratory/gas_exchange.py
+      - modules/cardiovascular/circulation.py
+      - modules/renal/aki_crrt.py
+      - modules/nutrition/glucose.py
+    expected_profile_hooks:
+      - age_group
+      - weight_kg
+      - FRC_ml_kg
+      - Vd_Vt
+      - GFR_ml_min_1_73m2
+      - HR
+      - RR
+      - MAP
+      - VO2_ml_kg_min
+  P1:
+    meaning: "Important for realistic PICU scenario diversity."
+    modules:
+      - modules/metabolism/metabolism.py
+      - modules/renal/fluid_balance.py
+      - modules/nutrition/catabolism.py
+      - modules/pharmacology/transfusion.py
+      - modules/ventilator/ventilator.py
+      - modules/endocrine/stress_axis.py
+    expected_profile_hooks:
+      - blood_volume_ml_kg
+      - Hb
+      - VO2_ml_kg_min
+      - GFR_ml_min_1_73m2
+      - Vt_ml_kg
+      - age_group
+  P2:
+    meaning: "Document and improve progressively."
+    modules:
+      - modules/acidbase/electrolytes.py
+      - modules/analgosedation/pain_stress_sedation.py
+      - modules/hepatic/liver.py
+      - modules/neurology/functional.py
+      - modules/thermoregulation/thermoregulation.py
+recommended_next_version:
+  name: "v0.45_profile_scaling_first_pass"
+  scope: >
+    Implement profile-derived anchors in a small number of P0 modules only,
+    avoiding broad uncontrolled refactor. Recommended first pass: respiratory
+    mechanics/gas exchange, renal GFR/CRRT, and glucose-insulin scaling.

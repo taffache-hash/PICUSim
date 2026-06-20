@@ -1,0 +1,83 @@
+name: airway_niv_cpap_bronchiolitis_v1_23_2
+description: 'v1.23.2 scenario: non-invasive CPAP for infant bronchiolitis/atelectatic work of breathing with mask leak and delivered pressure proxies.'
+simulation_time_s: 360
+patient:
+  profile: infant_8kg
+  age_y: 0.7
+  weight_kg: 8
+  sex: M
+airway_interface:
+  interface: NIV_CPAP
+  intubated: false
+  ventilator_connected: true
+  airway_pressure_delivery_enabled: true
+  oxygen_interface: NIV
+  NIV_mode: CPAP
+  NIV_CPAP_cmH2O: 7.0
+  NIV_FiO2_set: 0.45
+  NIV_leak_fraction: 0.30
+  mask_leak_fraction: 0.30
+  note: v1.23.2 NIV CPAP bronchiolitis base
+respiratory:
+  mode: CPAP
+  FiO2: 0.45
+  PEEP: 7.0
+  RR: 42
+  Vt: 46
+  C_rs: 0.70
+  R_rs: 13.5
+  SaO2: 0.90
+  PaO2: 58
+  PaCO2: 52
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: CPAP
+  PS: 0.0
+  PEEP: 7.0
+  trigger_thresh: 1.5
+airway:
+  bronchospasm_index: 0.10
+  mucus_load: 0.34
+  small_airway_obstruction: 0.38
+metabolism:
+  VO2: 75
+  T_core: 37.8
+  lactate: 1.3
+cardiovascular:
+  HR: 145
+  MAP: 55
+  CO: 1.45
+  Hb: 11.0
+perturbations:
+- t: 180
+  action: set_NIV_CPAP
+  value: 8.0
+  label: increase non-invasive CPAP
+- t: 180
+  action: set_NIV_FiO2
+  value: 0.50
+  label: increase NIV FiO2
+clinical_narrative: An infant with bronchiolitis is escalated from oxygen/HFNC-like support to non-invasive CPAP. The scenario verifies that the patient is not intubated while receiving mask-delivered distending pressure.
+debrief_questions:
+- Which variables distinguish NIV CPAP from invasive ventilation?
+- How does mask leak reduce delivered pressure and FiO2 in this educational model?
+- Which variables suggest NIV failure risk?
+outputs:
+- airway_interface
+- NIV_mode
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- NIV_CPAP_cmH2O
+- NIV_delivered_PEEP_cmH2O
+- NIV_delivered_PIP_cmH2O
+- NIV_leak_fraction
+- NIV_failure_risk
+- NIV_deadspace_washout
+- FiO2_delivered
+- PEEP
+- Paw
+- SaO2
+- PaCO2
+- RR_total

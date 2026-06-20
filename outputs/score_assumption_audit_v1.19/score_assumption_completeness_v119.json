@@ -1,0 +1,17 @@
+{
+  "expected_score_like": 204,
+  "registered": 212,
+  "missing": [],
+  "extra_non_score_like": [
+    "piperacillin_ft_above_MIC",
+    "piperacillin_target_attainment",
+    "vancomycin_target_attainment",
+    "vq_adaptive_sigma",
+    "vq_ards_weight",
+    "vq_neonatal_weight",
+    "vq_obstruction_weight",
+    "vq_shock_weight"
+  ],
+  "numeric_range_entries": 207,
+  "status": "PASS"
+}

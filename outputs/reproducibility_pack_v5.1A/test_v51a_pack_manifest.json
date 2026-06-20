@@ -1,0 +1,21 @@
+{
+  "schema": "pdt-reproducibility-pack-v5.1A",
+  "created_utc": "2026-06-20T12:58:50Z",
+  "engine_version": "3.1-step4.50-full-prevalidation-audit",
+  "seed": 123,
+  "scenario": "epals_v2_septic_shock_warm",
+  "scenario_path": "scenarios\\epals_v2_septic_shock_warm.yaml",
+  "scenario_file_sha256": "b1ccf81c3d073a61c04e53c94fdc9bce6993720339a4591e181b54a9d4e55e75",
+  "session_state_sha256": "c1090a39d6fa5033f705daa2c31ed4bfa4c6dc8730e7aaaa2b2b83c9c0c4b103",
+  "session_bundle_sha256": "170872f9df4749a14561a896604e6daf013b12b4df305d12b7bc3b94149494db",
+  "timeline_rows": 14,
+  "action_rows": 1,
+  "exports": {
+    "session_json": "complete portable session bundle",
+    "timeline_csv": "physiology timeline, bedside columns",
+    "intervention_log_csv": "action/intervention replay log",
+    "structured_report_md": "PDF-like markdown report",
+    "manifest_json": "hashes and reproducibility metadata"
+  },
+  "safety_note": "Educational/research alpha only. Not for clinical use. Not a medical device."
+}

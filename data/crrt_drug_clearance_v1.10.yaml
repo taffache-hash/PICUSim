@@ -1,0 +1,65 @@
+version: v1.10-alpha
+purpose: >
+  Educational CRRT-lite drug clearance properties for the public PharmacologyModule.
+  Values are conservative placeholders for simulation and audit only; they are not
+  dosing recommendations and do not replace therapeutic drug monitoring or local
+  CRRT dosing guidance.
+model_formula: "CL_crrt_L_min = effluent_L_min * sieving_coefficient, capped by max_fraction_intrinsic * intrinsic_CL_L_min"
+general_assumptions:
+  - CRRT extracorporeal removal increases with delivered effluent rate.
+  - Removal is lower for highly protein-bound or high-volume-of-distribution drugs.
+  - The model is intentionally conservative for sedatives and catecholamines because non-renal clearance dominates.
+  - Not validated for clinical dosing, organ failure covariates, filter adsorption, membrane type, downtime or therapeutic drug monitoring.
+drugs:
+  ketamine:
+    sieving_coefficient: 0.20
+    max_fraction_intrinsic: 0.08
+    qualitative_removal: low
+  noradrenaline:
+    sieving_coefficient: 0.00
+    max_fraction_intrinsic: 0.00
+    qualitative_removal: negligible
+  adrenaline:
+    sieving_coefficient: 0.00
+    max_fraction_intrinsic: 0.00
+    qualitative_removal: negligible
+  dopamine:
+    sieving_coefficient: 0.00
+    max_fraction_intrinsic: 0.00
+    qualitative_removal: negligible
+  midazolam:
+    sieving_coefficient: 0.12
+    max_fraction_intrinsic: 0.10
+    qualitative_removal: low_to_moderate
+  propofol:
+    sieving_coefficient: 0.01
+    max_fraction_intrinsic: 0.01
+    qualitative_removal: negligible
+  rocuronium:
+    sieving_coefficient: 0.35
+    max_fraction_intrinsic: 0.30
+    qualitative_removal: moderate
+  fentanyl:
+    sieving_coefficient: 0.02
+    max_fraction_intrinsic: 0.02
+    qualitative_removal: negligible_low
+  dexmedetomidine:
+    sieving_coefficient: 0.03
+    max_fraction_intrinsic: 0.03
+    qualitative_removal: negligible_low
+  vancomycin:
+    sieving_coefficient: 0.75
+    max_fraction_intrinsic: 1.00
+    qualitative_removal: moderate_to_high
+    note: Educational renal/CRRT clearance scaffold; use TDM and local protocols clinically.
+  furosemide:
+    sieving_coefficient: 0.10
+    max_fraction_intrinsic: 0.15
+    qualitative_removal: low
+    note: Educational renal/secretory clearance scaffold; diuretic response is not a dosing recommendation.
+
+  piperacillin:
+    sieving_coefficient: 0.75
+    max_fraction_intrinsic: 1.00
+    qualitative_removal: moderate_to_high
+    note: Educational beta-lactam CRRT clearance scaffold; not for antimicrobial dosing.

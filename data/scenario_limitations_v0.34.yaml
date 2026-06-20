@@ -1,0 +1,56 @@
+version: v0.34
+purpose: >-
+  Scenario-level limitations to make educational/face-validity use explicit.
+  These notes are intentionally conservative. They should be surfaced in README,
+  reports and expert-review sheets.
+global_limitations:
+  - Not for clinical use, diagnosis, prescribing, monitoring, triage or bedside decision support.
+  - Not patient-specific; scenarios are synthetic physiology configurations, not digital twins of real patients.
+  - Most equations are qualitative or semi-quantitative; many parameters remain empiric placeholders.
+  - External validation against patient-level datasets has not been performed.
+  - Output plausibility depends on declared scenario context and model assumptions.
+common_by_domain:
+  respiratory:
+    - Gas exchange remains simplified; regional V/Q heterogeneity is not fully represented.
+    - Ventilator-patient interaction is qualitative; waveforms are not device-validated.
+  cardiovascular:
+    - Hemodynamics are semi-quantitative and not a validated beat-to-beat circulatory model.
+    - Chemoreflex-baroreflex interaction remains simplified.
+  pharmacology:
+    - PK/PD is simplified; age-specific maturation, protein binding and full organ-clearance models are incomplete.
+    - Drug outputs are educational effect proxies, not dosing or monitoring recommendations.
+  sepsis_infection:
+    - Infection burden, antimicrobial coverage and source control are qualitative constructs.
+    - No MIC, pathogen-specific PK/PD or guideline-based antimicrobial selection is implemented.
+  renal_crrt:
+    - CRRT-lite is not a prescription calculator; clearance and ultrafiltration are qualitative.
+  hepatic:
+    - Hepatic injury, cholestasis and ammonia are qualitative indices, not diagnostic predictors.
+  hematology:
+    - Transfusion triggers are educational proxies; they do not replace TAXI/guideline recommendations.
+  neuro:
+    - GCS/RASS/AVPU and seizure risk are proxies and not validated clinical scales.
+  nutrition:
+    - Nutrition/catabolism outputs are approximate and not nutrition-prescription tools.
+scenario_tags:
+  healthy_child_20kg: [respiratory, cardiovascular, pharmacology]
+  ards_mild: [respiratory, cardiovascular]
+  septic_shock: [sepsis_infection, cardiovascular, renal_crrt, respiratory]
+  tbi_icp: [neuro, respiratory, renal_crrt]
+  status_asthmaticus: [respiratory, pharmacology]
+  infant_bronchiolitis: [respiratory]
+  aki_crrt_lite: [renal_crrt, acid_base, sepsis_infection]
+  hepatic_sepsis_cholestasis: [hepatic, sepsis_infection]
+  hematology_anemia_transfusion: [hematology, sepsis_infection]
+  infection_antibiotic_delay: [sepsis_infection]
+scenario_specific:
+  healthy_child_20kg:
+    - Stable reference scenario; should not be interpreted as a normal-values simulator across all ages.
+  ards_mild:
+    - PARDS is represented with simplified recruitability/shunt mechanics; no imaging or regional lung model.
+  septic_shock:
+    - Warm shock phenotype is simplified; no real-time guideline algorithm or individualized vasoactive titration.
+  tbi_icp:
+    - ICP/CPP responses are qualitative; no validated neurocritical-care decision support.
+  status_asthmaticus:
+    - Air trapping and bronchodilator response are qualitative; no dynamic airway-flow validation.

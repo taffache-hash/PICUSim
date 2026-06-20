@@ -1,0 +1,74 @@
+name: stress_hyperglycemia_insulin
+version: v0.19
+category: endocrine_stress_axis
+summary: >
+  Stress hyperglycemia during PICU inflammation with insulin resistance and insulin titration.
+
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 22
+  sex: F
+  diagnosis: stress_hyperglycemia
+
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 18
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.8
+  R_rs: 8
+  PaO2: 86
+  PaCO2: 40
+  SaO2: 0.96
+
+cardiovascular:
+  HR: 125
+  MAP: 75
+  CO: 4.1
+  CVP: 5
+  Hb: 10.5
+
+metabolism:
+  T_core: 38.5
+  T_setpoint: 38.6
+  lactate: 2.5
+  SIRS_factor: 1.25
+
+sepsis:
+  phenotype: warm
+  infection_load: 0.35
+  source_control: 0.2
+  antibiotic_effect: 0.2
+
+nutrition:
+  GIR: 6.5
+  glucose_mmol_L: 11.5
+
+drugs:
+  dexamethasone_mcg_kg_h: 90
+  insulin_UI_h: 0.0
+
+endocrine:
+  cortisol_activity: 0.34
+  catecholamine_tone: 0.32
+
+perturbations:
+  - {t: 180, action: set_insulin, value: 0.5, label: "start insulin"}
+  - {t: 360, action: set_insulin, value: 1.0, label: "escalate insulin"}
+  - {t: 480, action: set_GIR, value: 4.5, label: "reduce GIR"}
+
+outputs:
+  - glucose_mmol_L
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - cortisol_activity
+  - catecholamine_tone
+  - endocrine_glucose_prod_mod
+  - insulin_sensitivity_mod
+  - urine_rate_mL_h
+  - MAP
+  - HR
+
+simulation_time_s: 720

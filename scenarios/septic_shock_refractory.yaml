@@ -1,0 +1,84 @@
+name: septic_shock_refractory
+version: v0.14
+category: advanced_sepsis
+summary: >
+  Pediatric catecholamine-requiring septic shock with vasoplegia, capillary leak,
+  microcirculatory dysfunction and partial response to hydrocortisone/vasopressin.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+  diagnosis: refractory_vasoplegic_septic_shock
+
+respiratory:
+  mode: PCV
+  PEEP: 9
+  Paw: 26
+  FiO2: 0.80
+  RR: 32
+  C_rs: 0.50
+  R_rs: 11.0
+  PaO2: 58
+  PaCO2: 34
+  SaO2: 0.87
+  non_recruitable_frac: 0.30
+
+cardiovascular:
+  HR: 165
+  MAP: 42
+  CVP: 3
+  PAWP: 6
+  PAP_mean: 22
+  Hb: 9.0
+  preload_mod: 0.65
+
+metabolism:
+  T_core: 39.5
+  VO2: 185
+  lactate: 5.8
+
+sepsis:
+  phenotype: vasoplegic
+  infection_load: 0.90
+  source_control: 0.0
+  antibiotic_effect: 0.0
+
+drugs:
+  norad_mcg_kg_min: 0.0
+  adrenaline_mcg_kg_min: 0.0
+  vasopressin_mU_kg_min: 0.0
+  hydrocortisone_mg_kg_h: 0.0
+
+perturbations:
+  - {t: 20, action: fluid_bolus_mL, value: 200, label: "10 mL/kg balanced crystalloid"}
+  - {t: 50, action: set_norad, value: 0.15, label: "Start norepinephrine"}
+  - {t: 100, action: set_norad, value: 0.45, label: "Escalate norepinephrine"}
+  - {t: 160, action: set_vasopressin, value: 0.04, label: "Add vasopressin"}
+  - {t: 220, action: set_hydrocortisone, value: 0.18, label: "Stress-dose hydrocortisone"}
+  - {t: 280, action: fluid_bolus_mL, value: 150, label: "Small rescue fluid bolus"}
+  - {t: 340, action: set_antibiotic_effect, value: 0.6, label: "Antibiotics/source control begins"}
+  - {t: 340, action: set_source_control, value: 0.4, label: "Partial source control"}
+
+outputs:
+  - MAP
+  - HR
+  - CO
+  - SVR
+  - CVP
+  - lactate
+  - DO2
+  - VO2
+  - infection_load
+  - cytokine_drive
+  - vasoplegia_index
+  - myocardial_depression_index
+  - endothelial_leak_index
+  - microcirculatory_failure_index
+  - fluid_responsiveness
+  - capillary_leak_index
+  - sepsis_severity_score
+  - norepinephrine
+
+simulation_time_s: 600

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: "PICUSim / Pediatric Critical Care Sim"
+message: "If you use this final-public-release-candidate Apache-2.0 release-candidate educational/research simulation framework, please cite it using the metadata below. Not for clinical use."
+type: software
+authors:
+  - family-names: Taffache
+    given-names: Paolo
+version: "3.1-step5.9-final-public-release-candidate"
+date-released: "2026-06-20"
+abstract: "Release-candidate modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing, and hypothesis generation. Not a validated patient-specific digital twin and not for clinical use."
+keywords:
+  - pediatric intensive care
+  - physiology simulation
+  - in-silico model
+  - critical care
+  - medical education
+license: "Apache-2.0"
+

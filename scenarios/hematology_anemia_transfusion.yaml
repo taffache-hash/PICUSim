@@ -1,0 +1,88 @@
+name: hematology_anemia_transfusion
+version: v0.21
+category: hematology_oxygen_transport
+summary: >
+  Pediatric septic PICU patient with anemia, impaired oxygen transport and
+  restrictive transfusion-trigger exploration. RBC transfusion improves Hb/DO2
+  but does not normalize sepsis physiology.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: F
+  diagnosis: septic_anemia_oxygen_delivery
+
+respiratory:
+  mode: PCV
+  PEEP: 8
+  Paw: 23
+  FiO2: 0.55
+  RR: 28
+  C_rs: 0.55
+  R_rs: 10.0
+  PaO2: 68
+  PaCO2: 40
+  SaO2: 0.92
+  non_recruitable_frac: 0.18
+
+cardiovascular:
+  HR: 145
+  MAP: 58
+  CO: 4.0
+  CVP: 5
+  Hb: 6.8
+  SVR: 850
+
+metabolism:
+  T_core: 38.7
+  VO2: 150
+  lactate: 3.2
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.55
+  source_control: 0.2
+  antibiotic_effect: 0.2
+
+coagulation:
+  INR: 1.25
+  PLT: 110
+  fibrinogen: 2.2
+
+hematology:
+  WBC_count: 16.0
+  neutrophil_count: 13.0
+  lymphocyte_count: 1.2
+  transfusion_threshold_Hb: 7.0
+  transfusion_strategy: restrictive
+
+drugs:
+  norad_mcg_kg_min: 0.12
+
+perturbations:
+  - {t: 90, action: transfuse_GRC, value: 180, label: "RBC 9 mL/kg"}
+  - {t: 180, action: set_norad, value: 0.18, label: "Norepinephrine titration"}
+  - {t: 240, action: set_antibiotic_effect, value: 0.55, label: "Antibiotic effect increases"}
+
+outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - VO2
+  - ERO2
+  - SvO2
+  - oxygen_carrying_capacity_mL_dL
+  - oxygen_transport_reserve
+  - anemia_severity_index
+  - transfusion_trigger_score
+  - WBC_count
+  - neutrophil_count
+  - PLT_count
+  - bleeding_risk_index
+  - thrombosis_risk_index
+  - heme_severity_score
+  - MAP
+  - lactate
+
+simulation_time_s: 420

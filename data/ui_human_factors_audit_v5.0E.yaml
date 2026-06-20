@@ -1,0 +1,39 @@
+version: v5.0E
+name: UI human factors audit v2
+scope: static console UI audit before publication-grade validation
+criteria:
+  require_unique_ids: true
+  require_monitor_split_layout: true
+  require_side_vitals_before_waveforms: true
+  required_vital_ids: [vHR, vSpO2, vMAP, vABP, vPaCO2, vEtCO2, vPaw, vFiO2]
+  required_trend_ids: [trendHR, trendSpO2, trendMAP, trendCO2, trendPaw, trendFiO2]
+  required_waveform_ids: [ecgCanvas, plethCanvas, abpCanvas, respCanvas]
+  required_quick_buttons: [quickEmogasBtn, quickBolusBtn, quickExtendedMonitorBtn, audioMonitorBtn, scenarioInfoBtn]
+  required_session_buttons: [loadBtn, startBtn, pauseBtn, stepBtn, resetBtn]
+  required_panels:
+    - sessionPanel
+    - airwayPanel
+    - rcpPanel
+    - emogasPanel
+    - drugPanel
+    - extendedMonitorPanel
+    - trainingPanel
+    - instructorPanel
+    - debriefPanel
+    - timelinePanel
+    - authoringPanel
+  max_monitor_header_actions: 6
+  max_session_buttons: 6
+  max_quick_airway_actions: 5
+  max_dock_cards: 14
+  min_side_vital_font_px: 32
+  max_compact_waveform_height_px: 110
+  min_vitals_column_px: 210
+  max_vitals_column_px: 300
+review_policy:
+  any_missing_target: critical
+  duplicate_id: critical
+  missing_panel_target: critical
+  excessive_click_density: review
+  insufficient_numeric_prominence: review
+  waveform_dominance: review

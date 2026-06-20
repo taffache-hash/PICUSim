@@ -1,0 +1,1246 @@
+version: 1.04-alpha
+purpose: Scenario taxonomy for educational use, debriefing design, and public repository
+  navigation.
+safety_status: educational/research alpha only; not for clinical use; not a medical
+  device; not a validated patient-specific digital twin
+counts:
+  scenarios: 56
+  beginner: 1
+  intermediate: 37
+  advanced: 17
+curriculum_sequence:
+- healthy_child_20kg
+- ventilator_modes_demo
+- neonatal_rds_3kg
+- infant_bronchiolitis
+- ards_mild
+- status_asthmaticus
+- septic_shock
+- septic_shock_refractory
+- aki_crrt_lite
+- tbi_icp
+- picu_sedation_pkpd
+- picu_priority_drugs_v1_08
+- counterfactual_oversedation_hypoventilation
+- counterfactual_excessive_PEEP_ARDS
+- picu_crrt_drug_clearance_v1_10
+- picu_vancomycin_aki_crrt_v1_12
+scenarios:
+- id: acid_base_electrolyte_challenge
+  file: scenarios/acid_base_electrolyte_challenge.yaml
+  scenario_name: acid_base_electrolyte_challenge
+  domain: acid-base / electrolytes
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 720
+  educational_goal: Explore core acid-base / electrolytes physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - pH_a
+  - PaCO2
+  - HCO3_mmol_L
+  - base_excess_mmol_L
+  - anion_gap_mmol_L
+  - corrected_anion_gap_mmol_L
+  - Na_mmol_L
+  - K_mmol_L
+  - Cl_mmol_L
+  - lactate
+- id: acute_event_acute_bleeding_moderate
+  file: scenarios/acute_event_acute_bleeding_moderate.yaml
+  scenario_name: hematology_bleeding_coagulopathy__event_acute_bleeding_moderate
+  domain: hematology / coagulation
+  complexity: advanced
+  age_group: child
+  weight_kg: 18
+  simulation_time_s: 480
+  educational_goal: Explore oxygen delivery, bleeding, coagulation, and transfusion
+    trade-offs.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - PLT_count
+  - INR
+  - fibrinogen
+  - bleeding_rate_mL_h
+  - bleeding_risk_index
+  - thrombosis_risk_index
+  - transfusion_trigger_score
+- id: acute_event_hypoglycemia_severe
+  file: scenarios/acute_event_hypoglycemia_severe.yaml
+  scenario_name: stress_hyperglycemia_insulin__event_hypoglycemia_severe_severe
+  domain: endocrine / glucose
+  complexity: advanced
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - glucose_mmol_L
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - cortisol_activity
+  - catecholamine_tone
+  - endocrine_glucose_prod_mod
+  - insulin_sensitivity_mod
+  - urine_rate_mL_h
+  - MAP
+  - HR
+- id: acute_event_pneumothorax_tension
+  file: scenarios/acute_event_pneumothorax_tension.yaml
+  scenario_name: ards_mild_peep_titration__event_pneumothorax_tension
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 360
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Paw
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+- id: acute_event_sedative_bolus_hypotension
+  file: scenarios/acute_event_sedative_bolus_hypotension.yaml
+  scenario_name: picu_analgosedation_stress__event_sedative_bolus_hypotension_severe
+  domain: general physiology
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 600
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - pain_score
+  - stress_index
+  - sedation_score
+  - analgesia_score
+  - sympathetic_tone
+  - delirium_risk
+  - withdrawal_risk
+  - PaCO2
+  - MAP
+  - HR
+- id: acute_event_seizure_severe
+  file: scenarios/acute_event_seizure_severe.yaml
+  scenario_name: tbi_icp_management__event_seizure_severe
+  domain: neurology / neurocritical care
+  complexity: advanced
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 720
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - ICP_mmHg
+  - CPP_mmHg
+  - CBF_relative
+  - PbtO2_mmHg
+  - MAP
+  - HR
+  - PaCO2
+  - SaO2
+  - glucose_mmol_L
+  - INR
+- id: acute_event_tube_obstruction_severe
+  file: scenarios/acute_event_tube_obstruction_severe.yaml
+  scenario_name: status_asthmaticus__event_tube_obstruction_severe
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: adolescent
+  weight_kg: 30
+  simulation_time_s: 360
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - airway_obstruction_index
+  - bronchospasm_index
+  - bronchodilator_effect
+  - R_rs
+  - auto_PEEP
+  - auto_PEEP_obstructive
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_VdVt_add
+  - PaCO2
+- id: aki_crrt_lite
+  file: scenarios/aki_crrt_lite.yaml
+  scenario_name: aki_crrt_lite
+  domain: renal / fluid balance
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 2400
+  educational_goal: Explore fluid balance, AKI signals, electrolytes, and renal support
+    effects.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - HR
+  - lactate
+  - pH_a
+  - K_mmol_L
+  - HCO3_mmol_L
+  - urea_mmol_L
+  - creatinine_mg_dL
+  - AKI_stage
+  - urine_output_mL_kg_h
+- id: ards_mild
+  file: scenarios/ards_mild.yaml
+  scenario_name: ards_mild_peep_titration
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 360
+  educational_goal: Explore oxygenation, mechanics, and hemodynamic trade-offs during
+    PEEP changes.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Paw
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+- id: counterfactual_asthma_high_RR_airtrapping
+  file: scenarios/counterfactual_asthma_high_RR_airtrapping.yaml
+  scenario_name: counterfactual_asthma_high_RR_airtrapping
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: adolescent
+  weight_kg: 30
+  simulation_time_s: 360
+  educational_goal: Explore obstructive physiology, air trapping, and ventilator timing
+    choices.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - airway_obstruction_index
+  - bronchospasm_index
+  - bronchodilator_effect
+  - R_rs
+  - auto_PEEP
+  - auto_PEEP_obstructive
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_VdVt_add
+  - PaCO2
+- id: counterfactual_excessive_PEEP_ARDS
+  file: scenarios/counterfactual_excessive_PEEP_ARDS.yaml
+  scenario_name: counterfactual_excessive_PEEP_ARDS
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 360
+  educational_goal: Explore oxygenation, mechanics, and hemodynamic trade-offs during
+    PEEP changes.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Paw
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+- id: counterfactual_fluid_overload_sepsis
+  file: scenarios/counterfactual_fluid_overload_sepsis.yaml
+  scenario_name: counterfactual_fluid_overload_sepsis
+  domain: sepsis / infection
+  complexity: advanced
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 480
+  educational_goal: Explore fluid balance, AKI signals, electrolytes, and renal support
+    effects.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - CVP
+  - SVR
+  - SaO2
+  - PaO2
+  - lactate
+  - DO2
+  - VO2
+- id: counterfactual_hypertonic_overshoot_TBI
+  file: scenarios/counterfactual_hypertonic_overshoot_TBI.yaml
+  scenario_name: counterfactual_hypertonic_overshoot_TBI
+  domain: neurology / neurocritical care
+  complexity: advanced
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Explore ICP, CPP, oxygenation, ventilation, and hemodynamic coupling.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - ICP_mmHg
+  - CPP_mmHg
+  - PbtO2_mmHg
+  - Na_mmol_L
+  - Cl_mmol_L
+  - osmolarity_mOsm_L
+  - pH_a
+  - PaCO2
+  - GCS_proxy
+- id: counterfactual_insulin_hypoglycemia
+  file: scenarios/counterfactual_insulin_hypoglycemia.yaml
+  scenario_name: counterfactual_insulin_hypoglycemia
+  domain: neurology / neurocritical care
+  complexity: advanced
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 1800
+  educational_goal: Compare harmful or delayed management against a safer reference
+    trajectory.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - glucose_mmol_L
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - cortisol_activity
+  - catecholamine_tone
+  - endocrine_glucose_prod_mod
+  - insulin_sensitivity_mod
+  - urine_rate_mL_h
+  - MAP
+  - HR
+- id: counterfactual_oversedation_hypoventilation
+  file: scenarios/counterfactual_oversedation_hypoventilation.yaml
+  scenario_name: counterfactual_oversedation_hypoventilation
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Compare harmful or delayed management against a safer reference
+    trajectory.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Paw
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+  - EELV
+  - C_ketamine_mg_L
+- id: counterfactual_transfusion_overload
+  file: scenarios/counterfactual_transfusion_overload.yaml
+  scenario_name: counterfactual_transfusion_overload
+  domain: sepsis / infection
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 420
+  educational_goal: Explore oxygen delivery, bleeding, coagulation, and transfusion
+    trade-offs.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - VO2
+  - ERO2
+  - SvO2
+  - oxygen_carrying_capacity_mL_dL
+  - oxygen_transport_reserve
+  - anemia_severity_index
+  - transfusion_trigger_score
+- id: endocrine_adrenal_shock
+  file: scenarios/endocrine_adrenal_shock.yaml
+  scenario_name: endocrine_adrenal_shock
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 720
+  educational_goal: Explore core sepsis / infection physiology in a structured teaching
+    scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - HR
+  - glucose_mmol_L
+  - cortisol_activity
+  - catecholamine_tone
+  - adrenal_insufficiency_index
+  - critical_illness_steroid_need_index
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - ADH_water_retention_index
+- id: event_hypoglycemia_severe
+  file: scenarios/event_hypoglycemia_severe.yaml
+  scenario_name: healthy_child_20kg__event_hypoglycemia_severe_severe
+  domain: endocrine / glucose
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 300
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Paw
+  - EELV
+  - SaO2
+  - PaO2
+  - PaCO2
+  - MAP
+  - CO
+  - HR
+  - recruited_frac
+- id: event_sedative_bolus_hypotension
+  file: scenarios/event_sedative_bolus_hypotension.yaml
+  scenario_name: healthy_child_20kg__event_sedative_bolus_hypotension_severe
+  domain: cardiopulmonary
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 300
+  educational_goal: Practice recognition of acute deterioration and timeline-based
+    debriefing.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - Paw
+  - EELV
+  - SaO2
+  - PaO2
+  - PaCO2
+  - MAP
+  - CO
+  - HR
+  - recruited_frac
+- id: fluid_overload_diuretic_challenge
+  file: scenarios/fluid_overload_diuretic_challenge.yaml
+  scenario_name: fluid_overload_diuretic_challenge
+  domain: renal / fluid balance
+  complexity: intermediate
+  age_group: infant
+  weight_kg: 8
+  simulation_time_s: 720
+  educational_goal: Explore fluid balance, AKI signals, electrolytes, and renal support
+    effects.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - fluid_balance
+  - fluid_overload_percent
+  - urine_output_mL_kg_h
+  - diuretic_response_index
+  - creatinine_mg_dL
+  - AKI_stage
+  - K_mmol_L
+  - pH_a
+- id: healthy_child_20kg
+  file: scenarios/healthy_child_20kg.yaml
+  scenario_name: healthy_child_20kg
+  domain: cardiopulmonary
+  complexity: beginner
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 300
+  educational_goal: Establish baseline physiology and simple perturbation response.
+  suggested_use: guided demonstration
+  key_outputs:
+  - Paw
+  - EELV
+  - SaO2
+  - PaO2
+  - PaCO2
+  - MAP
+  - CO
+  - HR
+  - recruited_frac
+- id: hematology_anemia_transfusion
+  file: scenarios/hematology_anemia_transfusion.yaml
+  scenario_name: hematology_anemia_transfusion
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 420
+  educational_goal: Explore oxygen delivery, bleeding, coagulation, and transfusion
+    trade-offs.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - VO2
+  - ERO2
+  - SvO2
+  - oxygen_carrying_capacity_mL_dL
+  - oxygen_transport_reserve
+  - anemia_severity_index
+  - transfusion_trigger_score
+- id: hematology_bleeding_coagulopathy
+  file: scenarios/hematology_bleeding_coagulopathy.yaml
+  scenario_name: hematology_bleeding_coagulopathy
+  domain: hematology / coagulation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 18
+  simulation_time_s: 480
+  educational_goal: Explore oxygen delivery, bleeding, coagulation, and transfusion
+    trade-offs.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - PLT_count
+  - INR
+  - fibrinogen
+  - bleeding_rate_mL_h
+  - bleeding_risk_index
+  - thrombosis_risk_index
+  - transfusion_trigger_score
+- id: hemolysis_oxygen_transport
+  file: scenarios/hemolysis_oxygen_transport.yaml
+  scenario_name: hemolysis_oxygen_transport
+  domain: hematology / coagulation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 24
+  simulation_time_s: 420
+  educational_goal: Explore core hematology / coagulation physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Hb
+  - Hct_percent
+  - hemolysis_index
+  - LDH_index
+  - indirect_bilirubin_mg_dL
+  - K_mmol_L
+  - DO2
+  - oxygen_transport_reserve
+  - transfusion_trigger_score
+  - heme_severity_score
+- id: hepatic_hemolysis_bilirubin
+  file: scenarios/hepatic_hemolysis_bilirubin.yaml
+  scenario_name: hepatic_hemolysis_bilirubin
+  domain: hematology / coagulation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 600
+  educational_goal: Explore core hematology / coagulation physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Hb
+  - hemolysis_index
+  - bilirubin_total_mg_dL
+  - bilirubin_indirect_mg_dL
+  - bilirubin_direct_mg_dL
+  - LDH_index
+  - oxygen_transport_reserve
+  - hepatic_severity_score
+- id: hepatic_hypoxic_hepatitis
+  file: scenarios/hepatic_hypoxic_hepatitis.yaml
+  scenario_name: hepatic_hypoxic_hepatitis
+  domain: hepatic
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 720
+  educational_goal: Explore core hepatic physiology in a structured teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - CO
+  - lactate
+  - AST_U_L
+  - ALT_U_L
+  - INR
+  - hepatic_hypoxic_injury_index
+  - hepatocellular_injury_index
+  - hepatic_perfusion_index
+  - hepatic_severity_score
+- id: hepatic_sepsis_cholestasis
+  file: scenarios/hepatic_sepsis_cholestasis.yaml
+  scenario_name: hepatic_sepsis_cholestasis
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 900
+  educational_goal: Explore core sepsis / infection physiology in a structured teaching
+    scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - HR
+  - lactate
+  - INR
+  - bilirubin_total_mg_dL
+  - bilirubin_direct_mg_dL
+  - albumin_g_dL
+  - ammonia_umol_L
+  - hepatic_severity_score
+  - hepatic_lactate_clearance_mod
+- id: infant_bronchiolitis
+  file: scenarios/infant_bronchiolitis.yaml
+  scenario_name: infant_bronchiolitis
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: infant
+  weight_kg: 8
+  simulation_time_s: 300
+  educational_goal: Explore core respiratory / ventilation physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - airway_obstruction_index
+  - bronchodilator_effect
+  - mucus_load
+  - small_airway_obstruction
+  - R_rs
+  - auto_PEEP
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_shunt_add
+  - airway_VdVt_add
+- id: infection_antibiotic_delay
+  file: scenarios/infection_antibiotic_delay.yaml
+  scenario_name: infection_antibiotic_delay
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 720
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - microbial_burden
+  - infection_load
+  - antibiotic_coverage
+  - antibiotic_effect
+  - antibiotic_delay_harm_index
+  - culture_positivity_probability
+  - antimicrobial_escalation_score
+  - antimicrobial_deescalation_readiness
+  - inadequate_coverage_index
+  - infection_severity_score
+- id: infection_deescalation
+  file: scenarios/infection_deescalation.yaml
+  scenario_name: infection_deescalation
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: toddler
+  weight_kg: 12
+  simulation_time_s: 720
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - microbial_burden
+  - antibiotic_coverage
+  - antibiotic_effect
+  - antimicrobial_deescalation_readiness
+  - antimicrobial_escalation_score
+  - culture_positivity_probability
+  - infection_severity_score
+  - MAP
+  - lactate
+- id: infection_source_control
+  file: scenarios/infection_source_control.yaml
+  scenario_name: infection_source_control
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 900
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - microbial_burden
+  - source_control
+  - source_control_need_index
+  - antibiotic_effect
+  - antimicrobial_deescalation_readiness
+  - antimicrobial_escalation_score
+  - culture_positivity_probability
+  - MAP
+  - lactate
+  - sepsis_severity_score
+- id: near_fatal_status_asthmaticus
+  file: scenarios/near_fatal_status_asthmaticus.yaml
+  scenario_name: near_fatal_status_asthmaticus
+  domain: respiratory / ventilation
+  complexity: advanced
+  age_group: adolescent
+  weight_kg: 30
+  simulation_time_s: 360
+  educational_goal: Explore obstructive physiology, air trapping, and ventilator timing
+    choices.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - airway_obstruction_index
+  - bronchospasm_index
+  - bronchodilator_effect
+  - R_rs
+  - auto_PEEP
+  - auto_PEEP_obstructive
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_VdVt_add
+  - PaCO2
+- id: neonatal_rds_3kg
+  file: scenarios/neonatal_rds_3kg.yaml
+  scenario_name: neonatal_rds_3kg
+  domain: neonatal respiratory
+  complexity: intermediate
+  age_group: neonate
+  weight_kg: 3
+  simulation_time_s: 300
+  educational_goal: Practice cautious oxygenation and PEEP changes in a 3 kg neonatal
+    profile.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Paw
+  - Vt
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - HR
+- id: neuro_metabolic_seizure_risk
+  file: scenarios/neuro_metabolic_seizure_risk.yaml
+  scenario_name: neuro_metabolic_seizure_risk
+  domain: neurology / neurocritical care
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 720
+  educational_goal: Explore core neurology / neurocritical care physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - GCS_proxy
+  - AVPU_state
+  - metabolic_encephalopathy_index
+  - seizure_risk_index
+  - neuro_severity_score
+  - Na_mmol_L
+  - glucose_mmol_L
+  - osmolarity_mOsm_L
+  - T_core
+- id: neuro_sepsis_encephalopathy
+  file: scenarios/neuro_sepsis_encephalopathy.yaml
+  scenario_name: neuro_sepsis_encephalopathy
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 900
+  educational_goal: Explore core sepsis / infection physiology in a structured teaching
+    scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - GCS_proxy
+  - AVPU_state
+  - encephalopathy_index
+  - septic_encephalopathy_index
+  - delirium_state_index
+  - seizure_risk_index
+  - neuro_severity_score
+  - MAP
+  - HR
+  - lactate
+- id: neuro_tbi_sedation_weaning
+  file: scenarios/neuro_tbi_sedation_weaning.yaml
+  scenario_name: neuro_tbi_sedation_weaning
+  domain: neurology / neurocritical care
+  complexity: intermediate
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 900
+  educational_goal: Explore ICP, CPP, oxygenation, ventilation, and hemodynamic coupling.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - GCS_proxy
+  - AVPU_state
+  - RASS_proxy
+  - consciousness_index
+  - encephalopathy_index
+  - hypoxic_ischemic_neuro_index
+  - neuro_severity_score
+  - ICP_mmHg
+  - CPP_mmHg
+  - PbtO2_mmHg
+- id: nutrition_crrt_protein_loss
+  file: scenarios/nutrition_crrt_protein_loss.yaml
+  scenario_name: nutrition_crrt_protein_loss
+  domain: renal / fluid balance
+  complexity: intermediate
+  age_group: child
+  weight_kg: 24
+  simulation_time_s: 900
+  educational_goal: Explore fluid balance, AKI signals, electrolytes, and renal support
+    effects.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - CRRT_active_effective
+  - CRRT_protein_loss_g_day
+  - protein_balance_g_day
+  - phosphate_mmol_L
+  - magnesium_mmol_L
+  - nutrition_severity_score
+- id: nutrition_refeeding_risk
+  file: scenarios/nutrition_refeeding_risk.yaml
+  scenario_name: nutrition_refeeding_risk
+  domain: nutrition / metabolism
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 900
+  educational_goal: Explore nutrition delivery, catabolism, refeeding risk, and metabolic
+    stress.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - energy_intake_kcal_day
+  - energy_expenditure_kcal_day
+  - energy_balance_kcal_day
+  - protein_balance_g_day
+  - catabolism_index
+  - feeding_intolerance_index
+  - refeeding_risk_index
+  - phosphate_mmol_L
+  - magnesium_mmol_L
+  - nutrition_severity_score
+- id: nutrition_sepsis_catabolism
+  file: scenarios/nutrition_sepsis_catabolism.yaml
+  scenario_name: nutrition_sepsis_catabolism
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 21
+  simulation_time_s: 900
+  educational_goal: Explore nutrition delivery, catabolism, refeeding risk, and metabolic
+    stress.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - catabolism_index
+  - feeding_intolerance_index
+  - energy_balance_kcal_day
+  - protein_balance_g_day
+  - triglycerides_mmol_L
+  - nutrition_severity_score
+- id: picu_analgosedation_stress
+  file: scenarios/picu_analgosedation_stress.yaml
+  scenario_name: picu_analgosedation_stress
+  domain: analgosedation / pharmacology
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 600
+  educational_goal: Explore core analgosedation / pharmacology physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - pain_score
+  - stress_index
+  - sedation_score
+  - analgesia_score
+  - sympathetic_tone
+  - delirium_risk
+  - withdrawal_risk
+  - PaCO2
+  - MAP
+  - HR
+- id: picu_priority_drugs_v1_08
+  file: scenarios/picu_priority_drugs_v1_08.yaml
+  scenario_name: picu_priority_drugs_v1_08
+  domain: pharmacology / hemodynamics / analgosedation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 480
+  educational_goal: Explore qualitative concentration-time and physiologic effects
+    of adrenaline, dopamine, fentanyl and dexmedetomidine in a mixed PICU shock scenario.
+  suggested_use: small-group teaching / pharmacology debriefing
+  key_outputs:
+  - C_adrenaline_ng_mL
+  - C_dopamine_ng_mL
+  - C_fentanyl_ng_mL
+  - C_dexmedetomidine_ng_mL
+  - MAP
+  - HR
+  - CO
+  - drug_drive_mod
+- id: picu_sedation_pkpd
+  file: scenarios/picu_sedation_pkpd.yaml
+  scenario_name: picu_sedation_pkpd
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Explore core respiratory / ventilation physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - Paw
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+  - EELV
+  - C_ketamine_mg_L
+- id: pulmonary_hypertension_ino
+  file: scenarios/pulmonary_hypertension_ino.yaml
+  scenario_name: pulmonary_hypertension_ino
+  domain: cardiopulmonary
+  complexity: intermediate
+  age_group: child
+  weight_kg: 14
+  simulation_time_s: 720
+  educational_goal: Explore core cardiopulmonary physiology in a structured teaching
+    scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - PVR
+  - PAP_mean
+  - CO
+  - SaO2
+  - MAP
+  - CVP
+  - ino_PVR_mod
+  - ino_Qs_Qt_mod
+  - HR
+  - DO2
+- id: septic_cold_myocardial_dysfunction
+  file: scenarios/septic_cold_myocardial_dysfunction.yaml
+  scenario_name: septic_cold_myocardial_dysfunction
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 18
+  simulation_time_s: 520
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - SVR
+  - lactate
+  - DO2
+  - VO2
+  - cytokine_drive
+  - vasoplegia_index
+  - myocardial_depression_index
+- id: septic_shock
+  file: scenarios/septic_shock.yaml
+  scenario_name: septic_shock
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 480
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - CVP
+  - SVR
+  - SaO2
+  - PaO2
+  - lactate
+  - DO2
+  - VO2
+- id: septic_shock_refractory
+  file: scenarios/septic_shock_refractory.yaml
+  scenario_name: septic_shock_refractory
+  domain: sepsis / infection
+  complexity: advanced
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 600
+  educational_goal: Link infection, vasoplegia, perfusion, antimicrobials, and source
+    control.
+  suggested_use: expert debriefing / counterfactual discussion
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - SVR
+  - CVP
+  - lactate
+  - DO2
+  - VO2
+  - infection_load
+  - cytokine_drive
+- id: status_asthmaticus
+  file: scenarios/status_asthmaticus.yaml
+  scenario_name: status_asthmaticus
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: adolescent
+  weight_kg: 30
+  simulation_time_s: 360
+  educational_goal: Explore obstructive physiology, air trapping, and ventilator timing
+    choices.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - airway_obstruction_index
+  - bronchospasm_index
+  - bronchodilator_effect
+  - R_rs
+  - auto_PEEP
+  - auto_PEEP_obstructive
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_VdVt_add
+  - PaCO2
+- id: stress_hyperglycemia_insulin
+  file: scenarios/stress_hyperglycemia_insulin.yaml
+  scenario_name: stress_hyperglycemia_insulin
+  domain: endocrine / glucose
+  complexity: intermediate
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Explore core endocrine / glucose physiology in a structured teaching
+    scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - glucose_mmol_L
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - cortisol_activity
+  - catecholamine_tone
+  - endocrine_glucose_prod_mod
+  - insulin_sensitivity_mod
+  - urine_rate_mL_h
+  - MAP
+  - HR
+- id: tbi_hypertonic_electrolytes
+  file: scenarios/tbi_hypertonic_electrolytes.yaml
+  scenario_name: tbi_hypertonic_electrolytes
+  domain: neurology / neurocritical care
+  complexity: intermediate
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 720
+  educational_goal: Explore ICP, CPP, oxygenation, ventilation, and hemodynamic coupling.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - ICP_mmHg
+  - CPP_mmHg
+  - PbtO2_mmHg
+  - Na_mmol_L
+  - Cl_mmol_L
+  - osmolarity_mOsm_L
+  - pH_a
+  - PaCO2
+- id: tbi_icp
+  file: scenarios/tbi_icp.yaml
+  scenario_name: tbi_icp_management
+  domain: neurology / neurocritical care
+  complexity: intermediate
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 720
+  educational_goal: Explore ICP, CPP, oxygenation, ventilation, and hemodynamic coupling.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - ICP_mmHg
+  - CPP_mmHg
+  - CBF_relative
+  - PbtO2_mmHg
+  - MAP
+  - HR
+  - PaCO2
+  - SaO2
+  - glucose_mmol_L
+  - INR
+- id: thermoregulation_cooling_shivering_tbi
+  file: scenarios/thermoregulation_cooling_shivering_tbi.yaml
+  scenario_name: thermoregulation_cooling_shivering_tbi
+  domain: neurology / neurocritical care
+  complexity: intermediate
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 720
+  educational_goal: Explore ICP, CPP, oxygenation, ventilation, and hemodynamic coupling.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - T_core
+  - cooling_effect
+  - shivering_index
+  - thermo_VO2_mod
+  - ICP_mmHg
+  - CPP_mmHg
+- id: thermoregulation_fever_antipyretic
+  file: scenarios/thermoregulation_fever_antipyretic.yaml
+  scenario_name: thermoregulation_fever_antipyretic
+  domain: sepsis / infection
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 900
+  educational_goal: Explore temperature control and the coupling with metabolic and
+    cardiovascular responses.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - T_core
+  - setpoint_T
+  - fever_drive
+  - hyperthermia_index
+  - thermo_VO2_mod
+  - thermo_HR_add
+  - temperature_instability_score
+- id: thermoregulation_hypothermia_rewarming
+  file: scenarios/thermoregulation_hypothermia_rewarming.yaml
+  scenario_name: thermoregulation_hypothermia_rewarming
+  domain: thermoregulation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 18
+  simulation_time_s: 900
+  educational_goal: Explore temperature control and the coupling with metabolic and
+    cardiovascular responses.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - T_core
+  - hypothermia_index
+  - shivering_index
+  - warming_effect
+  - thermo_coag_mod
+  - thermo_VO2_mod
+- id: ventilator_modes_demo
+  file: scenarios/ventilator_modes_demo.yaml
+  scenario_name: ventilator_modes_demo
+  domain: respiratory / ventilation
+  complexity: intermediate
+  age_group: child
+  weight_kg: 25
+  simulation_time_s: 600
+  educational_goal: Explore core respiratory / ventilation physiology in a structured
+    teaching scenario.
+  suggested_use: small-group teaching / debriefing
+  key_outputs:
+  - vent_mode
+  - Paw
+  - Paw_current
+  - Ppeak
+  - Pplat
+  - Vt
+  - RR_total
+  - MV_L_min
+  - compliance_dyn
+  - resistance_meas
+- id: picu_crrt_drug_clearance_v1_10
+  file: scenarios/picu_crrt_drug_clearance_v1_10.yaml
+  scenario_name: picu_crrt_drug_clearance_v1_10
+  domain: pharmacology / renal
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 900
+  educational_goal: Explore how CRRT-lite extracorporeal clearance modifies selected
+    drug concentrations in a sedated pediatric shock/AKI scenario.
+  suggested_use: small-group pharmacology / renal debriefing
+  key_outputs:
+  - C_midazolam_ng_mL
+  - C_rocuronium_ng_mL
+  - pk_crrt_effluent_L_min
+  - pk_crrt_midazolam_CL_L_min
+  - pk_crrt_rocuronium_CL_L_min
+
+- id: picu_vancomycin_aki_crrt_v1_12
+  file: scenarios/picu_vancomycin_aki_crrt_v1_12.yaml
+  scenario_name: picu_vancomycin_aki_crrt_v1_12
+  domain: pharmacology / infection / renal
+  complexity: intermediate
+  age_group: child
+  weight_kg: 20
+  simulation_time_s: 1200
+  educational_goal: Explore renal-function-dependent vancomycin exposure, qualitative target attainment, antimicrobial coverage and CRRT-lite clearance.
+  suggested_use: small-group pharmacology / sepsis / renal debriefing
+  key_outputs:
+  - C_vancomycin_mg_L
+  - vancomycin_target_attainment
+  - vancomycin_coverage_mod
+  - antibiotic_coverage
+  - antibiotic_effect
+  - microbial_burden
+  - GFR
+  - AKI_stage
+  - pk_crrt_vancomycin_CL_L_min
+
+
+- id: picu_clonidine_withdrawal_weaning_v1_15
+  file: scenarios/picu_clonidine_withdrawal_weaning_v1_15.yaml
+  scenario_name: picu_clonidine_withdrawal_weaning_v1_15
+  domain: pharmacology / analgosedation / withdrawal
+  complexity: intermediate
+  age_group: child
+  weight_kg: 22
+  simulation_time_s: 1200
+  educational_goal: Explore qualitative clonidine PK/PD during sedative weaning and withdrawal-risk debriefing.
+  suggested_use: small-group pharmacology / analgosedation debriefing
+  key_outputs:
+  - C_clonidine_ng_mL
+  - clonidine_sedation_signal
+  - clonidine_sympatholysis_signal
+  - clonidine_withdrawal_mod
+  - withdrawal_risk
+  - HR
+  - MAP
+
+
+- scenario: picu_piperacillin_tazobactam_sepsis_v1_17
+  domain: infection_pkpd
+  complexity: intermediate
+  educational_objective: Link beta-lactam exposure, fT>MIC target attainment, antimicrobial coverage and infection trajectory.
+  recommended_outputs:
+    - C_piperacillin_mg_L
+    - piperacillin_ft_above_MIC
+    - piperacillin_target_attainment
+    - antibiotic_effect
+    - microbial_burden

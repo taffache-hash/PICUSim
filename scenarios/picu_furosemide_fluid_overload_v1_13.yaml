@@ -1,0 +1,88 @@
+name: picu_furosemide_fluid_overload_v1_13
+version: v1.13-alpha
+category: pharmacology / renal / fluid balance
+summary: >
+  Educational furosemide PK/PD scaffold linking dose, concentration, renal-function-dependent
+  clearance, qualitative diuretic effect signal, urine output and fluid balance.
+  Not a dosing guide.
+
+patient:
+  profile: infant_8kg
+  age_y: 0.7
+  age_group: infant
+  weight_kg: 8
+  sex: F
+  diagnosis: fluid_overload_after_resuscitation_with_early_AKI
+
+respiratory:
+  mode: PCV
+  Paw: 20
+  PEEP: 7
+  FiO2: 0.40
+  RR: 30
+  C_rs: 0.65
+  R_rs: 13
+  SaO2: 0.93
+  PaO2: 70
+  PaCO2: 45
+  non_recruitable_frac: 0.18
+
+cardiovascular:
+  HR: 155
+  MAP: 56
+  CO: 1.45
+  CVP: 9
+  Hb: 10.8
+
+metabolism:
+  T_core: 38.2
+  VO2: 70
+  lactate: 2.8
+
+acidbase:
+  Na_mmol_L: 137
+  K_mmol_L: 4.8
+  Cl_mmol_L: 109
+  HCO3_mmol_L: 21
+  urea_mmol_L: 8
+
+renal:
+  GFR_baseline: 28
+  creatinine_baseline_mg_dL: 0.28
+  creatinine_mg_dL: 0.40
+  furosemide_mg_kg: 0
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+
+drugs:
+  furosemide_mg_kg_h: 0.0
+
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 160, label: "Fluid load 20 mL/kg"}
+  - {t: 180, action: set_furosemide, value: 1.0, label: "Bolus-equivalent furosemide exposure 1 mg/kg"}
+  - {t: 300, action: set_furosemide_infusion, value: 0.20, label: "Low educational continuous furosemide infusion"}
+  - {t: 720, action: set_furosemide_infusion, value: 0.0, label: "Stop furosemide infusion"}
+
+outputs:
+  - C_furosemide_mg_L
+  - furosemide_effect_signal
+  - furosemide_renal_clearance_factor
+  - diuretic_response_index
+  - urine_output_mL_kg_h
+  - urine_rate_mL_h
+  - fluid_balance
+  - fluid_overload_percent
+  - GFR
+  - AKI_stage
+  - creatinine_mg_dL
+  - K_mmol_L
+  - pk_supported_drug_count
+  - pk_crrt_furosemide_CL_L_min
+
+limitations:
+  - Educational furosemide PK/PD scaffold only; not for prescribing or dose adjustment.
+  - Does not model tubular secretion saturation, albumin binding, ototoxicity risk, electrolyte depletion kinetics or nephrocalcinosis.
+  - Diuretic response is qualitative and depends on simulated renal perfusion/GFR/AKI status.
+
+simulation_time_s: 900

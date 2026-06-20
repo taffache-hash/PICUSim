@@ -1,0 +1,55 @@
+name: thermoregulation_fever_antipyretic
+version: v0.24
+category: thermoregulation
+summary: >
+  Septic fever with antipyretic and partial source control, tracking fever drive,
+  VO2, HR and temperature instability.
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: F
+  diagnosis: septic_fever
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 5
+  FiO2: 0.35
+  RR: 26
+  C_rs: 0.8
+  R_rs: 9
+  SaO2: 0.95
+  PaO2: 78
+  PaCO2: 40
+cardiovascular:
+  HR: 145
+  MAP: 70
+  CO: 4.3
+  Hb: 10.5
+metabolism:
+  T_core: 39.6
+  T_setpoint: 39.3
+  SIRS_factor: 1.35
+  VO2: 165
+  lactate: 2.6
+thermoregulation:
+  setpoint_T: 39.3
+sepsis:
+  phenotype: warm
+  infection_load: 0.68
+  source_control: 0.1
+  antibiotic_effect: 0.25
+perturbations:
+  - {t: 120, action: set_paracetamol, value: true, label: antipyretic}
+  - {t: 180, action: set_norad, value: 0.08, label: low-dose vasoactive support}
+  - {t: 300, action: set_source_control, value: 0.45, label: source control partial}
+  - {t: 420, action: set_antibiotic_effect, value: 0.55, label: antibiotic effect improves}
+outputs:
+  - T_core
+  - setpoint_T
+  - fever_drive
+  - hyperthermia_index
+  - thermo_VO2_mod
+  - thermo_HR_add
+  - temperature_instability_score
+simulation_time_s: 900

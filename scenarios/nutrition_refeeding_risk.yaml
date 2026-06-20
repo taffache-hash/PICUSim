@@ -1,0 +1,62 @@
+name: nutrition_refeeding_risk
+version: v0.23
+category: nutrition_catabolism
+summary: >
+  Malnourished PICU child with cautious nutrition escalation and refeeding electrolyte risk.
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 20
+  sex: F
+  diagnosis: malnutrition_refeeding_risk
+respiratory:
+  mode: PCV
+  Paw: 17
+  PEEP: 5
+  FiO2: 0.30
+  RR: 24
+  C_rs: 0.8
+  R_rs: 8
+  SaO2: 0.96
+  PaO2: 82
+  PaCO2: 39
+cardiovascular:
+  HR: 125
+  MAP: 68
+  CO: 3.8
+  CVP: 5
+  Hb: 10.6
+metabolism:
+  T_core: 37.8
+  VO2: 135
+  lactate: 1.8
+nutrition:
+  glucose_mmol_L: 5.5
+  GIR_mg_kg_min: 3.0
+  enteral_feed_mL_h: 8
+  enteral_kcal_mL: 1.0
+  parenteral_kcal_kg_day: 10
+  protein_g_kg_day: 0.7
+  lipid_g_kg_day: 0.4
+  malnutrition_index: 0.65
+  phosphate_mmol_L: 0.88
+  magnesium_mmol_L: 0.63
+  triglycerides_mmol_L: 0.9
+perturbations:
+  - {t: 240, action: set_enteral_feed, value: 22, label: cautious enteral escalation}
+  - {t: 360, action: set_parenteral_kcal, value: 18, label: increase parenteral calories}
+  - {t: 480, action: set_protein, value: 1.4, label: increase protein}
+  - {t: 540, action: set_phosphate_supplement, value: 8, label: phosphate supplementation}
+  - {t: 540, action: set_magnesium_supplement, value: 3, label: magnesium supplementation}
+outputs:
+  - energy_intake_kcal_day
+  - energy_expenditure_kcal_day
+  - energy_balance_kcal_day
+  - protein_balance_g_day
+  - catabolism_index
+  - feeding_intolerance_index
+  - refeeding_risk_index
+  - phosphate_mmol_L
+  - magnesium_mmol_L
+  - nutrition_severity_score
+simulation_time_s: 900

@@ -1,0 +1,62 @@
+# Pediatric Digital Twin v0.11 reference ranges
+# Purpose: internal plausibility checks for scenario regression, not clinical validation.
+# Values are intentionally broad because the simulator is exploratory and scenario-dependent.
+
+age_groups:
+  infant_0_1y:
+    HR_bpm: [100, 180]
+    MAP_mmHg: [45, 70]
+    Vt_mL_kg: [5, 8]
+    PaCO2_mmHg: [35, 50]
+    pH: [7.30, 7.50]
+    urine_mL_kg_h: [1.0, 4.0]
+  child_1_10y:
+    HR_bpm: [70, 150]
+    MAP_mmHg: [55, 90]
+    Vt_mL_kg: [5, 8]
+    PaCO2_mmHg: [35, 50]
+    pH: [7.30, 7.50]
+    CO_L_min_kg: [0.12, 0.25]
+    VO2_mL_min_kg: [4, 10]
+  adolescent_10_18y:
+    HR_bpm: [55, 120]
+    MAP_mmHg: [60, 95]
+    Vt_mL_kg: [5, 8]
+    PaCO2_mmHg: [35, 50]
+    pH: [7.30, 7.50]
+    CO_L_min_kg: [0.08, 0.20]
+
+scenario_expectations:
+  healthy_child_20kg:
+    SaO2: [0.90, 1.00]
+    PaCO2: [30, 50]
+    Vt_mL_kg: [4, 10]
+    recruited_frac: [0.80, 1.00]
+  ards_mild_peep_titration:
+    PaCO2: [35, 55]
+    Vt_mL_kg: [4, 9]
+    recruited_frac: [0.55, 0.85]
+  septic_shock:
+    MAP: [55, 100]
+    HR: [110, 180]
+    lactate: [2.0, 8.0]
+    Hb: [7.5, 12.5]
+  pulmonary_hypertension_ino:
+    PAP_mean: [25, 55]
+    PVR: [25, 100]
+  tbi_icp_management:
+    ICP_mmHg: [5, 25]
+    CPP_mmHg: [45, 95]
+  septic_shock_refractory:
+    MAP: [55, 95]
+    lactate: [3.0, 9.0]
+    vasoplegia_index: [0.20, 0.80]
+    endothelial_leak_index: [0.25, 0.85]
+    microcirculatory_failure_index: [0.25, 0.85]
+    fluid_responsiveness: [0.0, 0.45]
+  septic_cold_myocardial_dysfunction:
+    MAP: [50, 90]
+    lactate: [2.5, 8.0]
+    myocardial_depression_index: [0.20, 0.80]
+    vasoplegia_index: [0.0, 0.50]
+    sepsis_CO_mod: [0.55, 1.20]

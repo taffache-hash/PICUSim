@@ -1,0 +1,281 @@
+version: v0.47
+purpose: >
+  Governed output profiles for Pediatric Digital Twin exports. Profiles separate
+  bedside/educational variables from research/debug internals and validation
+  endpoints. This does not change model physiology; it only filters and labels
+  outputs.
+
+profiles:
+  instructor_minimal:
+    description: Minimal instructor dashboard for live teaching/debriefing.
+    include_required:
+      - t
+      - HR
+      - MAP
+      - SaO2
+      - PaCO2
+      - pH_a
+      - FiO2
+      - PEEP
+      - RR
+      - Vt
+      - lactate
+    include_optional:
+      - T_core
+      - glucose_mmol_L
+      - GCS_proxy
+      - ICP_mmHg
+      - CPP_mmHg
+      - fluid_balance
+      - urine_output_mL_kg_h
+      - auto_PEEP_obstructive
+      - event_active
+    derived:
+      - Vt_mL_kg
+      - urine_output_mL_kg_h
+    intended_use: education
+    expose_internal_scores: false
+
+  clinical_educational:
+    description: Clinically familiar variables for educational scenario playback.
+    include_required:
+      - t
+      - HR
+      - MAP
+      - SAP
+      - DAP
+      - SaO2
+      - PaO2
+      - PaCO2
+      - pH_a
+      - FiO2
+      - PEEP
+      - RR
+      - Vt
+      - Vt_mL_kg
+      - lactate
+      - Hb
+      - glucose_mmol_L
+      - Na_mmol_L
+      - K_mmol_L
+      - HCO3_mmol_L
+      - T_core
+      - fluid_balance
+      - urine_output_mL_kg_h
+    include_optional:
+      - Ppeak
+      - Pplat
+      - Pdriving
+      - auto_PEEP_obstructive
+      - CO
+      - CVP
+      - DO2
+      - ICP_mmHg
+      - CPP_mmHg
+      - GCS_proxy
+      - RASS_proxy
+      - creatinine_mg_dL
+      - urea_mmol_L
+      - bilirubin_total_mg_dL
+      - INR
+      - PLT_count
+    derived:
+      - Vt_mL_kg
+      - urine_output_mL_kg_h
+      - shock_index_proxy
+    intended_use: education
+    expose_internal_scores: false
+
+  validation_core:
+    description: Compact reproducibility/validation endpoint set used for reports.
+    include_required:
+      - t
+      - SaO2
+      - PaO2
+      - PaCO2
+      - pH_a
+      - MAP
+      - HR
+      - CO
+      - Vt
+      - Vt_mL_kg
+      - PEEP
+      - FiO2
+      - Pdriving
+      - VILI_risk
+      - lactate
+      - Hb
+      - DO2
+      - fluid_balance
+      - urine_output_mL_kg_h
+      - glucose_mmol_L
+      - Na_mmol_L
+      - K_mmol_L
+      - HCO3_mmol_L
+    include_optional:
+      - ICP_mmHg
+      - CPP_mmHg
+      - R_rs
+      - auto_PEEP_obstructive
+      - sepsis_severity_score
+      - infection_severity_score
+      - renal_severity_score
+      - hepatic_severity_score
+      - GCS_proxy
+    derived:
+      - Vt_mL_kg
+      - urine_output_mL_kg_h
+      - shock_index_proxy
+    intended_use: validation
+    expose_internal_scores: true
+
+  respiratory_focus:
+    description: Ventilation, mechanics and gas exchange focused profile.
+    include_required:
+      - t
+      - FiO2
+      - PEEP
+      - Paw
+      - Ppeak
+      - Pplat
+      - Pdriving
+      - RR
+      - Vt
+      - Vt_mL_kg
+      - PaO2
+      - SaO2
+      - PaCO2
+      - pH_a
+      - R_rs
+      - C_rs
+      - recruited_frac
+      - VILI_risk
+    include_optional:
+      - auto_PEEP_obstructive
+      - dynamic_hyperinflation_index
+      - airway_obstruction_index
+      - bronchospasm_index
+      - mucus_load
+      - small_airway_obstruction
+      - MP
+      - WOB
+    derived:
+      - Vt_mL_kg
+    intended_use: respiratory_teaching_and_debug
+    expose_internal_scores: true
+
+  hemodynamic_focus:
+    description: Circulation, shock and oxygen delivery focused profile.
+    include_required:
+      - t
+      - HR
+      - MAP
+      - SAP
+      - DAP
+      - CVP
+      - CO
+      - SV
+      - SVR
+      - PVR
+      - PAP_mean
+      - Hb
+      - SaO2
+      - DO2
+      - VO2
+      - ERO2
+      - lactate
+    include_optional:
+      - fluid_balance
+      - fluid_responsiveness
+      - vasoplegia_index
+      - myocardial_depression_index
+      - microcirculatory_failure_index
+      - RV_afterload_index
+      - heart_lung_CO_mod
+    derived:
+      - shock_index_proxy
+    intended_use: hemodynamic_teaching_and_debug
+    expose_internal_scores: true
+
+  renal_metabolic_focus:
+    description: Kidney, fluid, electrolytes, acid-base, glucose and liver/metabolic profile.
+    include_required:
+      - t
+      - fluid_balance
+      - urine_rate_mL_h
+      - urine_output_mL_kg_h
+      - GFR
+      - creatinine_mg_dL
+      - urea_mmol_L
+      - Na_mmol_L
+      - K_mmol_L
+      - Cl_mmol_L
+      - HCO3_mmol_L
+      - pH_a
+      - lactate
+      - glucose_mmol_L
+      - T_core
+    include_optional:
+      - phosphate_mmol_L
+      - magnesium_mmol_L
+      - bilirubin_total_mg_dL
+      - bilirubin_direct_mg_dL
+      - AST_U_L
+      - ALT_U_L
+      - INR
+      - renal_severity_score
+      - hepatic_severity_score
+      - insulin_resistance_index
+      - stress_hyperglycemia_index
+    derived:
+      - urine_output_mL_kg_h
+    intended_use: renal_metabolic_teaching_and_debug
+    expose_internal_scores: true
+
+  research_debug:
+    description: Full dataframe export for developers and research/debug work.
+    include_all: true
+    include_required:
+      - t
+    include_optional: []
+    derived:
+      - Vt_mL_kg
+      - urine_output_mL_kg_h
+      - shock_index_proxy
+    intended_use: research_debug
+    expose_internal_scores: true
+
+units:
+  t: s
+  HR: bpm
+  MAP: mmHg
+  SAP: mmHg
+  DAP: mmHg
+  SaO2: fraction
+  PaO2: mmHg
+  PaCO2: mmHg
+  pH_a: pH
+  FiO2: fraction
+  PEEP: cmH2O
+  Paw: cmH2O
+  Ppeak: cmH2O
+  Pplat: cmH2O
+  Pdriving: cmH2O
+  RR: breaths/min
+  Vt: mL
+  Vt_mL_kg: mL/kg
+  lactate: mmol/L
+  Hb: g/dL
+  glucose_mmol_L: mmol/L
+  Na_mmol_L: mmol/L
+  K_mmol_L: mmol/L
+  HCO3_mmol_L: mmol/L
+  T_core: C
+  fluid_balance: mL
+  urine_rate_mL_h: mL/h
+  urine_output_mL_kg_h: mL/kg/h
+  CO: L/min
+  CVP: mmHg
+  DO2: mL/min
+  ICP_mmHg: mmHg
+  CPP_mmHg: mmHg

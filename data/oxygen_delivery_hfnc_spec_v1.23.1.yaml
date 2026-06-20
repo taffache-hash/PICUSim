@@ -1,0 +1,39 @@
+release: v1.23.1-alpha
+scope: educational oxygen-delivery and HFNC interface scaffold
+interfaces:
+  ROOM_AIR:
+    pressure: none
+    ventilator_connected: false
+    expected_effect: FiO2_delivered approximately 0.21
+  LOW_FLOW_OXYGEN:
+    pressure: none
+    ventilator_connected: false
+    expected_effect: FiO2_delivered rises with oxygen_flow_L_min and oxygen_FiO2_set, but remains leak/entrainment limited
+  SIMPLE_MASK:
+    pressure: none
+    ventilator_connected: false
+    expected_effect: higher delivery efficiency than low-flow oxygen at comparable settings
+  HFNC:
+    pressure: qualitative small distending-pressure proxy
+    ventilator_connected: false
+    expected_effect: FiO2 delivery, mild external PEEP proxy and dead-space washout
+bus_fields:
+  - oxygen_interface
+  - oxygen_flow_L_min
+  - oxygen_FiO2_set
+  - FiO2_delivered
+  - FiO2_delivery_efficiency
+  - HFNC_flow_L_min
+  - HFNC_FiO2_set
+  - HFNC_distending_pressure_cmH2O
+  - HFNC_deadspace_washout
+  - HFNC_failure_risk
+  - mouth_leak_fraction
+  - oxygen_delivery_revision
+scenarios:
+  - airway_low_flow_oxygen_v1_23_1
+  - airway_hfnc_bronchiolitis_v1_23_1
+limitations:
+  - Not a clinical oxygen blender, cannula-sizing or HFNC failure prediction model.
+  - Does not model exact entrainment physics or patient-specific nasal/mouth geometry.
+  - NIV pressure support remains out of scope until v1.23.2.

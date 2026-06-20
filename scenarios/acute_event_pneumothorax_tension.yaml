@@ -1,0 +1,63 @@
+name: ards_mild_peep_titration__event_pneumothorax_tension
+description: "ARDS lieve in bambino 5 anni, 20 kg. Scenario: PEEP step-up 5\u2192\
+  8\u219212 cmH2O + valutazione risposta. Atteso: aumento EELV, miglioramento SaO2/PaO2,\
+  \ possibile aumento CVP.\n\n\nInjected acute event v0.43: pneumothorax/tension at\
+  \ t=180.0s."
+patient:
+  age_y: 5
+  weight_kg: 20
+  sex: M
+  diagnosis: ARDS_mild_Berlin
+respiratory:
+  PEEP: 5
+  Paw: 22
+  FiO2: 0.5
+  RR: 30
+  C_rs: 0.45
+  R_rs: 10.0
+  PaO2: 65.0
+  PaCO2: 42.0
+  SaO2: 0.9
+  recruited_frac: 0.55
+  non_recruitable_frac: 0.2
+cardiovascular:
+  HR: 130
+  MAP: 62
+  CVP: 6
+  Hb: 10.5
+metabolism:
+  T_core: 38.2
+  VO2: 145
+  lactate: 1.8
+perturbations:
+- t: 30
+  action: set_PEEP
+  value: 8
+  label: "PEEP step 5\u21928"
+- t: 120
+  action: set_PEEP
+  value: 10
+  label: "PEEP step 8\u219210"
+- t: 240
+  action: fluid_bolus_mL
+  value: 100
+  label: Bolo 100 mL
+outputs:
+- Paw
+- EELV
+- recruited_frac
+- SaO2
+- PaO2
+- PaCO2
+- pH_a
+- MAP
+- CO
+- HR
+- CVP
+- MP
+- Pdriving
+simulation_time_s: 360
+events:
+- t: 180.0
+  name: pneumothorax
+  severity: tension

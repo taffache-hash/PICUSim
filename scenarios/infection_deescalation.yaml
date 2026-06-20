@@ -1,0 +1,56 @@
+name: infection_deescalation
+version: v0.26
+category: infection_antimicrobial
+summary: >
+  Improving infection trajectory with adequate early antibiotics, source control and rising de-escalation readiness.
+
+patient:
+  profile: toddler_12kg
+  age_y: 2
+  weight_kg: 12
+  diagnosis: improving_line_sepsis
+
+respiratory:
+  mode: PCV
+  PEEP: 5
+  Paw: 17
+  FiO2: 0.30
+  RR: 26
+  C_rs: 0.8
+  R_rs: 9
+  SaO2: 0.97
+  PaO2: 85
+  PaCO2: 39
+
+cardiovascular:
+  HR: 128
+  MAP: 59
+  CO: 2.5
+  CVP: 5
+  Hb: 10.5
+
+metabolism:
+  T_core: 38.1
+  lactate: 2.0
+
+infection:
+  infection_focus: line
+  microbial_burden: 0.45
+  pathogen_virulence: 0.40
+  pathogen_resistance_index: 0.05
+  antibiotic_started: true
+  antibiotic_coverage: 0.88
+  source_control: 0.80
+  culture_drawn: true
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.45
+  source_control: 0.80
+
+perturbations:
+  - {t: 240, action: set_infection_load, value: 0.28, label: "Clinical response"}
+  - {t: 360, action: set_antibiotic_coverage, value: 0.72, label: "Narrow therapy after culture"}
+
+outputs: [microbial_burden, antibiotic_coverage, antibiotic_effect, antimicrobial_deescalation_readiness, antimicrobial_escalation_score, culture_positivity_probability, infection_severity_score, MAP, lactate]
+simulation_time_s: 720

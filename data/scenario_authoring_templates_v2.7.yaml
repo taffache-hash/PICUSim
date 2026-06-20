@@ -1,0 +1,212 @@
+release: v2.7-alpha
+schema: pdt-scenario-authoring-templates-v2.7
+disclaimer: Educational scenario templates only. Not for clinical use.
+templates:
+  - id: airway_deterioration
+    label: Airway deterioration / failed oxygenation
+    category: airway
+    default_focus:
+      - oxygenation failure
+      - airway rescue timing
+      - escalation to secured airway
+    defaults:
+      age_y: 5
+      weight_kg: 20
+      sex: M
+      diagnosis: airway_deterioration_training
+      duration_s: 420
+      respiratory:
+        mode: NONE
+        FiO2: 0.80
+        PEEP: 0.0
+        RR: 42
+        Vt: 100
+        C_rs: 0.60
+        R_rs: 16.0
+        SaO2: 0.88
+        PaO2: 56.0
+        PaCO2: 58.0
+        non_recruitable_frac: 0.14
+      cardiovascular:
+        HR: 150
+        MAP: 60
+        CO: 3.2
+      metabolism:
+        VO2: 150
+        lactate: 2.2
+      airway_interface:
+        interface: HFNC
+        intubated: false
+        ventilator_connected: false
+        airway_pressure_delivery_enabled: false
+        oxygen_interface: HFNC
+        HFNC_flow_L_min: 30.0
+        HFNC_FiO2_set: 0.80
+        mouth_leak_fraction: 0.30
+      airway:
+        bronchospasm_index: 0.15
+        mucus_load: 0.30
+        small_airway_obstruction: 0.40
+      ventilator:
+        mode: NONE
+      airway_events:
+        - t: 90
+          name: failed_intubation_attempt
+          severity: moderate
+          label: first failed attempt
+        - t: 150
+          name: start_bag_mask_ventilation
+          severity: difficult
+          label: rescue ventilation
+        - t: 260
+          name: perform_intubation
+          severity: emergency
+          label: secured airway
+          PEEP: 7.0
+          Pinsp_cmH2O: 20.0
+          FiO2: 1.0
+      perturbations:
+        - t: 45
+          action: set_midazolam
+          value: 100
+          label: sedative burden proxy
+  - id: bronchiolitis_hfnc_niv
+    label: Bronchiolitis HFNC / NIV escalation
+    category: respiratory
+    default_focus:
+      - work of breathing
+      - HFNC failure
+      - NIV escalation
+    defaults:
+      age_y: 0.6
+      weight_kg: 7
+      sex: F
+      diagnosis: bronchiolitis_escalation_training
+      duration_s: 480
+      respiratory:
+        mode: NONE
+        FiO2: 0.45
+        PEEP: 0.0
+        RR: 58
+        Vt: 42
+        C_rs: 0.45
+        R_rs: 20.0
+        SaO2: 0.90
+        PaO2: 60.0
+        PaCO2: 55.0
+        non_recruitable_frac: 0.08
+      cardiovascular:
+        HR: 168
+        MAP: 58
+        CO: 1.2
+      metabolism:
+        VO2: 80
+        lactate: 1.8
+      airway_interface:
+        interface: HFNC
+        intubated: false
+        ventilator_connected: false
+        airway_pressure_delivery_enabled: false
+        oxygen_interface: HFNC
+        HFNC_flow_L_min: 14.0
+        HFNC_FiO2_set: 0.45
+        mouth_leak_fraction: 0.35
+      airway:
+        bronchospasm_index: 0.25
+        mucus_load: 0.55
+        small_airway_obstruction: 0.55
+      ventilator:
+        mode: NONE
+      perturbations:
+        - t: 120
+          action: set_FiO2
+          value: 0.70
+          label: HFNC oxygen escalation
+        - t: 220
+          action: set_PEEP
+          value: 6
+          label: NIV/CPAP pressure support proxy
+  - id: septic_shock_escalation
+    label: Septic shock escalation
+    category: shock
+    default_focus:
+      - hypotension
+      - vasoactive escalation
+      - oxygen delivery
+    defaults:
+      age_y: 7
+      weight_kg: 24
+      sex: M
+      diagnosis: septic_shock_training
+      duration_s: 540
+      respiratory:
+        mode: PCV
+        FiO2: 0.50
+        PEEP: 6.0
+        RR: 32
+        Vt: 130
+        C_rs: 0.75
+        R_rs: 12.0
+        SaO2: 0.92
+        PaO2: 70.0
+        PaCO2: 44.0
+        non_recruitable_frac: 0.12
+      ventilator:
+        mode: PCV
+        Pinsp: 16
+      cardiovascular:
+        HR: 165
+        MAP: 48
+        CO: 2.8
+        SVR: 500
+      metabolism:
+        VO2: 160
+        lactate: 4.0
+        T_core: 38.8
+      perturbations:
+        - t: 90
+          action: set_norad
+          value: 0.05
+          label: vasoactive escalation
+        - t: 180
+          action: set_adrenaline
+          value: 0.03
+          label: inotrope escalation proxy
+  - id: generic_picu
+    label: Generic PICU monitoring scenario
+    category: generic
+    default_focus:
+      - physiology trend recognition
+      - safe parameter changes
+    defaults:
+      age_y: 5
+      weight_kg: 20
+      sex: M
+      diagnosis: generic_picu_training
+      duration_s: 300
+      respiratory:
+        mode: PCV
+        FiO2: 0.35
+        PEEP: 5.0
+        RR: 24
+        Vt: 120
+        C_rs: 0.90
+        R_rs: 9.0
+        SaO2: 0.97
+        PaO2: 88.0
+        PaCO2: 40.0
+      ventilator:
+        mode: PCV
+        Pinsp: 14
+      cardiovascular:
+        HR: 110
+        MAP: 66
+        CO: 3.0
+      metabolism:
+        VO2: 120
+        lactate: 1.2
+      perturbations:
+        - t: 120
+          action: set_FiO2
+          value: 0.25
+          label: oxygen weaning challenge

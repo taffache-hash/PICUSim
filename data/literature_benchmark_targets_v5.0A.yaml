@@ -1,0 +1,71 @@
+version: v5.0A
+purpose: >
+  First publication-oriented physiological benchmark pack for PDT v3.1. This is an
+  internal plausibility benchmark layer, not external clinical validation and not
+  medical decision support.
+principles:
+  - Use broad literature-aligned physiological corridors rather than patient-specific targets.
+  - Evaluate baseline, deterioration and final/recovery phases separately.
+  - Report PASS/REVIEW/NO_DATA without silently hiding impossible or missing outputs.
+  - Keep scenario solvability and human-factors testing separate from physiological benchmarking.
+sources:
+  RCH_vitals:
+    title: Royal Children's Hospital Melbourne normal physiological ranges
+    url: https://www.rch.org.au/clinicalguide/guideline_index/normal_ranges_for_physiological_variables/
+  Fleming_2011_vitals:
+    title: Systematic review of normal heart rate and respiratory rate in children
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3789232/
+  PALICC2_2023:
+    title: PALICC-2 pediatric acute respiratory distress syndrome consensus framework
+    url: https://pubmed.ncbi.nlm.nih.gov/36661420/
+  SSC_peds_2020:
+    title: Surviving Sepsis Campaign pediatric sepsis and septic shock guidelines
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7095013/
+  AAP_bronchiolitis_2014:
+    title: AAP bronchiolitis clinical practice guideline context
+    url: https://pubmed.ncbi.nlm.nih.gov/25349312/
+  DKA_ISPAD_context:
+    title: Pediatric DKA physiology context and broad educational targets
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+diabetic+ketoacidosis+guideline
+  Anaphylaxis_peds_context:
+    title: Pediatric anaphylaxis emergency physiology context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+anaphylaxis+guideline+epinephrine
+scenarios:
+  healthy_child_20kg:
+    description: Stable child baseline benchmark.
+    compare_at: final
+    targets:
+      HR: {range: [70, 140], source: [RCH_vitals, Fleming_2011_vitals]}
+      MAP: {range: [55, 85], source: [RCH_vitals]}
+      SaO2: {range: [0.94, 1.0], source: [RCH_vitals]}
+      PaCO2: {range: [32, 48], source: [PALICC2_2023]}
+      lactate: {range: [0.5, 2.5], source: [SSC_peds_2020]}
+  infant_bronchiolitis:
+    description: Bronchiolitis gas-exchange plausibility benchmark.
+    compare_at: nadir_or_peak
+    targets:
+      SaO2_min: {range: [0.82, 0.97], source: [AAP_bronchiolitis_2014]}
+      PaCO2_max: {range: [45, 85], source: [AAP_bronchiolitis_2014, PALICC2_2023]}
+      HR_max: {range: [120, 220], source: [RCH_vitals, Fleming_2011_vitals]}
+  epals_v2_septic_shock_warm:
+    description: Warm septic shock deterioration and rescue corridor.
+    compare_at: nadir_or_peak
+    targets:
+      MAP_min: {range: [25, 65], source: [SSC_peds_2020, RCH_vitals]}
+      lactate_max: {range: [2.0, 12.0], source: [SSC_peds_2020]}
+      HR_max: {range: [130, 240], source: [RCH_vitals, Fleming_2011_vitals]}
+  epals_v2_dka_dehydration_shock:
+    description: DKA/dehydration shock acid-base and perfusion corridor.
+    compare_at: nadir_or_peak
+    targets:
+      pH_a_min: {range: [6.85, 7.30], source: [DKA_ISPAD_context]}
+      HCO3_mmol_L_min: {range: [3, 18], source: [DKA_ISPAD_context]}
+      MAP_min: {range: [30, 70], source: [RCH_vitals]}
+      K_mmol_L_max: {range: [3.0, 7.5], source: [DKA_ISPAD_context]}
+  epals_v2_anaphylactic_shock:
+    description: Anaphylactic shock rapid collapse/rescue corridor.
+    compare_at: nadir_or_peak
+    targets:
+      MAP_min: {range: [25, 65], source: [Anaphylaxis_peds_context, RCH_vitals]}
+      SaO2_min: {range: [0.75, 0.98], source: [Anaphylaxis_peds_context]}
+      HR_max: {range: [130, 240], source: [RCH_vitals, Fleming_2011_vitals]}

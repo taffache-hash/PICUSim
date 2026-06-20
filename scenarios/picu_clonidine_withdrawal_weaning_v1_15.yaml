@@ -1,0 +1,87 @@
+name: picu_clonidine_withdrawal_weaning_v1_15
+version: v1.15-alpha
+category: pharmacology / analgosedation / withdrawal
+simulation_time_s: 1200
+summary: >
+  Educational clonidine PK/PD scaffold linking infusion rate, plasma concentration,
+  alpha-2 sedative/sympatholytic effect, heart-rate/MAP risk signals and withdrawal modulation.
+  Not a dosing guide.
+
+patient:
+  profile: child_20kg
+  age_y: 7
+  age_group: child
+  weight_kg: 22
+  sex: F
+  diagnosis: prolonged_picu_sedation_weaning_with_withdrawal_risk
+
+respiratory:
+  mode: PSV
+  Paw: 14
+  PEEP: 6
+  FiO2: 0.30
+  RR: 22
+  C_rs: 0.90
+  R_rs: 9
+  SaO2: 0.97
+  PaO2: 90
+  PaCO2: 42
+  non_recruitable_frac: 0.10
+
+cardiovascular:
+  HR: 132
+  MAP: 72
+  CO: 4.4
+  CVP: 7
+  Hb: 11.4
+
+metabolism:
+  T_core: 37.6
+  VO2: 120
+  lactate: 1.4
+
+renal:
+  GFR_baseline: 75
+  creatinine_baseline_mg_dL: 0.35
+  creatinine_mg_dL: 0.35
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+
+drugs:
+  morphine_mcg_kg_h: 25.0
+  midazolam_mcg_kg_h: 80.0
+  clonidine_mcg_kg_h: 0.0
+  dexmedetomidine_mcg_kg_h: 0.0
+
+perturbations:
+  - {t: 120, action: set_clonidine, value: 0.6, label: "Start educational clonidine infusion"}
+  - {t: 420, action: set_morphine, value: 10.0, label: "Opioid weaning step"}
+  - {t: 720, action: set_midazolam, value: 25.0, label: "Benzodiazepine weaning step"}
+  - {t: 900, action: set_clonidine, value: 1.0, label: "Clonidine escalation for withdrawal-risk debriefing"}
+
+outputs:
+  - C_clonidine_ng_mL
+  - clonidine_sedation_signal
+  - clonidine_sympatholysis_signal
+  - clonidine_bradycardia_risk
+  - clonidine_hypotension_risk
+  - clonidine_withdrawal_mod
+  - withdrawal_risk
+  - sedation_score
+  - stress_index
+  - sympathetic_tone
+  - HR
+  - MAP
+  - drug_HR_mod
+  - sed_HR_mod
+  - C_morphine_ng_mL
+  - C_midazolam_ng_mL
+  - pk_crrt_clonidine_CL_L_min
+  - pk_supported_drug_count
+  - pk_extension_revision
+
+limitations:
+  - Educational clonidine PK/PD scaffold only; not for prescribing or dose adjustment.
+  - Bradycardia/hypotension outputs are qualitative risk signals, not predicted adverse-event probabilities.
+  - Withdrawal modulation is a teaching proxy and does not replace validated withdrawal scales.

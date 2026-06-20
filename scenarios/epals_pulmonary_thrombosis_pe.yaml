@@ -1,0 +1,118 @@
+name: epals_pulmonary_thrombosis_pe
+version: v1.22.2-alpha
+category: epals_5t_pulmonary_thrombosis
+epals:
+  group: T
+  cause: pulmonary_thrombosis
+  reversible_cause: Pulmonary thrombosis / pulmonary embolism physiology
+  teaching_level: advanced
+clinical_narrative: 'Adolescent with acute pulmonary vascular obstruction physiology: sudden RV afterload/PVR rise,
+  dead-space burden, hypoxaemia and falling cardiac output. Reperfusion is represented as a slow partial reversal
+  proxy.'
+patient:
+  profile: adolescent_50kg
+  age_y: 15
+  weight_kg: 52
+  sex: M
+  diagnosis: epals_pulmonary_thrombosis_pe
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 20
+  FiO2: 0.55
+  RR: 26
+  C_rs: 1.9
+  R_rs: 7.0
+  PaO2: 68.0
+  PaCO2: 34.0
+  SaO2: 0.91
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: PCV
+  Pinsp: 14
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 38
+cardiovascular:
+  HR: 150
+  MAP: 52
+  CO: 3.0
+  CVP: 10
+  PAP_mean: 38
+  PVR: 240
+  Hb: 12.0
+  preload_mod: 0.75
+hematology:
+  thrombosis_risk_index: 0.7
+  platelet_function_index: 0.9
+metabolism:
+  T_core: 37.5
+  VO2: 160
+  lactate: 3.8
+perturbations:
+- t: 70
+  action: PVR
+  value: 420
+  label: acute pulmonary vascular obstruction proxy
+- t: 70
+  action: RV_afterload_index
+  value: 0.72
+  label: RV afterload rises
+- t: 70
+  action: PAP_mean
+  value: 52
+  label: pulmonary pressure rises
+- t: 70
+  action: CO
+  value: 2.2
+  label: CO falls
+- t: 70
+  action: airway_VdVt_add
+  value: 0.22
+  label: dead-space burden rises
+- t: 120
+  action: set_FiO2
+  value: 0.9
+  label: oxygen escalation
+- t: 190
+  action: PVR
+  value: 300
+  label: 'reperfusion/thrombolysis proxy: PVR improves'
+- t: 190
+  action: RV_afterload_index
+  value: 0.4
+  label: RV afterload improves
+- t: 190
+  action: CO
+  value: 3.2
+  label: CO partial recovery
+- t: 260
+  action: airway_VdVt_add
+  value: 0.08
+  label: dead-space burden improves
+expected_response:
+- PVR/RV afterload and dead-space burden rise before recovery.
+- Oxygenation improves only partially until perfusion mismatch improves.
+debrief_questions:
+- Why can CO fall in a primarily pulmonary vascular event?
+- Which variable suggests dead space rather than pure shunt?
+outputs:
+- PVR
+- PAP_mean
+- RV_afterload_index
+- CO
+- MAP
+- CVP
+- SaO2
+- PaO2
+- PaCO2
+- vq_deadspace_frac
+- vq_high_vq_burden
+- airway_VdVt_add
+- lactate
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified physiology proxies for reversible-cause teaching, not treatment protocols.
+- No explicit clot burden or anticoagulation module is implemented; pulmonary thrombosis is represented by PVR/dead-space
+  proxies.
+simulation_time_s: 380

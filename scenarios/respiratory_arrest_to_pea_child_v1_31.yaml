@@ -1,0 +1,107 @@
+name: respiratory_arrest_to_pea_child_v1_31
+description: "Educational v3.1 scenario: hypoxic respiratory arrest progressing to bradycardia and PEA, intended for RCP panel training."
+version: v3.1-step4.33
+patient:
+  profile: child_20kg
+  age_y: 5.0
+  weight_kg: 20.0
+  sex: F
+  diagnosis: hypoxic respiratory arrest progressing to PEA
+simulation_time_s: 480
+airway_interface:
+  interface: UNASSISTED
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: SIMPLE_MASK
+  oxygen_flow_L_min: 8.0
+  oxygen_FiO2_set: 0.50
+respiratory:
+  mode: NONE
+  FiO2: 0.50
+  PEEP: 0.0
+  RR: 8
+  Vt: 55
+  C_rs: 0.70
+  R_rs: 11.0
+  SaO2: 0.86
+  PaO2: 48.0
+  PaCO2: 68.0
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: NONE
+airway:
+  bronchospasm_index: 0.05
+  mucus_load: 0.15
+  small_airway_obstruction: 0.15
+cardiovascular:
+  HR: 92
+  MAP: 54
+  CO: 2.1
+metabolism:
+  VO2: 135
+  lactate: 3.0
+  pH_a: 7.25
+perturbations:
+  - t: 45
+    action: set_RR
+    value: 4
+    label: worsening respiratory arrest
+  - t: 45
+    action: set_FiO2
+    value: 0.21
+    label: ineffective oxygen delivery
+  - t: 75
+    action: set_HR
+    value: 55
+    label: hypoxic bradycardia
+  - t: 75
+    action: set_lactate
+    value: 5.5
+    label: worsening anaerobic metabolism
+  - t: 75
+    action: set_pH_a
+    value: 7.12
+    label: mixed respiratory/metabolic acidosis
+cardiac_events:
+  - t: 75
+    name: induce_bradycardia_unstable
+    cause: hypoxia
+    label: hypoxic unstable bradycardia
+  - t: 115
+    name: induce_pea
+    cause: hypoxic respiratory arrest
+    label: progression to PEA arrest
+clinical_narrative: A child with inadequate ventilation deteriorates from hypoxia and hypercapnia into unstable bradycardia, then PEA. Learners should ventilate, start compressions, give adrenaline and distinguish non-shockable PEA from shockable rhythms.
+decision_focus:
+  - recognize respiratory arrest before cardiac arrest
+  - identify PEA as non-shockable
+  - start high-quality compressions
+  - give adrenaline/epinephrine in arrest
+  - restore ventilation/oxygenation before and during resuscitation
+debrief_questions:
+  - Was respiratory failure recognized before PEA?
+  - Was PEA treated as non-shockable?
+  - Did compressions improve EtCO2/MAP during arrest?
+  - Was adrenaline used in the arrest context?
+outputs:
+  - cardiac_rhythm
+  - rhythm_category
+  - has_pulse
+  - cardiac_arrest_active
+  - shockable_rhythm
+  - CPR_active
+  - CPR_quality
+  - compression_fraction
+  - epinephrine_bolus_count
+  - last_rcp_drug
+  - last_rcp_drug_result
+  - ROSC
+  - SaO2
+  - PaO2
+  - PaCO2
+  - EtCO2
+  - pH_a
+  - lactate
+  - MAP
+  - HR

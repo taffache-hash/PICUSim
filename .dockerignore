@@ -1,0 +1,14 @@
+.git
+.gitignore
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+.env
+outputs/
+*.zip
+*.tar.gz
+.ipynb_checkpoints/
+.DS_Store

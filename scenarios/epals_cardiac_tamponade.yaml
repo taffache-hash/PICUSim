@@ -1,0 +1,109 @@
+name: epals_cardiac_tamponade
+version: v1.22.2-alpha
+category: epals_5t_cardiac_tamponade
+epals:
+  group: T
+  cause: cardiac_tamponade
+  reversible_cause: Cardiac tamponade / obstructive shock
+  teaching_level: intermediate
+clinical_narrative: 'Adolescent post-procedure physiology with obstructive shock pattern: high venous pressure,
+  low stroke volume/cardiac output and rising lactate. Pericardial drainage is represented as a simplified preload/venous-return
+  release proxy.'
+patient:
+  profile: adolescent_50kg
+  age_y: 14
+  weight_kg: 48
+  sex: F
+  diagnosis: epals_cardiac_tamponade
+respiratory:
+  mode: PCV
+  PEEP: 5
+  Paw: 18
+  FiO2: 0.45
+  RR: 22
+  C_rs: 1.8
+  R_rs: 7.0
+  PaO2: 88.0
+  PaCO2: 35.0
+  SaO2: 0.96
+ventilator:
+  mode: PCV
+  Pinsp: 13
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 38
+cardiovascular:
+  HR: 158
+  MAP: 45
+  CO: 2.2
+  SV: 14
+  CVP: 18
+  PAWP: 18
+  PAP_mean: 24
+  Hb: 10.8
+  preload_mod: 0.35
+metabolism:
+  T_core: 37.2
+  VO2: 150
+  lactate: 5.0
+perturbations:
+- t: 80
+  action: MAP
+  value: 38
+  label: progressive obstructive shock proxy
+- t: 80
+  action: CO
+  value: 1.6
+  label: falling stroke volume proxy
+- t: 80
+  action: CVP
+  value: 22
+  label: rising venous pressure proxy
+- t: 80
+  action: lactate
+  value: 6.5
+  label: hypoperfusion marker
+- t: 160
+  action: CVP
+  value: 10
+  label: 'pericardial drainage proxy: CVP falls'
+- t: 160
+  action: MAP
+  value: 62
+  label: 'pericardial drainage proxy: MAP recovers'
+- t: 160
+  action: CO
+  value: 4.2
+  label: 'pericardial drainage proxy: CO recovers'
+- t: 220
+  action: lactate
+  value: 4.0
+  label: post-drainage lactate trend
+- t: 300
+  action: lactate
+  value: 2.8
+  label: continued perfusion recovery
+expected_response:
+- Low-output obstructive shock pattern with high CVP and low MAP/CO.
+- Drainage proxy lowers CVP and improves CO/MAP before lactate normalizes.
+debrief_questions:
+- What differentiates tamponade from distributive shock in this trace?
+- Why can lactate lag behind mechanical relief of obstruction?
+outputs:
+- MAP
+- HR
+- CO
+- SV
+- CVP
+- PAWP
+- lactate
+- DO2
+- ERO2
+- SvO2
+- PAP_mean
+- oxygen_transport_reserve
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified physiology proxies for reversible-cause teaching, not treatment protocols.
+- No dedicated pericardial mechanics module is implemented; this scenario uses bus-level obstructive-shock proxies.
+simulation_time_s: 380

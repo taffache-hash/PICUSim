@@ -1,0 +1,33 @@
+version: v1.22.1-alpha
+title: EPALS 5H scenario pack
+scope: 'First five executable EPALS reversible-cause YAML scenarios: hypoxia, hypovolaemia, acidosis, hyperkalaemia/metabolic
+  disorder, hypothermia.'
+design_note: This pack intentionally uses existing modules and event/perturbation mechanisms only. No airway-interface
+  engine changes are introduced here.
+scenarios:
+- id: epals_hypoxia_airway_obstruction
+  file: scenarios/epals_hypoxia_airway_obstruction.yaml
+  H_cause: hypoxia
+  primary_marker: SaO2
+- id: epals_hypovolemia_hemorrhagic_shock
+  file: scenarios/epals_hypovolemia_hemorrhagic_shock.yaml
+  H_cause: hypovolaemia
+  primary_marker: MAP
+- id: epals_acidosis_septic_shock
+  file: scenarios/epals_acidosis_septic_shock.yaml
+  H_cause: hydrogen_ion_acidosis
+  primary_marker: pH_a
+- id: epals_hyperkalemia_aki
+  file: scenarios/epals_hyperkalemia_aki.yaml
+  H_cause: hypo_hyperkalaemia_metabolic
+  primary_marker: K_mmol_L
+- id: epals_hypothermia_rewarming
+  file: scenarios/epals_hypothermia_rewarming.yaml
+  H_cause: hypothermia
+  primary_marker: T_core
+audit_expectations:
+  all_scenarios_load: true
+  all_scenarios_smoke_run: true
+  no_nan_in_core_outputs: true
+  deterioration_or_reversal_marker_present: true
+next_release: v1.22.2-alpha EPALS 5T scenario pack

@@ -1,0 +1,33 @@
+version: v1.22.2-alpha
+title: EPALS 5T scenario pack
+scope: 'Five executable EPALS-style T-cause YAML scenarios: tension pneumothorax, cardiac tamponade, toxins, pulmonary
+  thrombosis and cardiac thrombosis/myocarditis low-output analogue.'
+design_note: This pack intentionally uses existing modules, acute events and bus-level perturbation mechanisms only.
+  Airway-interface engine changes are deferred to v1.23+.
+scenarios:
+- id: epals_tension_pneumothorax
+  file: scenarios/epals_tension_pneumothorax.yaml
+  T_cause: tension_pneumothorax
+  primary_marker: SaO2
+- id: epals_cardiac_tamponade
+  file: scenarios/epals_cardiac_tamponade.yaml
+  T_cause: cardiac_tamponade
+  primary_marker: MAP
+- id: epals_toxicologic_opioid_benzodiazepine
+  file: scenarios/epals_toxicologic_opioid_benzodiazepine.yaml
+  T_cause: toxins
+  primary_marker: PaCO2
+- id: epals_pulmonary_thrombosis_pe
+  file: scenarios/epals_pulmonary_thrombosis_pe.yaml
+  T_cause: pulmonary_thrombosis
+  primary_marker: PVR
+- id: epals_cardiac_thrombosis_myocarditis_low_output
+  file: scenarios/epals_cardiac_thrombosis_myocarditis_low_output.yaml
+  T_cause: cardiac_thrombosis_or_myocarditis_low_output
+  primary_marker: MAP
+audit_expectations:
+  all_scenarios_load: true
+  all_scenarios_smoke_run: true
+  no_nan_in_core_outputs: true
+  deterioration_or_reversal_marker_present: true
+next_release: v1.22.3-alpha EPALS debrief scaffold

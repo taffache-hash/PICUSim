@@ -1,0 +1,121 @@
+name: ventilator_modes_demo
+description: >
+  Demo completo delle modalità ventilatorie su bambino 8 anni 25 kg.
+  Sequenza: PCV → VCV → PSV → SIMV → HFOV
+  Monitoraggio: Ppeak, Pplat, Vt, compliance dinamica, auto-PEEP, RR totale.
+  Scenario senza ARDS severa per valutare la risposta ventilatoria pulita.
+
+patient:
+  age_y: 8
+  weight_kg: 25
+  sex: M
+  diagnosis: post_op_monitoring
+
+respiratory:
+  PEEP: 5
+  Paw: 20         # PCV Pinsp
+  FiO2: 0.35
+  RR: 20
+  C_rs: 0.90      # mL/cmH2O/kg → × 25 kg = 22.5 mL/cmH2O
+  R_rs: 8.0
+  PaO2: 90.0
+  PaCO2: 38.0
+  SaO2: 0.97
+  non_recruitable_frac: 0.05   # polmone quasi sano
+
+ventilator:
+  mode: PCV
+  Pinsp: 20
+  IE_ratio: 0.38
+  T_rise_s: 0.08
+  T_pause_s: 0.3        # pausa per Pplat measurement
+  trigger_thresh: 2.0
+  cycling_frac: 0.25
+  alarm_Ppeak_max: 40
+
+cardiovascular:
+  HR: 90
+  MAP: 70
+  CVP: 5
+  Hb: 12.0
+
+metabolism:
+  T_core: 37.0
+  VO2: 130
+  lactate: 1.1
+
+perturbations:
+  # t=60s: switch PCV → VCV (volume protettivo 6 mL/kg)
+  - t: 60
+    action: set_mode
+    value: VCV
+    label: "Switch → VCV"
+  - t: 60
+    action: set_Vt
+    value: 150       # 6 mL/kg × 25 kg
+    label: "Vt = 150 mL (6 mL/kg)"
+
+  # t=150s: switch VCV → PSV (extubazione test)
+  - t: 150
+    action: set_mode
+    value: PSV
+    label: "Switch → PSV"
+  - t: 150
+    action: set_PS
+    value: 12
+    label: "PS = 12 cmH2O"
+
+  # t=240s: switch PSV → SIMV
+  - t: 240
+    action: set_mode
+    value: SIMV
+    label: "Switch → SIMV"
+  - t: 240
+    action: set_RR
+    value: 10
+    label: "RR mandatoria = 10/min"
+
+  # t=360s: switch SIMV → HFOV (per scenario ARDS refrattario)
+  - t: 360
+    action: set_mode
+    value: HFOV
+    label: "Switch → HFOV"
+  - t: 360
+    action: set_PEEP
+    value: 18          # MAP_hfov in HFOV
+    label: "MAP HFOV = 18 cmH2O"
+
+  # t=480s: ritorno a PCV
+  - t: 480
+    action: set_mode
+    value: PCV
+    label: "Ritorno → PCV"
+  - t: 480
+    action: set_PEEP
+    value: 5
+    label: "PEEP → 5"
+  - t: 480
+    action: set_Pinsp
+    value: 10
+    label: "Pinsp → 10 cmH2O"
+
+outputs:
+  - vent_mode
+  - Paw
+  - Paw_current
+  - Ppeak
+  - Pplat
+  - Vt
+  - RR_total
+  - MV_L_min
+  - compliance_dyn
+  - resistance_meas
+  - auto_PEEP
+  - patient_triggered
+  - alarm_active
+  - SaO2
+  - PaCO2
+  - MAP
+  - CO
+
+simulation_time_s: 600

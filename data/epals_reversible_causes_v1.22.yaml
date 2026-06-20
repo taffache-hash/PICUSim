@@ -1,0 +1,490 @@
+version: v1.22-alpha
+title: EPALS reversible-cause taxonomy scaffold
+scope: Educational mapping of paediatric emergency reversible causes to PDT modules,
+  variables, planned scenarios and debriefing design. No engine changes in v1.22.
+safety_status: educational/research alpha only; not for clinical use; not a medical
+  device; not a validated patient-specific digital twin
+design_note: This is taxonomy and curriculum scaffolding. Scenario YAML files are
+  intentionally introduced in v1.22.1 and v1.22.2 after this map is stable.
+source_framework: Paediatric resuscitation reversible causes expressed as an H/T teaching
+  scaffold; this file uses five H and five T entries to support richer simulation
+  design.
+sources:
+  ERC_2025_SPECIAL_CIRCUMSTANCES:
+    title: 'European Resuscitation Council Guidelines 2025: Special circumstances'
+    scope: Reversible causes / special circumstances; 4H/4T framework and disease-specific
+      modifications.
+    url: https://www.resuscitationjournal.com/article/S0300-9572(25)00265-5/fulltext
+    source_type: guideline
+  RCUK_2025_SPECIAL_CIRCUMSTANCES:
+    title: Resuscitation Council UK 2025 Special circumstances guidelines
+    scope: Always address hypoxia, hypovolaemia, electrolyte disorders, hypothermia,
+      cardiac tamponade, tension pneumothorax, thrombosis, and toxins.
+    url: https://www.resus.org.uk/professional-library/2025-resuscitation-guidelines/special-circumstances-guidelines
+    source_type: guideline
+  RCUK_2025_PAEDIATRIC_LIFE_SUPPORT:
+    title: Resuscitation Council UK 2025 Paediatric basic and advanced life support
+      guidelines
+    scope: Paediatric advanced life support and reversible-cause awareness in paediatric
+      resuscitation.
+    url: https://www.resus.org.uk/professional-library/2025-resuscitation-guidelines/paediatric-basic-life-support-guidelines
+    source_type: guideline
+  ANZCOR_PALS_SPECIAL_CIRCUMSTANCES:
+    title: ANZCOR Guideline 12.4 Paediatric resuscitation in special circumstances
+    scope: Paediatric reversible causes of cardiorespiratory arrest; 4 Hs and 4 Ts
+      mnemonic.
+    url: https://www.anzcor.org/home/paediatric-advanced-life-support/guideline-12-4-paediatric-resuscitation-in-special-circumstances
+    source_type: guideline
+counts:
+  groups: 2
+  causes: 10
+  H: 5
+  T: 5
+  planned_scenarios: 10
+planned_release_sequence:
+- release: v1.22
+  deliverable: taxonomy, curriculum, audit and debrief metadata
+- release: v1.22.1
+  deliverable: 5H scenario YAML pack
+- release: v1.22.2
+  deliverable: 5T scenario YAML pack
+- release: v1.22.3
+  deliverable: EPALS debrief template and scenario report integration
+- release: v1.23
+  deliverable: airway interface model and unassisted breathing pathway
+causes:
+- id: hypoxia
+  group: H
+  display_name: Hypoxia
+  planned_scenario_id: epals_hypoxia_airway_obstruction
+  clinical_frame: Child with progressive oxygenation failure due to airway obstruction
+    or severe respiratory disease.
+  primary_modules:
+  - respiratory_mechanics
+  - gas_exchange_vq
+  - chemoreflex
+  - cardiovascular_coupling
+  key_bus_variables:
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - RR
+  - Vt
+  - Paw
+  - Pmus_cmH2O
+  - HR
+  - MAP
+  - bradycardia_risk
+  deterioration_markers:
+  - falling SaO2
+  - falling PaO2
+  - rising PaCO2 when ventilation fails
+  - progressive bradycardia risk
+  - rising respiratory effort or apnea if sedated
+  expected_interventions:
+  - open_airway
+  - increase_FiO2
+  - bag_mask_ventilation
+  - treat_airway_obstruction
+  - intubation_if_needed
+  expected_response:
+  - SaO2 and PaO2 improve
+  - PaCO2 stabilizes or falls
+  - HR/MAP recover if hypoxia-driven
+  teaching_points:
+  - In children, hypoxia is a dominant pathway to bradycardia/arrest. Treat oxygenation
+    and ventilation early.
+  debrief_questions:
+  - What was the earliest oxygenation warning sign?
+  - Was ventilation or oxygen delivery the limiting factor?
+  - Which intervention reversed the physiology?
+  source:
+  - RCUK_2025_PAEDIATRIC_LIFE_SUPPORT
+  - ANZCOR_PALS_SPECIAL_CIRCUMSTANCES
+- id: hypovolaemia
+  group: H
+  display_name: Hypovolaemia
+  planned_scenario_id: epals_hypovolemia_hemorrhagic_shock
+  clinical_frame: Child with blood/fluid loss, low preload, reduced stroke volume
+    and evolving shock.
+  primary_modules:
+  - cardiovascular_circulation
+  - hematology_oxygen_transport
+  - coagulation
+  - fluid_balance
+  key_bus_variables:
+  - MAP
+  - HR
+  - CO
+  - SV
+  - CVP
+  - Hb
+  - DO2
+  - lactate
+  - fluid_balance
+  - bleeding_rate_mL_h
+  deterioration_markers:
+  - tachycardia
+  - falling MAP
+  - low CVP/preload
+  - falling DO2
+  - rising lactate
+  - falling Hb if hemorrhage
+  expected_interventions:
+  - control_bleeding
+  - fluid_bolus
+  - blood_transfusion_when_indicated
+  - vasopressor_only_after_volume_strategy
+  expected_response:
+  - MAP/CO improve
+  - lactate rise slows
+  - DO2 improves
+  - tachycardia decreases if preload restored
+  teaching_points:
+  - Treat the volume problem rather than escalating vasopressor alone.
+  debrief_questions:
+  - Was shock primarily preload, pump or distributive?
+  - What variable showed inadequate oxygen delivery?
+  source:
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+  - ANZCOR_PALS_SPECIAL_CIRCUMSTANCES
+- id: hydrogen_ion_acidosis
+  group: H
+  display_name: Hydrogen ion / acidosis
+  planned_scenario_id: epals_acidosis_septic_shock
+  clinical_frame: Septic or hypoperfusion-driven metabolic acidosis with respiratory
+    compensation and cardiovascular depression.
+  primary_modules:
+  - acidbase_electrolytes
+  - sepsis
+  - cardiovascular_circulation
+  - respiratory_chemoreflex
+  key_bus_variables:
+  - pH_a
+  - HCO3_mmol_L
+  - base_excess_mmol_L
+  - lactate
+  - PaCO2
+  - RR
+  - MAP
+  - CO
+  deterioration_markers:
+  - falling pH
+  - rising lactate
+  - falling bicarbonate/base excess
+  - compensatory hyperventilation
+  - worsening MAP/CO
+  expected_interventions:
+  - treat_shock_source
+  - optimize_ventilation
+  - fluid_or_vasoactive_support
+  - source_control_and_antimicrobials
+  expected_response:
+  - lactate stabilizes/falls
+  - pH improves indirectly when perfusion improves
+  - ventilatory compensation becomes less extreme
+  teaching_points:
+  - Acidosis is usually a signal to fix oxygen delivery/perfusion/source rather than
+    a standalone number.
+  debrief_questions:
+  - Was acidosis respiratory, metabolic or mixed?
+  - What treatment addressed the cause rather than the pH alone?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: hypo_hyperkalaemia_metabolic
+  group: H
+  display_name: Hypo-/hyperkalaemia and metabolic disorder
+  planned_scenario_id: epals_hyperkalemia_aki
+  clinical_frame: AKI-associated electrolyte disturbance with arrhythmia risk and
+    metabolic instability.
+  primary_modules:
+  - acidbase_electrolytes
+  - renal_aki_crrt
+  - cardiovascular_circulation
+  key_bus_variables:
+  - K_mmol_L
+  - pH_a
+  - HCO3_mmol_L
+  - GFR
+  - AKI_stage
+  - MAP
+  - HR
+  - arrhythmia_risk
+  deterioration_markers:
+  - rising or falling K outside safe range
+  - worsening acidosis
+  - falling GFR
+  - arrhythmia-risk proxy increases
+  expected_interventions:
+  - calcium_if_hyperkalaemic_instability
+  - insulin_glucose_shift
+  - treat_acidosis_if_relevant
+  - renal_replacement_if_refractory
+  expected_response:
+  - K moves toward safer range
+  - arrhythmia-risk proxy decreases
+  - pH stabilizes
+  teaching_points:
+  - Electrolyte correction is time-critical when instability or severe hyperkalaemia
+    is present.
+  debrief_questions:
+  - What made this electrolyte problem immediately dangerous?
+  - Which intervention changed potassium fastest?
+  source:
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+  - ANZCOR_PALS_SPECIAL_CIRCUMSTANCES
+- id: hypothermia
+  group: H
+  display_name: Hypothermia
+  planned_scenario_id: epals_hypothermia_rewarming
+  clinical_frame: Cold child with reduced metabolism, bradycardia tendency, coagulopathy
+    risk and rewarming response.
+  primary_modules:
+  - thermoregulation
+  - coagulation
+  - cardiovascular_circulation
+  - metabolism
+  key_bus_variables:
+  - T_core
+  - HR
+  - MAP
+  - VO2
+  - coagulopathy_index
+  - lactate
+  - shivering_index
+  deterioration_markers:
+  - low T_core
+  - bradycardia tendency
+  - coagulation impairment
+  - reduced metabolic rate
+  - rewarming instability
+  expected_interventions:
+  - prevent_further_heat_loss
+  - active_rewarming
+  - correct_hypoglycaemia_or_electrolytes_if_present
+  expected_response:
+  - T_core rises gradually
+  - hemodynamics stabilize
+  - coagulation proxy improves over time
+  teaching_points:
+  - Rewarming strategy and associated metabolic/electrolyte problems matter.
+  debrief_questions:
+  - Was the rewarming rate appropriate?
+  - Which variables improved first and which lagged?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: tension_pneumothorax
+  group: T
+  display_name: Tension pneumothorax
+  planned_scenario_id: epals_tension_pneumothorax
+  clinical_frame: Ventilated or spontaneously breathing child with obstructive shock
+    physiology from intrathoracic pressure.
+  primary_modules:
+  - respiratory_mechanics
+  - gas_exchange_vq
+  - cardiovascular_circulation
+  key_bus_variables:
+  - Paw
+  - R_rs
+  - C_rs
+  - SaO2
+  - PaO2
+  - PaCO2
+  - MAP
+  - CO
+  - CVP
+  - Ppl_cmH2O
+  deterioration_markers:
+  - rising airway pressure
+  - falling compliance
+  - falling SaO2
+  - falling MAP/CO
+  - obstructive-shock pattern
+  expected_interventions:
+  - needle_decompression
+  - chest_drain
+  - reduce_excessive_positive_pressure_if_possible
+  expected_response:
+  - Paw/pressure burden falls
+  - SaO2 improves
+  - MAP/CO recover
+  teaching_points:
+  - Rapid diagnosis and decompression can reverse obstructive shock.
+  debrief_questions:
+  - Which signs separated pneumothorax from bronchospasm?
+  - Did decompression reverse both oxygenation and circulation?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: cardiac_tamponade
+  group: T
+  display_name: Cardiac tamponade
+  planned_scenario_id: epals_cardiac_tamponade
+  clinical_frame: Obstructive shock from impaired ventricular filling and low stroke
+    volume.
+  primary_modules:
+  - cardiovascular_circulation
+  - heart_btb
+  - gas_exchange_vq
+  key_bus_variables:
+  - MAP
+  - HR
+  - CO
+  - SV
+  - CVP
+  - EDV_lv
+  - SVR
+  - lactate
+  - DO2
+  deterioration_markers:
+  - falling SV/CO
+  - hypotension
+  - tachycardia
+  - high filling-pressure proxy
+  - rising lactate
+  expected_interventions:
+  - recognize_obstructive_shock
+  - pericardiocentesis_or_surgical_drainage
+  - judicious_volume_bridge
+  expected_response:
+  - SV/CO improve
+  - MAP rises
+  - lactate trend stabilizes
+  teaching_points:
+  - Vasopressors alone cannot fix a mechanically constrained heart.
+  debrief_questions:
+  - Was the shock distributive, hypovolaemic or obstructive?
+  - What variable suggested impaired filling?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: toxins
+  group: T
+  display_name: Toxins / intoxication
+  planned_scenario_id: epals_toxicologic_opioid_benzodiazepine
+  clinical_frame: Toxicologic respiratory depression with depressed drive, hypoventilation
+    and hemodynamic risk.
+  primary_modules:
+  - pharmacology_pkpd
+  - analgosedation
+  - respiratory_chemoreflex
+  - gas_exchange_vq
+  key_bus_variables:
+  - sedation_score
+  - C_morphine_ng_mL
+  - C_midazolam_ng_mL
+  - Pmus_cmH2O
+  - RR
+  - PaCO2
+  - pH_a
+  - SaO2
+  - MAP
+  deterioration_markers:
+  - rising sedation/depression signal
+  - falling respiratory drive
+  - rising PaCO2
+  - falling pH
+  - apnea risk
+  expected_interventions:
+  - support_airway_and_ventilation
+  - stop_or_reduce_toxin_exposure
+  - consider_specific_antidote_when_appropriate
+  expected_response:
+  - ventilation improves with support
+  - PaCO2 falls
+  - pH improves
+  - sedation proxy decreases over time
+  teaching_points:
+  - Airway/ventilation support comes before pharmacologic reversal debates.
+  debrief_questions:
+  - Was failure due to oxygenation or ventilation?
+  - What would happen without ventilatory support?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: pulmonary_thrombosis
+  group: T
+  display_name: Thrombosis — pulmonary
+  planned_scenario_id: epals_pulmonary_thrombosis_pe
+  clinical_frame: Pulmonary vascular obstruction with dead-space physiology, RV strain
+    proxy and hypoxemia.
+  primary_modules:
+  - gas_exchange_vq
+  - cardiovascular_circulation
+  - coagulation
+  key_bus_variables:
+  - PVR
+  - PAP_mean
+  - CO
+  - MAP
+  - SaO2
+  - PaO2
+  - PaCO2
+  - vq_deadspace_frac
+  - thrombosis_risk_index
+  deterioration_markers:
+  - increasing dead space
+  - falling CO/MAP
+  - rising PVR/PAP proxy
+  - hypoxemia disproportionate to parenchymal disease
+  expected_interventions:
+  - recognize_PE_pattern
+  - hemodynamic_support
+  - anticoagulation_or_reperfusion_pathway_when_indicated
+  expected_response:
+  - dead-space burden stabilizes
+  - CO/MAP improve with support
+  - oxygenation partially improves
+  teaching_points:
+  - Pulmonary thrombosis is primarily a perfusion/dead-space and RV-load problem.
+  debrief_questions:
+  - What pattern suggested dead space rather than shunt?
+  - What was the circulatory consequence?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES
+- id: cardiac_thrombosis_or_low_output
+  group: T
+  display_name: Thrombosis — cardiac / myocarditis low output
+  planned_scenario_id: epals_cardiac_thrombosis_myocarditis_low_output
+  clinical_frame: 'Paediatric-adapted cardiac-cause scenario: myocarditis/low-output
+    physiology or cardiac thrombosis analogue.'
+  primary_modules:
+  - heart_btb
+  - cardiovascular_circulation
+  - metabolism
+  - gas_exchange_vq
+  key_bus_variables:
+  - HR
+  - MAP
+  - CO
+  - SV
+  - EF_lv
+  - lactate
+  - DO2
+  - SvO2
+  - drug_inotropy_mod
+  deterioration_markers:
+  - falling CO/SV/EF proxy
+  - rising lactate
+  - low DO2/SvO2
+  - hypotension with poor perfusion
+  expected_interventions:
+  - recognize_cardiogenic_low_output
+  - inotrope_or_vasoactive_support
+  - consider_ECMO_pathway_if_refractory
+  expected_response:
+  - CO/MAP/DO2 improve if inotropy/support effective
+  - lactate trend stabilizes
+  teaching_points:
+  - In children, myocarditis/low-output physiology is often a more realistic teaching
+    analogue than adult coronary thrombosis.
+  debrief_questions:
+  - What separated cardiogenic from septic shock?
+  - Was the intervention preload, afterload or inotropy targeted?
+  source:
+  - ERC_2025_SPECIAL_CIRCUMSTANCES
+  - RCUK_2025_SPECIAL_CIRCUMSTANCES

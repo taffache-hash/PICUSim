@@ -1,0 +1,52 @@
+name: fluid_overload_diuretic_challenge
+simulation_time_s: 720
+patient:
+  profile: infant_8kg
+  age_y: 0.7
+  weight_kg: 8
+  sex: F
+respiratory:
+  mode: PCV
+  Paw: 20
+  PEEP: 7
+  FiO2: 0.40
+  RR: 30
+  C_rs: 0.65
+  R_rs: 13
+  SaO2: 0.93
+  PaO2: 70
+  PaCO2: 45
+cardiovascular:
+  HR: 155
+  MAP: 56
+  CO: 1.45
+  CVP: 9
+  Hb: 10.8
+metabolism:
+  T_core: 38.2
+  VO2: 70
+  lactate: 2.8
+acidbase:
+  Na_mmol_L: 137
+  K_mmol_L: 4.8
+  Cl_mmol_L: 109
+  HCO3_mmol_L: 21
+  urea_mmol_L: 8
+renal:
+  GFR_baseline: 28
+  creatinine_baseline_mg_dL: 0.28
+  creatinine_mg_dL: 0.38
+  furosemide_mg_kg: 0
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 160, label: fluid load 20 mL/kg}
+  - {t: 180, action: set_furosemide, value: 1.0, label: furosemide 1 mg/kg}
+  - {t: 360, action: set_furosemide, value: 2.0, label: second furosemide equivalent cumulative}
+outputs:
+  - fluid_balance
+  - fluid_overload_percent
+  - urine_output_mL_kg_h
+  - diuretic_response_index
+  - creatinine_mg_dL
+  - AKI_stage
+  - K_mmol_L
+  - pH_a

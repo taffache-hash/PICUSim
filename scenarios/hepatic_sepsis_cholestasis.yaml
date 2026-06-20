@@ -1,0 +1,52 @@
+name: hepatic_sepsis_cholestasis
+description: Sepsis-associated hepatic dysfunction with cholestasis, reduced lactate clearance, hypoalbuminemia tendency, INR contribution and ammonia signal.
+simulation_time_s: 900
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  FiO2: 0.45
+  PEEP: 8
+  Paw: 20
+  RR: 26
+  C_rs: 0.65
+  R_rs: 10
+  SaO2: 0.93
+  PaO2: 72
+  PaCO2: 42
+cardiovascular:
+  MAP: 50
+  HR: 150
+  CO: 4.5
+  CVP: 8
+  Hb: 9.5
+metabolism:
+  T_core: 38.7
+  lactate: 4.8
+sepsis:
+  infection_load: 0.75
+  phenotype: warm
+  source_control: 0.15
+  antibiotic_effect: 0.20
+coagulation:
+  INR: 1.25
+  PLT: 120
+  fibrinogen: 2.0
+hepatic:
+  albumin_g_dL: 3.0
+  bilirubin_total_mg_dL: 1.2
+  bilirubin_direct_mg_dL: 0.55
+  AST_U_L: 90
+  ALT_U_L: 70
+  ammonia_umol_L: 48
+drugs:
+  norad_mcg_kg_min: 0.08
+  hydrocortisone_mg_kg_h: 0.0
+perturbations:
+  - {t: 120, action: set_norad, value: 0.16}
+  - {t: 240, action: set_hydrocortisone, value: 0.18}
+  - {t: 360, action: set_source_control, value: 0.45}
+  - {t: 420, action: set_antibiotic_effect, value: 0.55}
+outputs: [MAP, HR, lactate, INR, bilirubin_total_mg_dL, bilirubin_direct_mg_dL, albumin_g_dL, ammonia_umol_L, hepatic_severity_score, hepatic_lactate_clearance_mod]

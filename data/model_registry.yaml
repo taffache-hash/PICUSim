@@ -1,0 +1,82 @@
+# External modeling/framework registry for long-term scalability.
+# Purpose: avoid reinventing everything; use as design inspiration and validation comparator.
+
+frameworks:
+  Pulse_Physiology_Engine:
+    type: "open-source whole-body physiology simulator"
+    relevance:
+      - modular physiology engine
+      - validated adult-focused physiology methodology
+      - respiratory model with pressure-source spontaneous ventilation and chemical feedback
+      - patient conditions including airway obstruction
+    possible_adaptation:
+      - compare respiratory/gas-exchange qualitative responses
+      - borrow documentation style for methodology and validation tables
+      - consider future adapter/export for synthetic waveforms
+    limitation_for_this_project:
+      - not primarily pediatric PICU-specific
+      - C++ ecosystem, heavier than lightweight Python simulator
+
+  HumMod:
+    type: "integrative whole-body physiology model"
+    relevance:
+      - large-scale multi-system physiology
+      - cardiovascular, respiratory, renal, neural, endocrine, metabolic integration
+    possible_adaptation:
+      - use as conceptual checklist for missing organ axes
+      - structure future endocrine/electrolyte/renal extensions
+    limitation_for_this_project:
+      - adult/general physiology orientation
+      - very large model complexity; not ideal to copy directly
+
+  OpenCOR_CellML:
+    type: "modeling environment for CellML and related standards"
+    relevance:
+      - modular physiological model representation
+      - interoperability with formal model standards
+    possible_adaptation:
+      - future export/import of selected subsystem equations
+      - document equations in a more standard form
+    limitation_for_this_project:
+      - current PDT code is pragmatic Python rather than formal CellML
+
+  Physiolibrary_Modelica:
+    type: "Modelica physiological component library"
+    relevance:
+      - component-based cardiovascular/respiratory/chemical transport modeling
+      - useful architecture for connectors and physical consistency
+    possible_adaptation:
+      - inspire future venous return, organ blood flow, electrolyte and acid-base modules
+    limitation_for_this_project:
+      - Modelica stack; higher barrier for clinicians
+
+  Graph_based_sepsis_patient_simulation:
+    type: "graph-model critical illness simulator"
+    relevance:
+      - scalable causal-pathway architecture
+      - acute sepsis trajectory and medication effects
+    possible_adaptation:
+      - add causal graph metadata for every module
+      - support explainability: which pathways drove MAP/lactate/oxygenation
+    limitation_for_this_project:
+      - graph models may be less mechanistic than current physiology bus approach
+
+credibility_frameworks:
+  ASME_VV40:
+    relevance: "Risk-informed verification and validation credibility framework."
+    adaptation:
+      - define context of use
+      - identify model risk
+      - define quantities of interest
+      - define verification/validation evidence per module
+  FDA_CMS_Credibility_Guidance:
+    relevance: "Risk-informed credibility assessment for computational models in medical-device submissions."
+    adaptation:
+      - use categories: code verification, calculation verification, validation, applicability, uncertainty
+  ISPOR_SMDM_Model_Transparency:
+    relevance: "General model transparency and validation principles."
+    adaptation:
+      - transparent assumptions
+      - face validity
+      - internal validity
+      - external validity when data become available

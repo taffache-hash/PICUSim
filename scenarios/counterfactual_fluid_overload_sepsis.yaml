@@ -1,0 +1,74 @@
+name: counterfactual_fluid_overload_sepsis
+description: 'Counterfactual sepsis: repeated large crystalloid boluses. Expected:
+  fluid overload rises, oxygenation may worsen, and lactate does not normalize proportionally.'
+patient:
+  age_y: 8
+  weight_kg: 25
+  sex: F
+  diagnosis: septic_shock_warm
+respiratory:
+  PEEP: 8
+  Paw: 22
+  FiO2: 0.6
+  RR: 32
+  C_rs: 0.55
+  R_rs: 12.0
+  PaO2: 60.0
+  PaCO2: 35.0
+  SaO2: 0.88
+  non_recruitable_frac: 0.25
+cardiovascular:
+  HR: 155
+  MAP: 45
+  CVP: 3
+  Hb: 9.5
+  preload_mod: 0.75
+metabolism:
+  T_core: 39.1
+  VO2: 200
+  lactate: 4.2
+sepsis:
+  phenotype: warm
+  infection_load: 0.75
+  source_control: 0.0
+  antibiotic_effect: 0.0
+drugs:
+  norad_mcg_kg_min: 0.0
+perturbations:
+- t: 30
+  action: fluid_bolus_mL
+  value: 500
+  label: large bolus 20 mL/kg
+- t: 60
+  action: set_norad
+  value: 0.1
+  label: low-dose norad
+- t: 120
+  action: fluid_bolus_mL
+  value: 500
+  label: second large bolus
+- t: 200
+  action: fluid_bolus_mL
+  value: 500
+  label: third large bolus
+- t: 300
+  action: fluid_bolus_mL
+  value: 500
+  label: fourth large bolus
+outputs:
+- MAP
+- HR
+- CO
+- CVP
+- SVR
+- SaO2
+- PaO2
+- lactate
+- DO2
+- VO2
+- ERO2
+- fluid_balance
+- fluid_overload_percent
+simulation_time_s: 480
+version: '0.42'
+counterfactual: true

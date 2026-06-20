@@ -1,0 +1,166 @@
+version: v1.24-alpha
+purpose: Educational airway intubation/extubation event definitions for scenario YAML. These are bounded proxy state changes, not procedural guidance.
+events:
+  perform_intubation:
+    description: Successful endotracheal intubation with invasive ventilator connection.
+    severities:
+      routine:
+        status: success
+        vent_mode: PCV
+        PEEP: 5.0
+        Pinsp_cmH2O: 15.0
+        PS_cmH2O: 10.0
+        FiO2: 0.60
+        tube_internal_diameter_mm: 5.0
+        tube_length_cm: 16.0
+        cuff_leak_fraction: 0.05
+        ETT_position_score: 0.95
+      emergency:
+        status: success
+        vent_mode: PCV
+        PEEP: 6.0
+        Pinsp_cmH2O: 18.0
+        PS_cmH2O: 10.0
+        FiO2: 1.0
+        tube_internal_diameter_mm: 5.0
+        tube_length_cm: 16.0
+        cuff_leak_fraction: 0.08
+        ETT_position_score: 0.90
+        SaO2_sub: 0.02
+        PaCO2_add: 2.0
+  failed_intubation_attempt:
+    description: Failed attempt; no secured airway and worsening apnea/hypoxia burden proxy.
+    severities:
+      mild:
+        status: failed
+        SaO2_sub: 0.03
+        PaCO2_add: 4.0
+        sed_resp_factor: 0.75
+        NMB_set: 0.35
+        aspiration_risk_add: 0.05
+        hypoxia_burden_add: 0.08
+      moderate:
+        status: failed
+        SaO2_sub: 0.08
+        PaCO2_add: 10.0
+        sed_resp_factor: 0.45
+        NMB_set: 0.65
+        aspiration_risk_add: 0.12
+        hypoxia_burden_add: 0.20
+      severe:
+        status: failed
+        SaO2_sub: 0.15
+        PaCO2_add: 18.0
+        sed_resp_factor: 0.25
+        NMB_set: 0.85
+        aspiration_risk_add: 0.22
+        hypoxia_burden_add: 0.35
+        HR_add: -20
+  start_bag_mask_ventilation:
+    description: Non-invasive bag-mask/manual ventilation proxy using leak-adjusted bilevel mask interface.
+    severities:
+      adequate:
+        status: rescue
+        bag_mask_quality: 0.75
+        EPAP: 4.0
+        IPAP: 18.0
+        FiO2: 1.0
+        SaO2_sub: 0.00
+        PaCO2_add: -2.0
+      difficult:
+        status: rescue
+        bag_mask_quality: 0.45
+        EPAP: 3.0
+        IPAP: 16.0
+        FiO2: 1.0
+        SaO2_sub: 0.04
+        PaCO2_add: 4.0
+        aspiration_risk_add: 0.10
+  accidental_extubation:
+    description: Unplanned loss of invasive airway and ventilator pressure delivery.
+    severities:
+      moderate:
+        status: unplanned
+        post_extubation_interface: UNASSISTED
+        FiO2: 0.21
+        SaO2_sub: 0.10
+        PaCO2_add: 12.0
+        aspiration_risk_add: 0.08
+        hypoxia_burden_add: 0.18
+      severe:
+        status: unplanned
+        post_extubation_interface: UNASSISTED
+        FiO2: 0.21
+        SaO2_sub: 0.20
+        PaCO2_add: 24.0
+        aspiration_risk_add: 0.18
+        hypoxia_burden_add: 0.35
+  planned_extubation:
+    description: Planned extubation to non-invasive oxygen support.
+    severities:
+      to_low_flow:
+        status: success
+        post_extubation_interface: LOW_FLOW_OXYGEN
+        FiO2: 0.35
+        oxygen_flow_L_min: 3.0
+        airway_protection_score: 0.80
+      to_hfnc:
+        status: success
+        post_extubation_interface: HFNC
+        FiO2: 0.45
+        HFNC_flow_L_min: 20.0
+        airway_protection_score: 0.75
+  laryngospasm:
+    description: Acute upper-airway closure after extubation or airway stimulation.
+    severities:
+      moderate:
+        status: obstructed
+        laryngospasm_add: 0.45
+        upper_airway_obstruction_add: 0.40
+        R_rs_add: 12.0
+        SaO2_sub: 0.10
+        PaCO2_add: 12.0
+        hypoxia_burden_add: 0.20
+      severe:
+        status: obstructed
+        laryngospasm_add: 0.75
+        upper_airway_obstruction_add: 0.70
+        R_rs_add: 25.0
+        SaO2_sub: 0.20
+        PaCO2_add: 22.0
+        hypoxia_burden_add: 0.38
+  aspiration_event:
+    description: Airway contamination/aspiration risk event with oxygenation burden proxy.
+    severities:
+      moderate:
+        status: complication
+        aspiration_risk_add: 0.35
+        airway_protection_sub: 0.20
+        SaO2_sub: 0.04
+        PaO2_sub: 10.0
+        R_rs_add: 4.0
+      severe:
+        status: complication
+        aspiration_risk_add: 0.60
+        airway_protection_sub: 0.35
+        SaO2_sub: 0.10
+        PaO2_sub: 22.0
+        R_rs_add: 8.0
+  airway_obstruction_event:
+    description: Tube or upper-airway obstruction depending on current airway interface.
+    severities:
+      moderate:
+        status: obstructed
+        tube_obstruction_add: 0.35
+        upper_airway_obstruction_add: 0.35
+        airway_obstruction_add: 0.20
+        R_rs_add: 10.0
+        PaCO2_add: 8.0
+      severe:
+        status: obstructed
+        tube_obstruction_add: 0.65
+        upper_airway_obstruction_add: 0.60
+        airway_obstruction_add: 0.35
+        R_rs_add: 20.0
+        PaCO2_add: 16.0
+        SaO2_sub: 0.08

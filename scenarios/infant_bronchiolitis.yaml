@@ -1,0 +1,74 @@
+name: infant_bronchiolitis
+version: 0.13
+description: >
+  Lattante 8 kg con bronchiolite: small-airway obstruction, mucus load,
+  ipossiemia moderata, CPAP/HFNC-like support. Risponde poco ai broncodilatatori,
+  con prevalenza di componente non reversibile.
+
+patient:
+  profile: infant_8kg
+  age_y: 0.6
+  weight_kg: 8
+  sex: F
+  diagnosis: bronchiolitis
+
+respiratory:
+  PEEP: 6
+  Paw: 10
+  FiO2: 0.35
+  RR: 38
+  C_rs: 0.75
+  R_rs: 14.0
+  PaO2: 62.0
+  PaCO2: 48.0
+  SaO2: 0.90
+  non_recruitable_frac: 0.08
+
+ventilator:
+  mode: CPAP
+  PS: 6
+  IE_ratio: 0.33
+  trigger_thresh: 1.5
+  cycling_frac: 0.30
+
+airway:
+  bronchospasm_index: 0.25
+  mucus_load: 0.70
+  small_airway_obstruction: 0.82
+
+cardiovascular:
+  HR: 150
+  MAP: 58
+  CVP: 4
+  Hb: 11.0
+
+metabolism:
+  T_core: 38.1
+  VO2: 68
+  lactate: 1.8
+
+perturbations:
+  - {t: 60, action: set_PEEP, value: 7, label: "CPAP 6→7"}
+  - {t: 120, action: set_FiO2, value: 0.45, label: "FiO2 escalation"}
+  - {t: 180, action: set_nebulized_epinephrine, value: 0.04, label: "nebulized epinephrine trial"}
+
+outputs:
+  - airway_obstruction_index
+  - bronchodilator_effect
+  - mucus_load
+  - small_airway_obstruction
+  - R_rs
+  - auto_PEEP
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_shunt_add
+  - airway_VdVt_add
+  - PaO2
+  - PaCO2
+  - SaO2
+  - Vt
+  - RR_total
+  - MAP
+  - CO
+
+simulation_time_s: 300

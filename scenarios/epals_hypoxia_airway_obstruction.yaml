@@ -1,0 +1,99 @@
+name: epals_hypoxia_airway_obstruction
+version: v1.22.1-alpha
+category: epals_5h_hypoxia
+epals:
+  group: H
+  cause: hypoxia
+  reversible_cause: Hypoxia / airway obstruction
+  teaching_level: intermediate
+clinical_narrative: Six-year-old child with progressive upper-airway/ETT obstruction physiology, falling oxygenation
+  and rising CO2. The scenario emphasizes early recognition that ventilation, not circulation, is the first limiting
+  problem.
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+  diagnosis: epals_hypoxia_airway_obstruction
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 22
+  FiO2: 0.4
+  RR: 30
+  C_rs: 0.75
+  R_rs: 16.0
+  PaO2: 58.0
+  PaCO2: 52.0
+  SaO2: 0.87
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: PCV
+  Pinsp: 16
+  IE_ratio: 0.33
+  T_rise_s: 0.06
+  alarm_Ppeak_max: 42
+airway:
+  bronchospasm_index: 0.1
+  mucus_load: 0.45
+  small_airway_obstruction: 0.35
+cardiovascular:
+  HR: 145
+  MAP: 64
+  CO: 3.4
+  CVP: 5
+  Hb: 11.0
+metabolism:
+  T_core: 37.6
+  VO2: 140
+  lactate: 2.2
+events:
+- t: 60
+  name: tube_obstruction
+  severity: moderate
+  label: progressive airway obstruction
+perturbations:
+- t: 120
+  action: set_FiO2
+  value: 0.8
+  label: high-concentration oxygen
+- t: 160
+  action: R_rs
+  value: 12.0
+  label: airway manoeuvre / suction proxy
+- t: 160
+  action: set_mucus_load
+  value: 0.12
+  label: secretion clearance proxy
+- t: 200
+  action: set_Paw
+  value: 24.0
+  label: ventilation support after airway opening
+- t: 260
+  action: set_FiO2
+  value: 0.55
+  label: oxygen weaning after stabilization
+expected_response:
+- SpO2/PaO2 fall during obstruction and recover after oxygen plus airway manoeuvre.
+- PaCO2 stabilizes or decreases when airway resistance improves.
+debrief_questions:
+- Was hypoxia due to oxygen delivery, ventilation failure, or both?
+- 'Which variable changed first: SpO2, PaCO2, MAP or HR?'
+outputs:
+- SaO2
+- PaO2
+- PaCO2
+- pH_a
+- R_rs
+- Paw
+- Vt
+- airway_obstruction_index
+- mucus_load
+- HR
+- MAP
+- bradycardia_risk
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+simulation_time_s: 360

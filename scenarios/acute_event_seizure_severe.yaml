@@ -1,0 +1,81 @@
+name: tbi_icp_management__event_seizure_severe
+description: "TBI moderato-severo in bambino 8 anni 25 kg. ICP elevata, gestione multimodale:\n\
+  \  - Osmoterapia (t=60s)\n  - Iperventilazione moderata PaCO2\u219235 (t=120s)\n\
+  \  - Desametasone (t=0 in corso)\n  - Noradrenalina per mantenere CPP > 50 mmHg\n\
+  \  - Glucosio monitorato (iperglicemia da stress)\n  - Coagulazione: CID lieve da\
+  \ danno tissutale\n\n\nInjected acute event v0.43: seizure/severe at t=180.0s."
+patient:
+  age_y: 8
+  weight_kg: 25
+  sex: M
+  diagnosis: TBI_severe
+respiratory:
+  PEEP: 6
+  Paw: 18
+  FiO2: 0.4
+  RR: 24
+  C_rs: 0.9
+  R_rs: 8.0
+  PaO2: 88.0
+  PaCO2: 40.0
+  SaO2: 0.96
+cardiovascular:
+  HR: 90
+  MAP: 75
+  CVP: 5
+  Hb: 12.0
+metabolism:
+  T_core: 37.5
+  T_setpoint: 37.5
+  SIRS_factor: 1.2
+  VO2: 140
+  lactate: 2.1
+drugs:
+  norad_mcg_kg_min: 0.1
+  dexamethasone_mcg_kg_h: 150
+neurology:
+  ICP: 22.0
+  V_edema: 15.0
+  autoregulation: 0.4
+perturbations:
+- t: 60
+  action: osmo_therapy
+  value: true
+  label: "Osmoterapia \u2192 riduzione ICP"
+- t: 120
+  action: set_RR
+  value: 30
+  label: "Iperventilazione RR\u219230"
+- t: 240
+  action: set_norad
+  value: 0.2
+  label: "Norad \u2191 per CPP target"
+- t: 360
+  action: csf_drain
+  value: 5.0
+  label: Drenaggio CSF 5 mL/h
+- t: 480
+  action: transfuse_GRC
+  value: 250
+  label: GRC 10 mL/kg
+outputs:
+- ICP_mmHg
+- CPP_mmHg
+- CBF_relative
+- PbtO2_mmHg
+- MAP
+- HR
+- PaCO2
+- SaO2
+- glucose_mmol_L
+- INR
+- PLT_count
+- C_dexa_ng_mL
+- steroid_ICP_mod
+- cushing_active
+- ICP_alert
+simulation_time_s: 720
+events:
+- t: 180.0
+  name: seizure
+  severity: severe

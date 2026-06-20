@@ -1,0 +1,90 @@
+version: v0.38
+purpose: >-
+  Executed multi-scenario numerical convergence pack. The standard executed screen
+  uses dt=1.0 and 0.5 across all core scenarios. The fine screen can add dt=0.2
+  and dt=0.1 when runtime permits. Primary failures are not hidden; they are
+  reported with a recommended maximum dt.
+standard_dts: [1.0, 0.5]
+fine_dts: [1.0, 0.5, 0.2]
+full_dts: [1.0, 0.5, 0.2, 0.1]
+default_primary_rel_tol: 0.10
+default_secondary_rel_tol: 0.15
+scenarios:
+  healthy_child_20kg:
+    priority: core
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+      MAP_final: {rel_tol: 0.10}
+      HR_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+    secondary:
+      PaO2_final: {rel_tol: 0.15}
+      CO_final: {rel_tol: 0.15}
+      lactate_final: {rel_tol: 0.15}
+  ards_mild:
+    priority: core
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+      PaO2_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+    secondary:
+      CO_final: {rel_tol: 0.15}
+      lactate_final: {rel_tol: 0.15}
+      VILI_risk_final: {abs_tol: 0.08}
+  septic_shock:
+    priority: core
+    primary:
+      MAP_final: {rel_tol: 0.10}
+      HR_final: {rel_tol: 0.10}
+      lactate_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.04}
+      PaCO2_final: {rel_tol: 0.10}
+    secondary:
+      CO_final: {rel_tol: 0.15}
+      SaO2_final: {abs_tol: 0.04}
+      fluid_balance_final: {rel_tol: 0.15}
+  tbi_icp:
+    priority: core
+    primary:
+      ICP_mmHg_final: {rel_tol: 0.10, abs_tol: 1.5}
+      CPP_mmHg_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+    secondary:
+      GCS_proxy_final: {abs_tol: 1.0}
+      Na_mmol_L_final: {abs_tol: 2.0}
+  status_asthmaticus:
+    priority: core
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.04}
+      R_rs_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+    secondary:
+      auto_PEEP_obstructive_final: {abs_tol: 0.5}
+      airway_obstruction_index_final: {abs_tol: 0.08}
+  aki_crrt_lite:
+    priority: extended
+    primary:
+      pH_a_final: {abs_tol: 0.05}
+      K_mmol_L_final: {abs_tol: 0.35}
+      HCO3_mmol_L_final: {rel_tol: 0.15}
+      urea_mmol_L_final: {rel_tol: 0.15}
+      fluid_balance_final: {rel_tol: 0.15}
+    secondary:
+      creatinine_mg_dL_final: {rel_tol: 0.15}
+      AKI_stage_final: {abs_tol: 1.0}
+  near_fatal_status_asthmaticus:
+    priority: extended
+    primary:
+      PaCO2_final: {rel_tol: 0.15}
+      pH_a_final: {abs_tol: 0.06}
+      R_rs_final: {rel_tol: 0.15}
+      MAP_final: {rel_tol: 0.15}
+    secondary:
+      airway_obstruction_index_final: {abs_tol: 0.12}

@@ -1,0 +1,16 @@
+name: epals_v2_bronchiolitis_respiratory_failure
+description: EPALS scenario engine v2 infant bronchiolitis with HFNC/NIV escalation and intubation trigger.
+patient: {age_y: 0.5, weight_kg: 7.5, sex: M, diagnosis: bronchiolitis_respiratory_failure}
+airway_interface: {interface: HFNC, HFNC_flow_L_min: 12, HFNC_FiO2_set: 0.45, mouth_leak_fraction: 0.35}
+respiratory: {FiO2: 0.45, PEEP: 2, Paw: 4, RR: 62, R_rs: 28, C_rs: 4.5, PaO2: 58, PaCO2: 62, SaO2: 0.88}
+airway: {mucus_load: 0.75, small_airway_obstruction: 0.72}
+cardiovascular: {HR: 168, MAP: 52, CVP: 5, Hb: 11.2}
+metabolism: {lactate: 2.8}
+perturbations:
+  - {t: 30, action: set_HFNC_flow, value: 16, label: HFNC flow escalation}
+  - {t: 100, action: set_NIV_CPAP, value: 7, label: non-invasive CPAP trial}
+  - {t: 180, action: set_airway_interface, value: ETT, label: intubation/ETT transition}
+  - {t: 181, action: set_intubated, value: true, label: intubated flag true}
+  - {t: 182, action: set_ventilator_connected, value: true, label: ventilator connected}
+outputs: [SaO2, PaCO2, RR, Pmus_cmH2O, airway_interface, decision_priority]
+simulation_time_s: 360

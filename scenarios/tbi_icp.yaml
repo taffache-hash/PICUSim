@@ -1,0 +1,100 @@
+name: tbi_icp_management
+description: >
+  TBI moderato-severo in bambino 8 anni 25 kg.
+  ICP elevata, gestione multimodale:
+    - Osmoterapia (t=60s)
+    - Iperventilazione moderata PaCO2→35 (t=120s)
+    - Desametasone (t=0 in corso)
+    - Noradrenalina per mantenere CPP > 50 mmHg
+    - Glucosio monitorato (iperglicemia da stress)
+    - Coagulazione: CID lieve da danno tissutale
+
+patient:
+  age_y: 8
+  weight_kg: 25
+  sex: M
+  diagnosis: TBI_severe
+
+respiratory:
+  PEEP: 6
+  Paw: 18
+  FiO2: 0.40
+  RR: 24
+  C_rs: 0.90
+  R_rs: 8.0
+  PaO2: 88.0
+  PaCO2: 40.0
+  SaO2: 0.96
+
+cardiovascular:
+  HR: 90
+  MAP: 75
+  CVP: 5
+  Hb: 12.0
+
+metabolism:
+  T_core: 37.5
+  T_setpoint: 37.5
+  SIRS_factor: 1.2
+  VO2: 140
+  lactate: 2.1
+
+drugs:
+  norad_mcg_kg_min: 0.10
+  dexamethasone_mcg_kg_h: 150    # 0.15 mg/kg/die
+
+
+neurology:
+  ICP: 22.0          # ICP iniziale elevata [mmHg]
+  V_edema: 15.0      # edema cerebrale iniziale [mL]
+  autoregulation: 0.4  # autoregolazione ridotta (TBI severo)
+
+perturbations:
+  # t=60s: osmoterapia attivata (manitolo/NaCl 3%)
+  - t: 60
+    action: osmo_therapy
+    value: true
+    label: "Osmoterapia → riduzione ICP"
+
+  # t=120s: iperventilazione moderata (PaCO2 target 35)
+  - t: 120
+    action: set_RR
+    value: 30
+    label: "Iperventilazione RR→30"
+
+  # t=240s: norad titolata per CPP target
+  - t: 240
+    action: set_norad
+    value: 0.20
+    label: "Norad ↑ per CPP target"
+
+  # t=360s: CSF drainage (EVD aperta)
+  - t: 360
+    action: csf_drain
+    value: 5.0
+    label: "Drenaggio CSF 5 mL/h"
+
+  # t=480s: bolo GRC (Hb target >10)
+  - t: 480
+    action: transfuse_GRC
+    value: 250
+    label: "GRC 10 mL/kg"
+
+outputs:
+  - ICP_mmHg
+  - CPP_mmHg
+  - CBF_relative
+  - PbtO2_mmHg
+  - MAP
+  - HR
+  - PaCO2
+  - SaO2
+  - glucose_mmol_L
+  - INR
+  - PLT_count
+  - C_dexa_ng_mL
+  - steroid_ICP_mod
+  - cushing_active
+  - ICP_alert
+
+simulation_time_s: 720

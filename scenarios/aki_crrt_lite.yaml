@@ -1,0 +1,73 @@
+name: aki_crrt_lite
+simulation_time_s: 2400
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 6
+  FiO2: 0.35
+  RR: 26
+  C_rs: 0.75
+  R_rs: 9
+  SaO2: 0.94
+  PaO2: 78
+  PaCO2: 42
+cardiovascular:
+  HR: 145
+  MAP: 54
+  CO: 3.7
+  CVP: 8
+  Hb: 10.5
+metabolism:
+  T_core: 38.8
+  VO2: 150
+  lactate: 5.5
+sepsis:
+  phenotype: vasoplegic
+  infection_load: 0.75
+  source_control: 0.1
+  antibiotic_effect: 0.2
+acidbase:
+  Na_mmol_L: 136
+  K_mmol_L: 6.4
+  Cl_mmol_L: 108
+  HCO3_mmol_L: 14
+  urea_mmol_L: 30
+  normal_saline_mL: 400
+renal:
+  GFR_baseline: 70
+  creatinine_baseline_mg_dL: 0.36
+  creatinine_mg_dL: 0.62
+  urea_baseline_mmol_L: 5.0
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 25
+  CRRT_net_UF_mL_h: 60
+  CRRT_dialysate_K_mmol_L: 4.0
+  CRRT_bicarbonate_mmol_L: 32
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 800, label: large resuscitation fluid load}
+  - {t: 60, action: fluid_bolus_mL, value: 400, label: second fluid load}
+  - {t: 120, action: set_norad, value: 0.22, label: noradrenaline escalation}
+  - {t: 180, action: set_vasopressin, value: 0.5, label: vasopressin}
+  - {t: 240, action: set_furosemide, value: 1.0, label: diuretic stress test}
+  - {t: 360, action: set_CRRT_active, value: true, label: start CRRT}
+  - {t: 360, action: set_CRRT_effluent, value: 30, label: CRRT effluent 30 mL/kg/h}
+  - {t: 360, action: set_CRRT_net_UF, value: 120, label: net UF 120 mL/h}
+outputs:
+  - MAP
+  - HR
+  - lactate
+  - pH_a
+  - K_mmol_L
+  - HCO3_mmol_L
+  - urea_mmol_L
+  - creatinine_mg_dL
+  - AKI_stage
+  - urine_output_mL_kg_h
+  - fluid_overload_percent
+  - RRT_indication_score
+  - CRRT_active_effective

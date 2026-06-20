@@ -1,0 +1,54 @@
+name: airway_ett_tube_resistance_v1_23_3
+description: Educational intubated child with a deliberately small ETT to demonstrate
+  artificial-airway resistance and apparatus dead-space.
+patient:
+  profile: child_20kg
+  age_y: 5.0
+  weight_kg: 20.0
+  sex: F
+simulation:
+  T: 360
+respiratory:
+  FiO2: 0.4
+  PEEP: 5.0
+  RR: 24
+  Paw: 18.0
+  PaO2: 85.0
+  PaCO2: 42.0
+  SaO2: 0.95
+  C_rs: 16.0
+  R_rs: 8.0
+ventilator:
+  mode: PCV
+  Pinsp: 13.0
+  IE_ratio: 0.38
+  T_rise_s: 0.15
+airway_interface:
+  interface: ETT
+  intubated: true
+  ventilator_connected: true
+  tube_internal_diameter_mm: 4.0
+  tube_length_cm: 17.0
+  tube_obstruction_score: 0.05
+  cuff_leak_fraction: 0.05
+  cuff_pressure_cmH2O: 20.0
+  ETT_position_score: 1.0
+  oxygen_interface: VENTILATOR
+  FiO2_set: 0.4
+airway:
+  bronchospasm_index: 0.05
+  mucus_load: 0.05
+  small_airway_obstruction: 0.05
+outputs:
+- airway_interface
+- intubated
+- tube_internal_diameter_mm
+- tube_resistance_cmH2O_L_s
+- tube_resistance_factor
+- tube_dead_space_mL
+- tube_VdVt_add
+- Vt
+- PaCO2
+- ETT_failure_risk
+notes: Not a clinical tube-size calculator. The scenario is designed to expose the
+  qualitative resistance effect of a smaller artificial airway.

@@ -1,0 +1,97 @@
+name: picu_vancomycin_aki_crrt_v1_12
+version: v1.12-alpha
+category: pharmacology / infection / renal
+summary: >
+  Educational vancomycin PK/PD scaffold showing renal-function-dependent clearance,
+  qualitative target attainment, antimicrobial coverage contribution and CRRT removal.
+  Not a dosing guide.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  age_group: child
+  weight_kg: 20
+  sex: F
+  diagnosis: septic_shock_aki_suspected_gram_positive_infection
+
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 18
+  FiO2: 0.40
+  RR: 26
+  C_rs: 0.8
+  R_rs: 9
+  PaO2: 82
+  PaCO2: 42
+  SaO2: 0.95
+  non_recruitable_frac: 0.15
+
+cardiovascular:
+  HR: 145
+  MAP: 54
+  CO: 3.5
+  CVP: 8
+  Hb: 10.5
+
+metabolism:
+  T_core: 38.7
+  VO2: 150
+  lactate: 4.0
+
+infection:
+  microbial_burden: 0.68
+  pathogen_virulence: 0.65
+  pathogen_resistance_index: 0.25
+  antibiotic_started: false
+  antibiotic_coverage: 0.10
+  source_control: 0.30
+  infection_focus: line
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.68
+  source_control: 0.30
+  antibiotic_effect: 0.05
+
+renal:
+  GFR_baseline: 70
+  creatinine_baseline_mg_dL: 0.36
+  creatinine_mg_dL: 0.85
+  urea_baseline_mmol_L: 5.0
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+
+drugs:
+  norad_mcg_kg_min: 0.12
+  vancomycin_mg_kg_h: 0.0
+
+perturbations:
+  - {t: 60, action: set_vancomycin, value: 60.0, label: "Compressed educational loading infusion; not a dosing recommendation"}
+  - {t: 660, action: set_vancomycin, value: 2.5, label: "Maintenance-equivalent educational infusion"}
+  - {t: 900, action: set_CRRT_active, value: true, label: "Start CRRT"}
+  - {t: 900, action: set_CRRT_effluent, value: 35, label: "CRRT effluent 35 mL/kg/h"}
+  - {t: 900, action: set_CRRT_net_UF, value: 60, label: "Net UF 60 mL/h"}
+
+outputs:
+  - C_vancomycin_mg_L
+  - vancomycin_target_attainment
+  - vancomycin_coverage_mod
+  - vancomycin_renal_clearance_factor
+  - antibiotic_started
+  - antibiotic_coverage
+  - antibiotic_effect
+  - microbial_burden
+  - infection_severity_score
+  - GFR
+  - AKI_stage
+  - CRRT_active
+  - pk_crrt_vancomycin_CL_L_min
+
+limitations:
+  - Educational vancomycin PK/PD scaffold only; not for prescribing or dose adjustment.
+  - Does not model intermittent peaks/troughs, Bayesian AUC estimation, MIC uncertainty, protein binding, nephrotoxicity feedback or TDM.
+  - CRRT clearance is based on a simple effluent-rate/sieving proxy and ignores membrane adsorption, downtime and filter age.
+
+simulation_time_s: 1200

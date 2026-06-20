@@ -1,0 +1,51 @@
+version: v1.22.3-alpha
+title: EPALS debrief scaffold specification
+scope: Instructor-facing debrief metadata and report-generation rules for the EPALS 5H/5T scenario pack.
+safety_status: educational/research alpha only; not for clinical use; not a medical device; not a validated patient-specific digital twin
+design_note: This release does not change the simulation engine. It adds report generation from scenario metadata and optional time-series simulation outputs.
+inputs:
+  taxonomy: data/epals_reversible_causes_v1.22.yaml
+  scenario_packs:
+    - data/epals_5h_scenario_pack_v1.22.1.yaml
+    - data/epals_5t_scenario_pack_v1.22.2.yaml
+outputs:
+  summary_json: epals_debrief_summary_v1223.json
+  scenario_summary_csv: epals_debrief_scenario_summary_v1223.csv
+  metric_markers_csv: epals_debrief_metric_markers_v1223.csv
+  threshold_events_csv: epals_debrief_threshold_events_v1223.csv
+  questions_csv: epals_debrief_questions_v1223.csv
+  scenario_reports_dir: scenario_reports/
+debrief_sections:
+  - clinical_frame
+  - reversible_cause
+  - key_physiologic_markers
+  - threshold_events
+  - intervention_proxies
+  - expected_physiologic_response
+  - debrief_questions
+  - safety_note
+metric_groups:
+  oxygenation:
+    variables: [SaO2, PaO2, PaCO2, R_rs]
+  circulation:
+    variables: [MAP, HR, CO, CVP, lactate, Hb]
+  acidbase_electrolytes:
+    variables: [pH_a, K_mmol_L, HCO3_mmol_L, RRT_indication_score]
+  temperature:
+    variables: [T_core, hypothermia_index, HR]
+  obstructive_shock:
+    variables: [MAP, CVP, PVR, RV_afterload_index, Ppeak]
+  toxicology:
+    variables: [PaCO2, sedation_score, drive_level]
+thresholds:
+  SaO2: [0.90, 0.80]
+  MAP: [55.0, 45.0]
+  pH_a: [7.25, 7.10]
+  K_mmol_L: [6.0, 7.0]
+  T_core: [35.0, 32.0]
+  PaCO2: [55.0, 70.0]
+limitations:
+  - Thresholds are educational markers, not treatment triggers.
+  - Debrief reports summarize model behavior; they do not assess real clinical performance.
+  - Interventions are simplified scenario perturbations, not clinical protocols.
+next_release: v1.23-alpha airway interface model base

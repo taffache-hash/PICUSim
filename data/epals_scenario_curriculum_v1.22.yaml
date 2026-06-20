@@ -1,0 +1,312 @@
+version: v1.22-alpha
+title: EPALS emergency scenario curriculum scaffold
+safety_status: educational/research alpha only; not for clinical use; not a medical device; not a validated patient-specific
+  digital twin
+curriculum_goal: Prepare structured emergency teaching scenarios before modifying the ventilator/airway model.
+teaching_sequence:
+- epals_hypoxia_airway_obstruction
+- epals_hypovolemia_hemorrhagic_shock
+- epals_acidosis_septic_shock
+- epals_hyperkalemia_aki
+- epals_hypothermia_rewarming
+- epals_tension_pneumothorax
+- epals_cardiac_tamponade
+- epals_toxicologic_opioid_benzodiazepine
+- epals_pulmonary_thrombosis_pe
+- epals_cardiac_thrombosis_myocarditis_low_output
+milestones:
+- release: v1.22.1
+  focus: 5H scenarios
+  scenario_ids:
+  - epals_hypoxia_airway_obstruction
+  - epals_hypovolemia_hemorrhagic_shock
+  - epals_acidosis_septic_shock
+  - epals_hyperkalemia_aki
+  - epals_hypothermia_rewarming
+- release: v1.22.2
+  focus: 5T scenarios
+  scenario_ids:
+  - epals_tension_pneumothorax
+  - epals_cardiac_tamponade
+  - epals_toxicologic_opioid_benzodiazepine
+  - epals_pulmonary_thrombosis_pe
+  - epals_cardiac_thrombosis_myocarditis_low_output
+- release: v1.22.3
+  focus: debrief automation
+  outputs:
+  - timeline markers
+  - reversible-cause checklist
+  - endpoint recovery table
+  - reflection questions
+scenarios:
+- id: epals_hypoxia_airway_obstruction
+  cause_id: hypoxia
+  group: H
+  complexity: intermediate
+  status: planned
+  clinical_frame: Child with progressive oxygenation failure due to airway obstruction or severe respiratory disease.
+  key_outputs:
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - RR
+  - Vt
+  - Paw
+  - Pmus_cmH2O
+  - HR
+  - MAP
+  expected_interventions:
+  - open_airway
+  - increase_FiO2
+  - bag_mask_ventilation
+  - treat_airway_obstruction
+  - intubation_if_needed
+  debrief_questions:
+  - What was the earliest oxygenation warning sign?
+  - Was ventilation or oxygen delivery the limiting factor?
+  - Which intervention reversed the physiology?
+  implementation_status: implemented_v1.22.1
+  scenario_file: scenarios/epals_hypoxia_airway_obstruction.yaml
+  release: v1.22.1-alpha
+- id: epals_hypovolemia_hemorrhagic_shock
+  cause_id: hypovolaemia
+  group: H
+  complexity: intermediate
+  status: planned
+  clinical_frame: Child with blood/fluid loss, low preload, reduced stroke volume and evolving shock.
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - SV
+  - CVP
+  - Hb
+  - DO2
+  - lactate
+  - fluid_balance
+  - bleeding_rate_mL_h
+  expected_interventions:
+  - control_bleeding
+  - fluid_bolus
+  - blood_transfusion_when_indicated
+  - vasopressor_only_after_volume_strategy
+  debrief_questions:
+  - Was shock primarily preload, pump or distributive?
+  - What variable showed inadequate oxygen delivery?
+  implementation_status: implemented_v1.22.1
+  scenario_file: scenarios/epals_hypovolemia_hemorrhagic_shock.yaml
+  release: v1.22.1-alpha
+- id: epals_acidosis_septic_shock
+  cause_id: hydrogen_ion_acidosis
+  group: H
+  complexity: intermediate
+  status: planned
+  clinical_frame: Septic or hypoperfusion-driven metabolic acidosis with respiratory compensation and cardiovascular
+    depression.
+  key_outputs:
+  - pH_a
+  - HCO3_mmol_L
+  - base_excess_mmol_L
+  - lactate
+  - PaCO2
+  - RR
+  - MAP
+  - CO
+  expected_interventions:
+  - treat_shock_source
+  - optimize_ventilation
+  - fluid_or_vasoactive_support
+  - source_control_and_antimicrobials
+  debrief_questions:
+  - Was acidosis respiratory, metabolic or mixed?
+  - What treatment addressed the cause rather than the pH alone?
+  implementation_status: implemented_v1.22.1
+  scenario_file: scenarios/epals_acidosis_septic_shock.yaml
+  release: v1.22.1-alpha
+- id: epals_hyperkalemia_aki
+  cause_id: hypo_hyperkalaemia_metabolic
+  group: H
+  complexity: intermediate
+  status: planned
+  clinical_frame: AKI-associated electrolyte disturbance with arrhythmia risk and metabolic instability.
+  key_outputs:
+  - K_mmol_L
+  - pH_a
+  - HCO3_mmol_L
+  - GFR
+  - AKI_stage
+  - MAP
+  - HR
+  - arrhythmia_risk
+  expected_interventions:
+  - calcium_if_hyperkalaemic_instability
+  - insulin_glucose_shift
+  - treat_acidosis_if_relevant
+  - renal_replacement_if_refractory
+  debrief_questions:
+  - What made this electrolyte problem immediately dangerous?
+  - Which intervention changed potassium fastest?
+  implementation_status: implemented_v1.22.1
+  scenario_file: scenarios/epals_hyperkalemia_aki.yaml
+  release: v1.22.1-alpha
+- id: epals_hypothermia_rewarming
+  cause_id: hypothermia
+  group: H
+  complexity: intermediate
+  status: planned
+  clinical_frame: Cold child with reduced metabolism, bradycardia tendency, coagulopathy risk and rewarming response.
+  key_outputs:
+  - T_core
+  - HR
+  - MAP
+  - VO2
+  - coagulopathy_index
+  - lactate
+  - shivering_index
+  expected_interventions:
+  - prevent_further_heat_loss
+  - active_rewarming
+  - correct_hypoglycaemia_or_electrolytes_if_present
+  debrief_questions:
+  - Was the rewarming rate appropriate?
+  - Which variables improved first and which lagged?
+  implementation_status: implemented_v1.22.1
+  scenario_file: scenarios/epals_hypothermia_rewarming.yaml
+  release: v1.22.1-alpha
+- id: epals_tension_pneumothorax
+  cause_id: tension_pneumothorax
+  group: T
+  complexity: advanced
+  status: planned
+  clinical_frame: Ventilated or spontaneously breathing child with obstructive shock physiology from intrathoracic
+    pressure.
+  key_outputs:
+  - Paw
+  - R_rs
+  - C_rs
+  - SaO2
+  - PaO2
+  - PaCO2
+  - MAP
+  - CO
+  - CVP
+  - Ppl_cmH2O
+  expected_interventions:
+  - needle_decompression
+  - chest_drain
+  - reduce_excessive_positive_pressure_if_possible
+  debrief_questions:
+  - Which signs separated pneumothorax from bronchospasm?
+  - Did decompression reverse both oxygenation and circulation?
+  implementation_status: implemented_v1.22.2
+  scenario_file: scenarios/epals_tension_pneumothorax.yaml
+  release: v1.22.2-alpha
+- id: epals_cardiac_tamponade
+  cause_id: cardiac_tamponade
+  group: T
+  complexity: advanced
+  status: planned
+  clinical_frame: Obstructive shock from impaired ventricular filling and low stroke volume.
+  key_outputs:
+  - MAP
+  - HR
+  - CO
+  - SV
+  - CVP
+  - EDV_lv
+  - SVR
+  - lactate
+  - DO2
+  expected_interventions:
+  - recognize_obstructive_shock
+  - pericardiocentesis_or_surgical_drainage
+  - judicious_volume_bridge
+  debrief_questions:
+  - Was the shock distributive, hypovolaemic or obstructive?
+  - What variable suggested impaired filling?
+  implementation_status: implemented_v1.22.2
+  scenario_file: scenarios/epals_cardiac_tamponade.yaml
+  release: v1.22.2-alpha
+- id: epals_toxicologic_opioid_benzodiazepine
+  cause_id: toxins
+  group: T
+  complexity: advanced
+  status: planned
+  clinical_frame: Toxicologic respiratory depression with depressed drive, hypoventilation and hemodynamic risk.
+  key_outputs:
+  - sedation_score
+  - C_morphine_ng_mL
+  - C_midazolam_ng_mL
+  - Pmus_cmH2O
+  - RR
+  - PaCO2
+  - pH_a
+  - SaO2
+  - MAP
+  expected_interventions:
+  - support_airway_and_ventilation
+  - stop_or_reduce_toxin_exposure
+  - consider_specific_antidote_when_appropriate
+  debrief_questions:
+  - Was failure due to oxygenation or ventilation?
+  - What would happen without ventilatory support?
+  implementation_status: implemented_v1.22.2
+  scenario_file: scenarios/epals_toxicologic_opioid_benzodiazepine.yaml
+  release: v1.22.2-alpha
+- id: epals_pulmonary_thrombosis_pe
+  cause_id: pulmonary_thrombosis
+  group: T
+  complexity: advanced
+  status: planned
+  clinical_frame: Pulmonary vascular obstruction with dead-space physiology, RV strain proxy and hypoxemia.
+  key_outputs:
+  - PVR
+  - PAP_mean
+  - CO
+  - MAP
+  - SaO2
+  - PaO2
+  - PaCO2
+  - vq_deadspace_frac
+  - thrombosis_risk_index
+  expected_interventions:
+  - recognize_PE_pattern
+  - hemodynamic_support
+  - anticoagulation_or_reperfusion_pathway_when_indicated
+  debrief_questions:
+  - What pattern suggested dead space rather than shunt?
+  - What was the circulatory consequence?
+  implementation_status: implemented_v1.22.2
+  scenario_file: scenarios/epals_pulmonary_thrombosis_pe.yaml
+  release: v1.22.2-alpha
+- id: epals_cardiac_thrombosis_myocarditis_low_output
+  cause_id: cardiac_thrombosis_or_low_output
+  group: T
+  complexity: advanced
+  status: planned
+  clinical_frame: 'Paediatric-adapted cardiac-cause scenario: myocarditis/low-output physiology or cardiac thrombosis
+    analogue.'
+  key_outputs:
+  - HR
+  - MAP
+  - CO
+  - SV
+  - EF_lv
+  - lactate
+  - DO2
+  - SvO2
+  - drug_inotropy_mod
+  expected_interventions:
+  - recognize_cardiogenic_low_output
+  - inotrope_or_vasoactive_support
+  - consider_ECMO_pathway_if_refractory
+  debrief_questions:
+  - What separated cardiogenic from septic shock?
+  - Was the intervention preload, afterload or inotropy targeted?
+  implementation_status: implemented_v1.22.2
+  scenario_file: scenarios/epals_cardiac_thrombosis_myocarditis_low_output.yaml
+  release: v1.22.2-alpha
+implementation_notes:
+- v1.22.1 implements the 5H executable scenario pack.
+- v1.22.2 implements the 5T executable scenario pack.

@@ -1,0 +1,132 @@
+name: airway_failed_intubation_cannot_oxygenate_v1_25
+description: 'Educational v1.25 scenario: hypoxic child with repeated failed intubation attempts, difficult
+  rescue ventilation and delayed secured airway.'
+version: v1.25-alpha
+patient:
+  profile: child_20kg
+  age_y: 5.0
+  weight_kg: 20.0
+  sex: M
+  diagnosis: severe hypoxic respiratory failure with difficult airway
+simulation_time_s: 480
+airway_interface:
+  interface: HFNC
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: HFNC
+  HFNC_flow_L_min: 32.0
+  HFNC_FiO2_set: 0.9
+  mouth_leak_fraction: 0.35
+respiratory:
+  mode: NONE
+  FiO2: 0.9
+  PEEP: 0.0
+  RR: 44
+  Vt: 100
+  C_rs: 0.55
+  R_rs: 18.0
+  SaO2: 0.86
+  PaO2: 52.0
+  PaCO2: 60.0
+  non_recruitable_frac: 0.16
+ventilator:
+  mode: NONE
+airway:
+  bronchospasm_index: 0.2
+  mucus_load: 0.35
+  small_airway_obstruction: 0.45
+cardiovascular:
+  HR: 155
+  MAP: 58
+  CO: 3.2
+metabolism:
+  VO2: 155
+  lactate: 2.4
+drugs:
+  ketamine_mg_kg_h: 0.0
+  midazolam_mcg_kg_h: 0.0
+  rocuronium_mg_kg_h: 0.0
+perturbations:
+- t: 50
+  action: set_ketamine
+  value: 1.0
+  label: RSI sedative proxy
+- t: 50
+  action: set_rocuronium
+  value: 1.2
+  label: NMB proxy
+- t: 50
+  action: set_midazolam
+  value: 160
+  label: sedative burden proxy
+airway_events:
+- t: 85
+  name: failed_intubation_attempt
+  severity: severe
+  label: first failed attempt with worsening hypoxia
+- t: 140
+  name: failed_intubation_attempt
+  severity: severe
+  label: second failed attempt cannot oxygenate
+- t: 175
+  name: laryngospasm
+  severity: severe
+  label: upper-airway closure after repeated attempts
+- t: 230
+  name: start_bag_mask_ventilation
+  severity: difficult
+  label: difficult rescue ventilation
+- t: 340
+  name: perform_intubation
+  severity: emergency
+  label: eventual secured airway
+  tube_internal_diameter_mm: 5.0
+  tube_length_cm: 16.0
+  PEEP: 7.0
+  Pinsp_cmH2O: 20.0
+  FiO2: 1.0
+clinical_narrative: A hypoxic child deteriorates during airway management with repeated failed attempts,
+  difficult rescue ventilation and delayed successful endotracheal intubation. The scenario is for debriefing
+  recognition of failed airway physiology and rescue escalation.
+decision_focus:
+- recognize failed oxygenation
+- avoid fixation on repeated attempts
+- start rescue ventilation
+- secure airway after rescue
+debrief_questions:
+- Which variables mark transition from hypoxic respiratory failure to failed airway?
+- How many failed attempts occurred before rescue ventilation?
+- Did oxygenation support begin before the airway was finally secured?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP

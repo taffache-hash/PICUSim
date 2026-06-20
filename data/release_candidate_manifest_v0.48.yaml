@@ -1,0 +1,51 @@
+version: v0.48
+release_name: release_candidate_cleanup
+status: release-candidate-internal
+clinical_status: not_for_clinical_use
+recommended_public_title: Pediatric Critical Care Physiology Simulation Framework
+internal_project_name: Pediatric Digital Twin
+primary_use:
+  - education
+  - physiology teaching
+  - in-silico model development
+  - hypothesis generation
+prohibited_use:
+  - diagnosis
+  - prescription
+  - bedside decision support
+  - patient-specific digital twin claims
+  - medical-device use
+minimum_release_files:
+  - README.md
+  - RELEASE_CANDIDATE_NOTES_v0.48.md
+  - DISCLAIMER_NOT_FOR_CLINICAL_USE.md
+  - CITATION.bib
+  - CITATION.cff
+  - requirements.txt
+  - run_simulation.py
+  - data/output_profiles_v0.47.yaml
+  - data/release_candidate_manifest_v0.48.yaml
+  - docs/RELEASE_CANDIDATE_CLEANUP_v0.48.md
+  - docs/QUICKSTART_v0.48.md
+  - docs/GITHUB_ZENODO_RELEASE_CHECKLIST_v0.48.md
+recommended_pre_release_checks:
+  - python -m compileall -q .
+  - python tools/dependency_deep_audit.py --fail-on-error
+  - python tools/audit_score_registry.py --fail-on-error
+  - python tools/literature_source_matrix.py --spec data/literature_benchmark_targets_v0.39.yaml
+  - python tools/export_output_profile.py --profiles instructor_minimal validation_core --scenarios healthy_child_20kg septic_shock --dt 2.0
+  - pytest -q tests/test_runtime_guards.py tests/test_v048_release_candidate_cleanup.py
+known_limitations:
+  - Not externally validated against patient-level datasets.
+  - Not patient specific and not a validated digital twin.
+  - Several modules remain semi-mechanistic and assumption-driven.
+  - PK/PD allometric scaling is not yet systematic across all drugs.
+  - Cardiovascular age-scaling and regional V/Q modeling remain simplified.
+  - Morris screening is lightweight and exploratory.
+  - Expert review package is prepared but real external expert ratings are still needed.
+release_blockers_before_public_submission:
+  - Decide final license with institutional/TTO/legal input.
+  - Remove any private/local data before GitHub publication.
+  - Run full test suite on a clean machine.
+  - Generate a final Zenodo archive only after repository metadata are stable.
+  - Ensure README title/disclaimer does not overclaim clinical digital-twin status.

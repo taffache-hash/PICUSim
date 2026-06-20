@@ -1,0 +1,43 @@
+version: 0.45
+purpose: first-pass pediatric profile scaling refactor
+status: partial_refactor_not_full_validation
+modules_refactored:
+  respiratory/mechanics.py:
+    changes:
+      - binds weight_kg from BusState/profile at initialize
+      - derives FRC and compliance anchors from pediatric_profiles.yaml
+      - scales baseline airway resistance upward in smaller children
+    remaining_limits:
+      - disease-specific compliance modifiers are still scenario-defined
+      - no external patient-level calibration
+  respiratory/gas_exchange.py:
+    changes:
+      - uses profile Vd_Vt as dead-space baseline
+      - preserves airway and recruitment modifiers on top of profile baseline
+    remaining_limits:
+      - V/Q model remains two-compartment
+      - no regional distribution or 2,3-DPG model
+  renal/fluid_balance.py:
+    changes:
+      - derives GFR_baseline from profile GFR_ml_min_1_73m2 and BSA
+      - scales infusion, insensible losses and plasma volume by weight
+      - uses profile MAP to set autoregulation anchors
+    remaining_limits:
+      - urine/GFR dynamics remain simplified and fast-timescale educational proxies
+  renal/aki_crrt.py:
+    changes:
+      - derives GFR_baseline from profile and BSA
+      - uses age-group TBW fraction for small solute distribution
+    remaining_limits:
+      - CRRT drug clearance is still not modeled
+  nutrition/glucose.py:
+    changes:
+      - binds weight from BusState/profile
+      - adds age-group GIR/hypoglycemia/distribution anchors
+      - includes age/profile insulin sensitivity term
+    remaining_limits:
+      - insulin model is still qualitative, not full PK/PD
+critical_statement: >
+  The simulator is now more pediatric-profile driven in respiratory, renal and
+  glucose handling, but this is still a first pass. It does not make the model
+  patient-specific or clinically validated.

@@ -1,0 +1,102 @@
+name: airway_rsi_hypoxic_child_v1_24
+description: "Educational v1.24 scenario: hypoxic child on HFNC undergoing RSI with one failed attempt, bag-mask rescue, then successful intubation."
+version: v1.24-alpha
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+  diagnosis: hypoxic respiratory failure before intubation
+simulation_time_s: 420
+airway_interface:
+  interface: HFNC
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: HFNC
+  HFNC_flow_L_min: 30.0
+  HFNC_FiO2_set: 0.85
+  mouth_leak_fraction: 0.25
+respiratory:
+  mode: NONE
+  FiO2: 0.85
+  PEEP: 0.0
+  RR: 42
+  Vt: 110
+  C_rs: 0.60
+  R_rs: 14.0
+  SaO2: 0.90
+  PaO2: 58.0
+  PaCO2: 55.0
+  non_recruitable_frac: 0.10
+ventilator:
+  mode: NONE
+airway:
+  bronchospasm_index: 0.10
+  mucus_load: 0.20
+  small_airway_obstruction: 0.25
+cardiovascular:
+  HR: 145
+  MAP: 62
+  CO: 3.5
+metabolism:
+  VO2: 145
+  lactate: 2.0
+drugs:
+  ketamine_mg_kg_h: 0.0
+  midazolam_mcg_kg_h: 0.0
+  rocuronium_mg_kg_h: 0.0
+perturbations:
+  - t: 60
+    action: set_ketamine
+    value: 1.0
+    label: RSI sedative proxy
+  - t: 60
+    action: set_rocuronium
+    value: 1.2
+    label: neuromuscular blockade proxy
+  - t: 60
+    action: set_midazolam
+    value: 150
+    label: additional sedative proxy
+airway_events:
+  - t: 95
+    name: failed_intubation_attempt
+    severity: moderate
+    label: first laryngoscopy failed
+  - t: 155
+    name: start_bag_mask_ventilation
+    severity: adequate
+    label: bag-mask rescue oxygenation
+  - t: 245
+    name: perform_intubation
+    severity: emergency
+    label: successful endotracheal intubation
+    tube_internal_diameter_mm: 5.0
+    tube_length_cm: 16.0
+    PEEP: 6.0
+    Pinsp_cmH2O: 18.0
+    FiO2: 0.80
+clinical_narrative: A hypoxic child is managed on HFNC before rapid-sequence intubation. The first attempt fails, bag-mask ventilation is started, and the airway is then secured with an endotracheal tube.
+debrief_questions:
+  - What changed after the failed attempt: airway status, saturation, CO2 burden, or rescue state?
+  - Did bag-mask rescue restore positive pressure before intubation?
+  - Which fields identify the airway as secured after successful intubation?
+outputs:
+  - airway_interface
+  - intubated
+  - ventilator_connected
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - manual_ventilation_active
+  - bag_mask_ventilation_active
+  - FiO2_delivered
+  - Paw
+  - PEEP
+  - SaO2
+  - PaCO2
+  - Pmus

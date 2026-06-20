@@ -1,0 +1,111 @@
+name: airway_laryngospasm_post_extubation_v1_25
+description: 'Educational v1.25 scenario: post-extubation laryngospasm with upper-airway obstruction,
+  rescue ventilation and re-intubation.'
+version: v1.25-alpha
+patient:
+  profile: toddler_12kg
+  age_y: 2.0
+  weight_kg: 12.0
+  sex: M
+  diagnosis: postoperative extubation with upper-airway obstruction risk
+simulation_time_s: 420
+airway_interface:
+  interface: ETT
+  intubated: true
+  ventilator_connected: true
+  tube_internal_diameter_mm: 4.0
+  tube_length_cm: 14.0
+  cuff_leak_fraction: 0.05
+  oxygen_interface: VENTILATOR
+  FiO2_set: 0.35
+respiratory:
+  mode: PCV
+  FiO2: 0.35
+  PEEP: 4.0
+  RR: 28
+  Paw: 16.0
+  Vt: 75
+  C_rs: 0.75
+  R_rs: 8.0
+  SaO2: 0.97
+  PaO2: 88.0
+  PaCO2: 40.0
+  non_recruitable_frac: 0.03
+ventilator:
+  mode: PCV
+  Pinsp: 12.0
+  IE_ratio: 0.38
+cardiovascular:
+  HR: 120
+  MAP: 62
+  CO: 2.1
+metabolism:
+  VO2: 95
+  lactate: 1.0
+airway_events:
+- t: 90
+  name: planned_extubation
+  severity: to_low_flow
+  label: planned extubation to low-flow oxygen
+  FiO2: 0.35
+  oxygen_flow_L_min: 3.0
+- t: 145
+  name: laryngospasm
+  severity: severe
+  label: post-extubation laryngospasm
+- t: 210
+  name: start_bag_mask_ventilation
+  severity: difficult
+  label: difficult mask ventilation
+- t: 300
+  name: perform_intubation
+  severity: emergency
+  label: airway secured after laryngospasm
+  tube_internal_diameter_mm: 4.0
+  tube_length_cm: 14.0
+  PEEP: 5.0
+  Pinsp_cmH2O: 18.0
+  FiO2: 1.0
+clinical_narrative: A toddler is extubated after a procedure and develops severe laryngospasm. The scenario
+  emphasizes upper-airway obstruction markers and timely rescue ventilation/re-intubation.
+decision_focus:
+- identify upper-airway obstruction
+- track laryngospasm score
+- recognize poor mask ventilation
+- secure airway if obstruction persists
+debrief_questions:
+- Which variables distinguish laryngospasm from parenchymal lung disease?
+- Did rescue ventilation occur before re-intubation?
+- What are the limits of this proxy model?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP

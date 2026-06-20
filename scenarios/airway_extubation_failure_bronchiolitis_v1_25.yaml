@@ -1,0 +1,119 @@
+name: airway_extubation_failure_bronchiolitis_v1_25
+description: 'Educational v1.25 scenario: infant bronchiolitis planned extubation to HFNC followed by
+  obstruction/hypercapnia and re-intubation.'
+version: v1.25-alpha
+patient:
+  profile: infant_8kg
+  age_y: 0.7
+  weight_kg: 8.0
+  sex: F
+  diagnosis: bronchiolitis after invasive ventilation
+simulation_time_s: 480
+airway_interface:
+  interface: ETT
+  intubated: true
+  ventilator_connected: true
+  tube_internal_diameter_mm: 3.5
+  tube_length_cm: 12.0
+  cuff_leak_fraction: 0.08
+  oxygen_interface: VENTILATOR
+  FiO2_set: 0.4
+respiratory:
+  mode: PCV
+  FiO2: 0.4
+  PEEP: 5.0
+  RR: 34
+  Paw: 18.0
+  Vt: 48
+  C_rs: 0.62
+  R_rs: 13.0
+  SaO2: 0.95
+  PaO2: 78.0
+  PaCO2: 48.0
+  non_recruitable_frac: 0.08
+ventilator:
+  mode: PCV
+  Pinsp: 13.0
+  IE_ratio: 0.35
+airway:
+  bronchospasm_index: 0.1
+  mucus_load: 0.4
+  small_airway_obstruction: 0.45
+cardiovascular:
+  HR: 145
+  MAP: 54
+  CO: 1.35
+metabolism:
+  VO2: 78
+  lactate: 1.5
+  T_core: 37.8
+airway_events:
+- t: 100
+  name: planned_extubation
+  severity: to_hfnc
+  label: planned extubation to HFNC
+  HFNC_flow_L_min: 16.0
+  FiO2: 0.5
+- t: 210
+  name: airway_obstruction_event
+  severity: moderate
+  label: post-extubation obstructive deterioration
+- t: 285
+  name: start_bag_mask_ventilation
+  severity: adequate
+  label: rescue ventilation before re-intubation
+- t: 355
+  name: perform_intubation
+  severity: emergency
+  label: re-intubation for extubation failure
+  tube_internal_diameter_mm: 3.5
+  tube_length_cm: 12.0
+  PEEP: 6.0
+  Pinsp_cmH2O: 18.0
+  FiO2: 0.8
+clinical_narrative: An infant with bronchiolitis is extubated to HFNC but develops recurrent obstruction
+  and hypercapnia requiring rescue ventilation and re-intubation.
+decision_focus:
+- recognize extubation failure
+- track HFNC support limits
+- rescue before deterioration
+- re-intubate when failure markers persist
+debrief_questions:
+- Which variables confirm the planned extubation occurred?
+- Which markers suggest HFNC support is failing?
+- What changed after re-intubation?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP
+- HFNC_flow_L_min
+- HFNC_failure_risk
+- HFNC_deadspace_washout

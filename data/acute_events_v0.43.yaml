@@ -1,0 +1,207 @@
+version: v0.43
+purpose: >
+  Standardized acute event definitions for educational / in-silico scenario perturbation.
+  These are not clinical prediction rules. They map abrupt clinical events to reusable
+  physiologic perturbations on the simulation bus.
+
+schema:
+  effect_fields: [key, op, value, min, max]
+  supported_ops: [set, add, multiply]
+
+events:
+  pneumothorax:
+    description: Acute pneumothorax / tension pneumothorax physiology.
+    expected_direction: [C_rs_down, PaO2_down, SaO2_down, PVR_up, RV_afterload_up, MAP_down]
+    severities:
+      mild:
+        effects:
+          - {key: C_rs, op: multiply, value: 0.75, min: 2.0}
+          - {key: recruited_frac, op: add, value: -0.10, min: 0.10, max: 1.0}
+          - {key: airway_shunt_add, op: add, value: 0.04, min: 0.0, max: 0.50}
+          - {key: PVR, op: multiply, value: 1.15, max: 400.0}
+          - {key: CVP, op: add, value: 1.5, max: 25.0}
+          - {key: RV_afterload_index, op: add, value: 0.10, min: 0.0, max: 1.0}
+          - {key: MAP, op: multiply, value: 0.92, min: 25.0}
+          - {key: alarm_active, op: set, value: true}
+      moderate:
+        effects:
+          - {key: C_rs, op: multiply, value: 0.55, min: 2.0}
+          - {key: recruited_frac, op: add, value: -0.22, min: 0.05, max: 1.0}
+          - {key: airway_shunt_add, op: add, value: 0.10, min: 0.0, max: 0.60}
+          - {key: PVR, op: multiply, value: 1.35, max: 500.0}
+          - {key: CVP, op: add, value: 3.0, max: 30.0}
+          - {key: RV_afterload_index, op: add, value: 0.25, min: 0.0, max: 1.0}
+          - {key: MAP, op: multiply, value: 0.82, min: 25.0}
+          - {key: alarm_active, op: set, value: true}
+      tension:
+        effects:
+          - {key: C_rs, op: multiply, value: 0.35, min: 1.0}
+          - {key: recruited_frac, op: add, value: -0.35, min: 0.03, max: 1.0}
+          - {key: airway_shunt_add, op: add, value: 0.18, min: 0.0, max: 0.70}
+          - {key: PVR, op: multiply, value: 1.75, max: 700.0}
+          - {key: CVP, op: add, value: 6.0, max: 35.0}
+          - {key: RV_afterload_index, op: add, value: 0.45, min: 0.0, max: 1.0}
+          - {key: MAP, op: multiply, value: 0.68, min: 20.0}
+          - {key: CO, op: multiply, value: 0.72, min: 0.5}
+          - {key: alarm_active, op: set, value: true}
+
+  tube_obstruction:
+    description: Acute endotracheal tube obstruction / secretions.
+    expected_direction: [R_rs_up, Ppeak_up, Vt_down, PaCO2_up, alarm_on]
+    severities:
+      mild:
+        effects:
+          - {key: R_rs, op: multiply, value: 1.4, max: 80.0}
+          - {key: mucus_load, op: add, value: 0.12, min: 0.0, max: 1.0}
+          - {key: airway_obstruction_index, op: add, value: 0.10, min: 0.0, max: 1.0}
+          - {key: alarm_active, op: set, value: true}
+      moderate:
+        effects:
+          - {key: R_rs, op: multiply, value: 2.0, max: 100.0}
+          - {key: mucus_load, op: add, value: 0.28, min: 0.0, max: 1.0}
+          - {key: airway_obstruction_index, op: add, value: 0.22, min: 0.0, max: 1.0}
+          - {key: PaCO2, op: add, value: 8.0, max: 120.0}
+          - {key: alarm_active, op: set, value: true}
+      severe:
+        effects:
+          - {key: R_rs, op: multiply, value: 3.2, max: 140.0}
+          - {key: mucus_load, op: add, value: 0.45, min: 0.0, max: 1.0}
+          - {key: airway_obstruction_index, op: add, value: 0.40, min: 0.0, max: 1.0}
+          - {key: PaCO2, op: add, value: 18.0, max: 140.0}
+          - {key: alarm_active, op: set, value: true}
+
+  accidental_extubation:
+    description: Accidental extubation / circuit disconnection physiology.
+    expected_direction: [effective_PEEP_lost, Vt_down, SaO2_down, PaCO2_up, alarm_on]
+    severities:
+      moderate:
+        effects:
+          - {key: PEEP, op: set, value: 0.0, min: 0.0}
+          - {key: Pinsp_cmH2O, op: set, value: 0.0, min: 0.0}
+          - {key: PS_cmH2O, op: set, value: 0.0, min: 0.0}
+          - {key: FiO2, op: set, value: 0.21, min: 0.21, max: 1.0}
+          - {key: Vt, op: multiply, value: 0.35, min: 5.0}
+          - {key: PaCO2, op: add, value: 12.0, max: 130.0}
+          - {key: SaO2, op: multiply, value: 0.86, min: 0.40, max: 1.0}
+          - {key: alarm_active, op: set, value: true}
+      severe:
+        effects:
+          - {key: PEEP, op: set, value: 0.0, min: 0.0}
+          - {key: Pinsp_cmH2O, op: set, value: 0.0, min: 0.0}
+          - {key: PS_cmH2O, op: set, value: 0.0, min: 0.0}
+          - {key: FiO2, op: set, value: 0.21, min: 0.21, max: 1.0}
+          - {key: Vt, op: multiply, value: 0.20, min: 2.0}
+          - {key: PaCO2, op: add, value: 25.0, max: 150.0}
+          - {key: SaO2, op: multiply, value: 0.65, min: 0.30, max: 1.0}
+          - {key: alarm_active, op: set, value: true}
+
+  bronchospasm_acute:
+    description: Abrupt bronchospasm with dynamic hyperinflation risk.
+    expected_direction: [R_rs_up, auto_PEEP_up, PaCO2_up, MAP_possible_down]
+    severities:
+      moderate:
+        effects:
+          - {key: bronchospasm_index, op: add, value: 0.25, min: 0.0, max: 1.0}
+          - {key: R_rs, op: multiply, value: 1.8, max: 100.0}
+          - {key: auto_PEEP_obstructive, op: add, value: 2.5, min: 0.0, max: 20.0}
+          - {key: PaCO2, op: add, value: 8.0, max: 130.0}
+      severe:
+        effects:
+          - {key: bronchospasm_index, op: add, value: 0.45, min: 0.0, max: 1.0}
+          - {key: R_rs, op: multiply, value: 2.6, max: 140.0}
+          - {key: auto_PEEP_obstructive, op: add, value: 5.0, min: 0.0, max: 25.0}
+          - {key: PaCO2, op: add, value: 18.0, max: 150.0}
+          - {key: MAP, op: multiply, value: 0.88, min: 25.0}
+
+  acute_bleeding:
+    description: Acute hemorrhage / blood loss.
+    expected_direction: [Hb_down, preload_down, MAP_down, HR_up, lactate_up]
+    severities:
+      moderate:
+        effects:
+          - {key: bleeding_rate_mL_h, op: add, value: 120.0, min: 0.0, max: 2000.0}
+          - {key: Hb, op: add, value: -1.0, min: 3.0}
+          - {key: fluid_balance, op: add, value: -180.0}
+          - {key: EDV_lv, op: multiply, value: 0.82, min: 10.0}
+          - {key: MAP, op: multiply, value: 0.82, min: 20.0}
+          - {key: HR, op: add, value: 18.0, max: 230.0}
+          - {key: lactate, op: add, value: 1.0, max: 20.0}
+      severe:
+        effects:
+          - {key: bleeding_rate_mL_h, op: add, value: 350.0, min: 0.0, max: 3000.0}
+          - {key: Hb, op: add, value: -2.0, min: 3.0}
+          - {key: fluid_balance, op: add, value: -350.0}
+          - {key: EDV_lv, op: multiply, value: 0.65, min: 8.0}
+          - {key: MAP, op: multiply, value: 0.68, min: 20.0}
+          - {key: HR, op: add, value: 35.0, max: 240.0}
+          - {key: lactate, op: add, value: 2.5, max: 25.0}
+
+  seizure:
+    description: Acute seizure/metabolic crisis.
+    expected_direction: [VO2_up, lactate_up, temperature_up, neuro_status_down]
+    severities:
+      moderate:
+        effects:
+          - {key: seizure_risk_index, op: add, value: 0.35, min: 0.0, max: 1.0}
+          - {key: VO2, op: multiply, value: 1.25, max: 500.0}
+          - {key: lactate, op: add, value: 1.2, max: 20.0}
+          - {key: T_core, op: add, value: 0.4, max: 41.5}
+          - {key: GCS_proxy, op: add, value: -2.0, min: 3.0, max: 15.0}
+      severe:
+        effects:
+          - {key: seizure_risk_index, op: add, value: 0.65, min: 0.0, max: 1.0}
+          - {key: VO2, op: multiply, value: 1.55, max: 650.0}
+          - {key: lactate, op: add, value: 2.8, max: 25.0}
+          - {key: T_core, op: add, value: 0.9, max: 42.0}
+          - {key: GCS_proxy, op: add, value: -4.0, min: 3.0, max: 15.0}
+
+  hypoglycemia_severe:
+    description: Severe hypoglycemia with neurologic risk.
+    expected_direction: [glucose_down, seizure_risk_up, sympathetic_tone_up]
+    severities:
+      moderate:
+        effects:
+          - {key: glucose_mmol_L, op: set, value: 2.6, min: 1.0, max: 30.0}
+          - {key: seizure_risk_index, op: add, value: 0.25, min: 0.0, max: 1.0}
+          - {key: sympathetic_tone, op: multiply, value: 1.15, min: 0.5, max: 3.0}
+      severe:
+        effects:
+          - {key: glucose_mmol_L, op: set, value: 1.8, min: 1.0, max: 30.0}
+          - {key: seizure_risk_index, op: add, value: 0.55, min: 0.0, max: 1.0}
+          - {key: GCS_proxy, op: add, value: -3.0, min: 3.0, max: 15.0}
+          - {key: sympathetic_tone, op: multiply, value: 1.30, min: 0.5, max: 3.0}
+
+  sedative_bolus_hypotension:
+    description: Bolus sedative/opioid hypotension and hypoventilation.
+    expected_direction: [sedation_up, MAP_down, respiratory_drive_down, PaCO2_up]
+    severities:
+      moderate:
+        effects:
+          - {key: sedation_score, op: add, value: 0.20, min: 0.0, max: 1.0}
+          - {key: sed_resp_mod, op: multiply, value: 0.75, min: 0.10, max: 1.0}
+          - {key: MAP, op: multiply, value: 0.86, min: 25.0}
+          - {key: PaCO2, op: add, value: 8.0, max: 130.0}
+      severe:
+        effects:
+          - {key: sedation_score, op: add, value: 0.40, min: 0.0, max: 1.0}
+          - {key: sed_resp_mod, op: multiply, value: 0.55, min: 0.10, max: 1.0}
+          - {key: MAP, op: multiply, value: 0.72, min: 20.0}
+          - {key: PaCO2, op: add, value: 18.0, max: 150.0}
+          - {key: RASS_proxy, op: add, value: -2.0, min: -5.0, max: 4.0}
+
+  transfusion_reaction:
+    description: Febrile/hemolytic transfusion reaction proxy.
+    expected_direction: [temperature_up, inflammatory_drive_up, hemolysis_up, K_possible_up]
+    severities:
+      mild:
+        effects:
+          - {key: T_core, op: add, value: 0.6, max: 41.0}
+          - {key: cytokine_drive, op: add, value: 0.12, min: 0.0, max: 1.0}
+          - {key: hemolysis_index, op: add, value: 0.10, min: 0.0, max: 1.0}
+      severe:
+        effects:
+          - {key: T_core, op: add, value: 1.4, max: 42.0}
+          - {key: cytokine_drive, op: add, value: 0.30, min: 0.0, max: 1.0}
+          - {key: hemolysis_index, op: add, value: 0.35, min: 0.0, max: 1.0}
+          - {key: K_mmol_L, op: add, value: 0.5, min: 1.5, max: 8.0}
+          - {key: MAP, op: multiply, value: 0.82, min: 20.0}

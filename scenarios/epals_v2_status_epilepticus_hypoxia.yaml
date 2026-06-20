@@ -1,0 +1,16 @@
+name: epals_v2_status_epilepticus_hypoxia
+description: EPALS scenario engine v2 status epilepticus with hypoxia/hypercarbia burden.
+patient: {age_y: 4, weight_kg: 16, sex: F, diagnosis: status_epilepticus}
+respiratory: {FiO2: 0.30, PEEP: 0, Paw: 0, RR: 12, PaO2: 55, PaCO2: 66, SaO2: 0.84}
+airway_interface: {interface: LOW_FLOW_OXYGEN, oxygen_flow_L_min: 4, oxygen_FiO2_set: 0.30}
+cardiovascular: {HR: 150, MAP: 64, CVP: 5, Hb: 11.5}
+metabolism: {lactate: 5.2}
+neurofunctional: {GCS_proxy: 6, seizure_risk_index: 0.95, seizure_treatment_effect: 0.0}
+drugs: {midazolam_mcg_kg_h: 0.0}
+perturbations:
+  - {t: 30, action: set_midazolam, value: 60, label: benzodiazepine antiseizure treatment}
+  - {t: 60, action: set_seizure_treatment, value: 0.75, label: seizure activity improves}
+  - {t: 90, action: set_bag_mask_ventilation, value: true, label: rescue ventilation started}
+  - {t: 130, action: set_FiO2, value: 0.80, label: oxygen support escalated}
+outputs: [SaO2, PaCO2, GCS_proxy, seizure_risk_index, lactate, decision_priority]
+simulation_time_s: 300

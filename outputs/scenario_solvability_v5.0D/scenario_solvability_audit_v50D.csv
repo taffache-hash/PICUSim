@@ -1,0 +1,9 @@
+scenario_id,path,phenotype,complexity,simulation_time_s,expected_actions,perturbations,outputs,playable,recoverable,failable,non_deterministic,solvable,status,critical_findings,review_findings,findings
+epals_v2_septic_shock_warm,scenarios/epals_v2_septic_shock_warm.yaml,distributive/septic shock,intermediate,420,3,5,8,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_anaphylactic_shock,scenarios/epals_v2_anaphylactic_shock.yaml,distributive/anaphylactic shock,advanced,300,3,4,7,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_tamponade_obstructive_shock,scenarios/epals_v2_tamponade_obstructive_shock.yaml,obstructive shock/tamponade,advanced,360,3,4,7,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_hyperkalemia_aki_instability,scenarios/epals_v2_hyperkalemia_aki_instability.yaml,electrolyte emergency/AKI,intermediate,360,3,4,6,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_status_epilepticus_hypoxia,scenarios/epals_v2_status_epilepticus_hypoxia.yaml,neurologic emergency/status epilepticus,intermediate,300,3,4,6,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_tbi_icp_crisis,scenarios/epals_v2_tbi_icp_crisis.yaml,traumatic brain injury/raised ICP,advanced,360,3,4,6,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_dka_dehydration_shock,scenarios/epals_v2_dka_dehydration_shock.yaml,metabolic shock/DKA surrogate,intermediate,420,3,3,6,yes,yes,yes,yes,yes,pass,0,0,none
+epals_v2_bronchiolitis_respiratory_failure,scenarios/epals_v2_bronchiolitis_respiratory_failure.yaml,respiratory failure/bronchiolitis,intermediate,360,3,5,6,yes,yes,yes,yes,yes,pass,0,0,none

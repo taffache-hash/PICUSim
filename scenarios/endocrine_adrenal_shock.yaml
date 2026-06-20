@@ -1,0 +1,95 @@
+name: endocrine_adrenal_shock
+version: v0.19
+category: endocrine_stress_axis
+summary: >
+  Catecholamine-requiring pediatric septic shock with relative adrenal insufficiency,
+  stress hyperglycemia and partial response to hydrocortisone/vasopressin.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+  diagnosis: septic_shock_relative_adrenal_insufficiency
+
+respiratory:
+  mode: PCV
+  PEEP: 8
+  Paw: 24
+  FiO2: 0.80
+  RR: 34
+  C_rs: 0.75
+  R_rs: 10
+  PaO2: 64
+  PaCO2: 36
+  SaO2: 0.90
+  non_recruitable_frac: 0.20
+
+cardiovascular:
+  HR: 160
+  MAP: 45
+  CO: 4.2
+  CVP: 4
+  PAWP: 6
+  Hb: 9.2
+  preload_mod: 0.70
+
+metabolism:
+  T_core: 39.2
+  T_setpoint: 39.4
+  lactate: 5.2
+  SIRS_factor: 1.35
+
+sepsis:
+  phenotype: vasoplegic
+  infection_load: 0.85
+  source_control: 0.0
+  antibiotic_effect: 0.0
+
+acidbase:
+  Na_mmol_L: 136
+  K_mmol_L: 4.8
+  Cl_mmol_L: 104
+  HCO3_mmol_L: 18
+  urea_mmol_L: 7
+
+nutrition:
+  GIR: 5.5
+
+drugs:
+  norad_mcg_kg_min: 0.0
+  vasopressin_mU_kg_min: 0.0
+  hydrocortisone_mg_kg_h: 0.0
+  insulin_UI_h: 0.0
+
+endocrine:
+  cortisol_activity: 0.16
+  catecholamine_tone: 0.50
+
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 200, label: "initial 10 mL/kg fluid bolus"}
+  - {t: 60, action: set_norad, value: 0.20, label: "start norepinephrine"}
+  - {t: 120, action: set_norad, value: 0.45, label: "escalate norepinephrine"}
+  - {t: 180, action: set_vasopressin, value: 0.04, label: "vasopressin for vasoplegia"}
+  - {t: 240, action: set_hydrocortisone, value: 0.18, label: "stress-dose hydrocortisone"}
+  - {t: 300, action: set_insulin, value: 0.6, label: "low-dose insulin for stress hyperglycemia"}
+  - {t: 420, action: set_antibiotic_effect, value: 0.55, label: "antibiotic effect"}
+  - {t: 420, action: set_source_control, value: 0.35, label: "partial source control"}
+
+outputs:
+  - MAP
+  - HR
+  - glucose_mmol_L
+  - cortisol_activity
+  - catecholamine_tone
+  - adrenal_insufficiency_index
+  - critical_illness_steroid_need_index
+  - insulin_resistance_index
+  - stress_hyperglycemia_index
+  - ADH_water_retention_index
+  - endocrine_severity_score
+  - lactate
+  - HCO3_mmol_L
+  - pH_a
+
+simulation_time_s: 720

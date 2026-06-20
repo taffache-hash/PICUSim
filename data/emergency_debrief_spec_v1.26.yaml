@@ -1,0 +1,70 @@
+version: v1.26-alpha
+title: Airway/emergency debrief engine specification
+scope: Instructor-facing quantitative debrief metrics for airway decision scenarios.
+safety_status: educational/research alpha only; not for clinical use; not a medical device; not a validated patient-specific digital twin
+primary_input_pack: data/airway_decision_scenario_pack_v1.25.yaml
+optional_input_pack: data/epals_debrief_spec_v1.22.3.yaml
+outputs:
+  summary_json: emergency_debrief_summary_v126.json
+  scenario_metrics_csv: emergency_debrief_scenario_metrics_v126.csv
+  timing_csv: emergency_debrief_timing_v126.csv
+  threshold_events_csv: emergency_debrief_threshold_events_v126.csv
+  decision_flags_csv: emergency_debrief_decision_flags_v126.csv
+  index_markdown: emergency_debrief_index_v126.md
+  scenario_reports_dir: scenario_reports/
+core_metrics:
+  oxygenation:
+    - SpO2_nadir
+    - SpO2_nadir_time_s
+    - time_below_SpO2_90_s
+    - time_below_SpO2_80_s
+    - time_below_SpO2_70_s
+    - time_to_reoxygenation_after_intubation_s
+  ventilation:
+    - PaCO2_peak
+    - PaCO2_peak_time_s
+    - time_above_PaCO2_70_s
+  circulation:
+    - HR_min
+    - MAP_min
+    - time_below_MAP_50_s
+  airway_events:
+    - first_failed_attempt_time_s
+    - first_rescue_ventilation_time_s
+    - intubation_success_time_s
+    - extubation_time_s
+    - failed_intubation_count
+    - intubation_attempt_count
+educational_flags:
+  repeated_failed_attempts:
+    rule: failed_intubation_count >= 2
+  severe_hypoxia:
+    rule: SpO2_nadir < 0.80
+  profound_hypoxia:
+    rule: SpO2_nadir < 0.70
+  prolonged_hypoxia:
+    rule: time_below_SpO2_90_s >= 60
+  delayed_rescue_after_failed_attempt:
+    rule: rescue ventilation begins more than 60 seconds after first failed attempt
+  no_rescue_before_intubation:
+    rule: successful intubation occurs without preceding rescue ventilation in a scenario with failed attempt
+  delayed_reoxygenation_after_intubation:
+    rule: SpO2 remains below 0.90 for more than 120 seconds after successful intubation
+thresholds:
+  SpO2: [0.90, 0.80, 0.70]
+  PaCO2: [60.0, 70.0, 90.0]
+  MAP: [55.0, 50.0, 45.0]
+  HR: [80.0, 60.0]
+report_sections:
+  - scenario_frame
+  - airway_event_timeline
+  - oxygenation_burden
+  - ventilation_burden
+  - rescue_timing
+  - decision_flags
+  - debrief_questions
+limitations:
+  - Metrics are educational markers and are not clinical quality indicators.
+  - Timing is limited by simulation snapshot interval; use smaller dt for finer debrief timing.
+  - Airway interventions are simplified event proxies, not procedural guidance.
+next_release: v1.27-alpha Streamlit emergency training mode

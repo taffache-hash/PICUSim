@@ -1,0 +1,10 @@
+{
+  "version": "3.1-step5.6-zenodo-deposition-ready-release-candidate",
+  "archive": "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip",
+  "sha256_file": "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip.sha256",
+  "sha256": "02456548893e05700baa9116f31bc1207adb1d8d54033d35aeae86d3c54a6ece",
+  "file_count_in_archive": 659,
+  "excludes_transient_caches": true,
+  "includes_reproducibility_outputs": true,
+  "doi_status": "pending deposition"
+}

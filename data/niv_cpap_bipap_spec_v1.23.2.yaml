@@ -1,0 +1,29 @@
+release: v1.23.2-alpha
+purpose: Non-invasive ventilation scaffold for educational pediatric airway simulations.
+interfaces:
+  NIV_CPAP:
+    description: Mask-delivered continuous positive airway pressure with leak-adjusted delivered PEEP and FiO2.
+    expected_vent_mode: CPAP
+    intubated: false
+    ventilator_connected: true
+    primary_outputs:
+    - NIV_delivered_PEEP_cmH2O
+    - NIV_leak_fraction
+    - NIV_failure_risk
+  NIV_BIPAP:
+    description: Mask-delivered bilevel support represented as EPAP plus pressure support, with leak-adjusted delivered pressures.
+    expected_vent_mode: PSV
+    intubated: false
+    ventilator_connected: true
+    primary_outputs:
+    - NIV_delivered_PEEP_cmH2O
+    - NIV_delivered_PS_cmH2O
+    - NIV_delivered_PIP_cmH2O
+    - NIV_deadspace_washout
+scenarios:
+- airway_niv_cpap_bronchiolitis_v1_23_2
+- airway_niv_bipap_hypercapnia_v1_23_2
+limitations:
+- Educational proxy only.
+- Does not model mask geometry, asynchrony, trigger leak compensation, gastric insufflation or skin injury.
+- NIV failure risk is qualitative and not externally validated.

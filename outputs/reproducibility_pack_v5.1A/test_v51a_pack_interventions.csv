@@ -1,0 +1,2 @@
+t,action,label,payload_json,result_json
+0.0,airway_event,action:airway_event,"{""name"":""failed_intubation_attempt"",""severity"":""moderate""}","{""action"":""airway_event"",""event"":""failed_intubation_attempt"",""severity"":""moderate"",""status"":""applied""}"

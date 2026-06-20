@@ -1,0 +1,47 @@
+# Zenodo deposition metadata draft for PICUSim Step 5.6
+# DOI and record identifiers are intentionally absent until deposition.
+
+title: "PICUSim / Pediatric Critical Care Sim: modular pediatric critical-care physiology simulation framework"
+upload_type: software
+publication_date: "2026-06-20"
+version: "3.1-step5.9-final-public-release-candidate"
+creators:
+  - name: "Taffache, Paolo"
+    affiliation: "Independent / to be confirmed before deposition"
+    orcid: ""
+description: >-
+  PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework
+  for education, scenario design, in-silico research prototyping, software testing and hypothesis generation.
+  The release-candidate package includes physiological and pharmacological modules, YAML clinical scenarios,
+  a local FastAPI backend, a browser-based training console, validation-support artifacts, regression reports,
+  reproducibility outputs and publication-readiness documentation. This software is not a medical device and
+  is not for clinical use, diagnosis, treatment, prescribing, triage, bedside monitoring, prognostication,
+  device control, patient-specific modelling or patient-care decisions.
+license: "Apache-2.0"
+access_right: open
+keywords:
+  - pediatric intensive care
+  - critical care simulation
+  - physiology simulation
+  - medical education
+  - in-silico research
+  - scenario-based training
+  - FastAPI
+  - digital twin disclaimer
+language: eng
+related_identifiers:
+  - identifier: "OSF project URL pending Step 5.7"
+    relation: isSupplementTo
+    resource_type: project
+  - identifier: "Cureus/JMIR manuscript DOI pending Step 5.8/publication"
+    relation: isDocumentedBy
+    resource_type: publication
+notes: >-
+  Prepared as a release-candidate archival software upload. Final DOI, ORCID, affiliation, related identifiers,
+  and public record URLs must be completed during actual Zenodo deposition. Safety disclaimer must remain visible.
+archive:
+  candidate_name: "pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip"
+  checksum_algorithm: sha256
+  checksum_file: "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip.sha256"
+  includes_reproducibility_outputs: true
+  excludes_transient_caches: true

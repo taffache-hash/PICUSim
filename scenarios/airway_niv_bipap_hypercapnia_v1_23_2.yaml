@@ -1,0 +1,94 @@
+name: airway_niv_bipap_hypercapnia_v1_23_2
+description: 'v1.23.2 scenario: non-invasive bilevel ventilation for hypercapnic obstructive respiratory failure.'
+simulation_time_s: 420
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: F
+airway_interface:
+  interface: NIV_BIPAP
+  intubated: false
+  ventilator_connected: true
+  airway_pressure_delivery_enabled: true
+  oxygen_interface: NIV
+  NIV_mode: BIPAP
+  NIV_EPAP_cmH2O: 6.0
+  NIV_IPAP_cmH2O: 16.0
+  NIV_pressure_support_cmH2O: 10.0
+  NIV_FiO2_set: 0.50
+  NIV_leak_fraction: 0.32
+  mask_leak_fraction: 0.32
+  note: v1.23.2 NIV BiPAP hypercapnia base
+respiratory:
+  mode: PSV
+  FiO2: 0.50
+  PEEP: 6.0
+  RR: 34
+  Vt: 120
+  C_rs: 0.78
+  R_rs: 18.0
+  SaO2: 0.89
+  PaO2: 60
+  PaCO2: 64
+  non_recruitable_frac: 0.05
+ventilator:
+  mode: PSV
+  PS: 10.0
+  PEEP: 6.0
+  trigger_thresh: 1.5
+  cycling_frac: 0.25
+airway:
+  bronchospasm_index: 0.42
+  mucus_load: 0.30
+  small_airway_obstruction: 0.50
+metabolism:
+  VO2: 130
+  T_core: 37.6
+  lactate: 1.5
+cardiovascular:
+  HR: 132
+  MAP: 62
+  CO: 3.6
+  Hb: 11.4
+perturbations:
+- t: 210
+  action: set_NIV_IPAP
+  value: 18.0
+  label: increase NIV IPAP
+- t: 210
+  action: set_NIV_PS
+  value: 12.0
+  label: increase NIV pressure support
+- t: 210
+  action: set_NIV_FiO2
+  value: 0.55
+  label: increase NIV FiO2
+clinical_narrative: A school-age child with obstructive hypercapnic respiratory failure is supported with non-invasive bilevel ventilation. The scenario verifies pressure-support delivery through a mask rather than an endotracheal tube.
+debrief_questions:
+- Which variables show that bilevel NIV is active but the child is not intubated?
+- What is the effect of IPAP/EPAP and leak on delivered pressure?
+- Which markers would prompt escalation to intubation in a future airway-event scenario?
+outputs:
+- airway_interface
+- NIV_mode
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- NIV_EPAP_cmH2O
+- NIV_IPAP_cmH2O
+- NIV_pressure_support_cmH2O
+- NIV_delivered_PEEP_cmH2O
+- NIV_delivered_PS_cmH2O
+- NIV_delivered_PIP_cmH2O
+- NIV_leak_fraction
+- NIV_failure_risk
+- NIV_deadspace_washout
+- FiO2_delivered
+- PEEP
+- Paw
+- Ppeak
+- SaO2
+- PaCO2
+- RR_total

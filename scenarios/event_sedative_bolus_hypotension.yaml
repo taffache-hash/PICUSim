@@ -1,0 +1,54 @@
+name: healthy_child_20kg__event_sedative_bolus_hypotension_severe
+description: 'Bambino sano 5 anni, 20 kg, in ventilazione meccanica protettiva post-operatoria.
+  Parametri fisiologici normali.
+
+
+
+  Injected acute event v0.43: sedative_bolus_hypotension/severe at t=120.0s.'
+patient:
+  age_y: 5
+  weight_kg: 20
+  sex: M
+  diagnosis: post_op_monitoring
+respiratory:
+  PEEP: 5
+  Paw: 12
+  FiO2: 0.3
+  RR: 22
+  C_rs: 1.0
+  R_rs: 8.0
+  PaO2: 95.0
+  PaCO2: 38.0
+  SaO2: 0.98
+cardiovascular:
+  HR: 105
+  MAP: 68
+  CVP: 4
+  Hb: 11.5
+metabolism:
+  T_core: 37.0
+  VO2: 120
+perturbations:
+- t: 60
+  action: set_PEEP
+  value: 8
+  label: "PEEP 5\u21928 cmH2O"
+- t: 180
+  action: set_FiO2
+  value: 0.21
+  label: "Weaning FiO2 \u2192 0.21"
+outputs:
+- Paw
+- EELV
+- SaO2
+- PaO2
+- PaCO2
+- MAP
+- CO
+- HR
+- recruited_frac
+simulation_time_s: 300
+events:
+- t: 120.0
+  name: sedative_bolus_hypotension
+  severity: severe

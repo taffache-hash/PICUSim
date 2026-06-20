@@ -1,0 +1,56 @@
+version: v5.0C
+release_step: "5.0C"
+description: "Biological plausibility guardrails for PDT validation pack. Educational simulator only; not clinical decision support."
+critical_bounds:
+  SaO2_final: [0.0, 1.0]
+  SaO2_min: [0.0, 1.0]
+  PaO2_final: [0.0, 700.0]
+  PaCO2_final: [5.0, 250.0]
+  PaCO2_max: [5.0, 300.0]
+  pH_a_final: [6.5, 7.8]
+  pH_a_min: [6.4, 7.8]
+  MAP_final: [5.0, 180.0]
+  MAP_min: [0.0, 180.0]
+  HR_final: [20.0, 320.0]
+  lactate_final: [0.0, 30.0]
+  lactate_max: [0.0, 35.0]
+  K_mmol_L_final: [1.5, 9.5]
+  Na_mmol_L_final: [110.0, 170.0]
+  glucose_mmol_L_final: [0.5, 60.0]
+  creatinine_mg_dL_final: [0.05, 8.0]
+  urine_rate_mL_h_final: [0.0, 1000.0]
+  FiO2_final: [0.21, 1.0]
+  PEEP_final: [0.0, 25.0]
+  Paw_final: [0.0, 80.0]
+  VILI_risk_final: [0.0, 1.0]
+  VILI_risk_max: [0.0, 1.0]
+soft_bounds:
+  healthy_child_20kg:
+    SaO2_min: [0.86, 1.0]
+    MAP_min: [55.0, 120.0]
+    lactate_max: [0.5, 4.0]
+  infant_bronchiolitis:
+    SaO2_min: [0.65, 1.0]
+    PaCO2_max: [35.0, 160.0]
+  epals_v2_septic_shock_warm:
+    MAP_min: [25.0, 95.0]
+    lactate_max: [1.0, 16.0]
+  epals_v2_anaphylaxis:
+    MAP_min: [20.0, 100.0]
+    SaO2_min: [0.55, 1.0]
+  epals_v2_hyperkalemia:
+    K_mmol_L_final: [3.0, 9.5]
+logical_rules:
+  - id: fio2_fraction_not_percent
+    expression: "FiO2_final <= 1.0"
+  - id: saturation_fraction_not_percent
+    expression: "SaO2_final <= 1.0 and SaO2_min <= 1.0"
+  - id: severe_hypoxemia_should_not_have_high_pao2
+    expression: "not (SaO2_min < 0.75 and PaO2_final > 180)"
+  - id: shock_hypotension_should_not_have_zero_lactate
+    expression: "not (MAP_min < 40 and lactate_max < 1.0)"
+  - id: electrolyte_values_are_finite
+    expression: "isfinite(K_mmol_L_final) and isfinite(Na_mmol_L_final)"
+clamp_policy:
+  mode: audit_only
+  reason: "The validation pack reports impossible states; runtime clamping should be explicit and module-owned, not silently applied during validation."

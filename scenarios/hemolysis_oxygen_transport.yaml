@@ -1,0 +1,63 @@
+name: hemolysis_oxygen_transport
+version: v0.21
+category: hematology_oxygen_transport
+summary: >
+  Qualitative hemolysis scenario with falling effective Hb, indirect bilirubin/LDH
+  indices and potassium interaction. Exploratory, not diagnostic.
+
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 24
+  sex: F
+  diagnosis: hemolysis_oxygen_transport
+
+respiratory:
+  mode: PCV
+  PEEP: 7
+  Paw: 21
+  FiO2: 0.40
+  RR: 24
+  C_rs: 0.80
+  R_rs: 8.0
+  PaO2: 88
+  PaCO2: 39
+  SaO2: 0.96
+
+cardiovascular:
+  HR: 125
+  MAP: 64
+  CO: 4.1
+  Hb: 9.5
+
+acidbase:
+  K_mmol_L: 4.6
+
+metabolism:
+  T_core: 38.0
+  VO2: 135
+  lactate: 1.8
+
+hematology:
+  hemolysis_index: 0.35
+  WBC_count: 10.5
+  transfusion_threshold_Hb: 7.0
+
+perturbations:
+  - {t: 180, action: set_hemolysis, value: 0.15, label: "Hemolysis partially controlled"}
+  - {t: 300, action: set_K, value: 5.1, label: "Potassium drift from hemolysis/AKI context"}
+
+outputs:
+  - Hb
+  - Hct_percent
+  - hemolysis_index
+  - LDH_index
+  - indirect_bilirubin_mg_dL
+  - K_mmol_L
+  - DO2
+  - oxygen_transport_reserve
+  - transfusion_trigger_score
+  - heme_severity_score
+  - MAP
+
+simulation_time_s: 420

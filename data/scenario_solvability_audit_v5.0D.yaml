@@ -1,0 +1,74 @@
+version: v5.0D
+release_step: 5.0D
+name: scenario_solvability_audit
+safety_status: educational/research alpha only; not for clinical use; not a medical device
+scope: >
+  Static and semi-structured audit gate for scenario-engine v2 cases before full
+  validation. The audit checks whether each curated scenario has enough structure
+  to be playable, recoverable, fail-able and debriable.
+criteria:
+  minimum_simulation_time_s: 240
+  minimum_expected_actions: 2
+  minimum_perturbations: 2
+  minimum_outputs: 4
+  require_patient: true
+  require_debrief_questions: true
+  require_recovery_marker: true
+  require_failure_marker: true
+  require_non_determinism_marker: true
+recovery_markers:
+  actions:
+    - set_MAP
+    - set_K
+    - set_FiO2
+    - set_PaCO2
+    - set_norad
+    - set_adrenaline
+    - set_insulin
+    - set_antibiotic_started
+    - set_antibiotic_coverage
+    - set_CRRT_active
+    - set_NIV_CPAP
+    - set_airway_interface
+    - set_intubated
+    - tamponade_index
+    - osmo_therapy
+    - calcium_given
+    - set_seizure_treatment
+    - set_bag_mask_ventilation
+    - fluid_bolus_mL
+  labels_any:
+    - improves
+    - response
+    - started
+    - control
+    - decompression
+    - stabilization
+failure_markers:
+  state_keys:
+    - shock
+    - airway
+    - neuro
+    - neurofunctional
+    - acidbase
+    - renal
+    - infection
+  output_keys:
+    - lactate
+    - MAP
+    - SaO2
+    - PaCO2
+    - K_mmol_L
+    - ICP_mmHg
+    - decision_warning
+    - arrhythmia_risk
+    - seizure_risk_index
+    - GCS_proxy
+non_determinism_markers:
+  accepted_if:
+    - multiple_action_steps
+    - mixed_intervention_timing
+    - at_least_three_outputs
+severity_policy:
+  critical: missing manifest path, unreadable scenario, missing patient block, simulation shorter than minimum, fewer than two expected actions
+  review: weak recovery/failure/non-determinism markers, limited outputs, missing debrief questions

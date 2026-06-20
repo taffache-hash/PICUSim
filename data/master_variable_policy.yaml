@@ -1,0 +1,154 @@
+# PDT v0.30 master-variable ownership policy
+# Purpose: prevent silent order-dependent overwrites in the shared PhysiologicalBus.
+#
+# Semantics:
+#   master: module responsible for the final bedside/observable value.
+#   allowed_modifiers: modules allowed to write the variable in the current codebase, usually as
+#     transitional contributors or physiologically bounded modifiers.
+#   migration_target: preferred future architecture when direct multi-writes are refactored.
+#
+# This policy does not claim clinical validity. It documents ownership and prevents
+# ungoverned duplicate writers from entering the codebase.
+masters:
+  # ---------------------------------------------------------------------------
+  # Respiratory / ventilator master variables
+  # ---------------------------------------------------------------------------
+  Paw:
+    master: Ventilator
+    allowed_modifiers: []
+    rule: Ventilator is the sole master of airway pressure command/current pressure.
+    migration_target: Keep RespiratoryMechanics pressure-driven from Paw/Pmus only.
+  Vt:
+    master: RespiratoryMechanics
+    allowed_modifiers: [Ventilator]
+    rule: Ventilator sets command/pressure-flow context; RespiratoryMechanics writes realized tidal volume.
+    migration_target: Ventilator should expose set/commanded values only; realized Vt remains mechanics-owned.
+
+  # ---------------------------------------------------------------------------
+  # Gas exchange / oxygen transport
+  # ---------------------------------------------------------------------------
+  pH_a:
+    master: GasExchange
+    allowed_modifiers: [AcidBaseElectrolytes]
+    rule: AcidBase controls HCO3/base-excess; GasExchange writes final Henderson-Hasselbalch pH from PaCO2 and HCO3.
+    migration_target: AcidBase writes HCO3/BE/SID; GasExchange writes pH_a.
+  DO2:
+    master: GasExchange
+    allowed_modifiers: [HematologyOxygenTransport]
+    rule: GasExchange writes final DO2 from CaO2 and CO; Hematology may recompute oxygen transport reserve and currently mirrors DO2 for anemia/transfusion scenarios.
+    migration_target: Hematology writes oxygen_transport_reserve and oxygen_carrying_capacity_mL_dL only; DO2 final remains GasExchange.
+  ERO2:
+    master: GasExchange
+    allowed_modifiers: [HematologyOxygenTransport]
+    rule: GasExchange writes extraction ratio from VO2/DO2; Hematology may mirror the value for anemia risk scoring.
+    migration_target: Hematology reads ERO2 and writes heme_severity_score only.
+  PvO2:
+    master: GasExchange
+    allowed_modifiers: [HematologyOxygenTransport]
+    rule: GasExchange writes final mixed venous oxygen proxy; Hematology may contribute anemia/oxygen transport constraints.
+    migration_target: Hematology writes PvO2_modifier or oxygen_transport_reserve; GasExchange writes PvO2.
+  SvO2:
+    master: GasExchange
+    allowed_modifiers: [HematologyOxygenTransport]
+    rule: GasExchange writes final venous saturation proxy; Hematology may contribute anemia/oxygen transport constraints.
+    migration_target: Hematology writes SvO2_modifier or oxygen_transport_reserve; GasExchange writes SvO2.
+
+  # ---------------------------------------------------------------------------
+  # Acid-base / electrolytes
+  # ---------------------------------------------------------------------------
+  HCO3_mmol_L:
+    master: AcidBaseElectrolytes
+    allowed_modifiers: [AKI_CRRT_lite]
+    rule: AcidBaseElectrolytes owns systemic bicarbonate; AKI_CRRT_lite may modify it through CRRT bicarbonate bath/correction.
+    migration_target: AKI_CRRT_lite writes CRRT_HCO3_delta_mmol_L or CRRT_HCO3_mod; AcidBaseElectrolytes writes final HCO3.
+  K_mmol_L:
+    master: AcidBaseElectrolytes
+    allowed_modifiers: [AKI_CRRT_lite]
+    rule: AcidBaseElectrolytes owns systemic potassium; AKI_CRRT_lite may modify it through CRRT/renal clearance.
+    migration_target: AKI_CRRT_lite writes CRRT_K_delta_mmol_L or renal_K_clearance_mod; AcidBaseElectrolytes writes final K.
+
+  # ---------------------------------------------------------------------------
+  # Cardiovascular aggregate variables
+  # ---------------------------------------------------------------------------
+  SAP:
+    master: Circulation
+    allowed_modifiers: [HeartBTB]
+    rule: Circulation owns bedside systolic arterial pressure aggregate; HeartBTB provides beat-to-beat/PV-derived pressure context.
+    migration_target: HeartBTB writes SAP_btb or LV_pressure_features; Circulation writes final SAP.
+  DAP:
+    master: Circulation
+    allowed_modifiers: [HeartBTB]
+    rule: Circulation owns bedside diastolic arterial pressure aggregate; HeartBTB provides beat-to-beat/PV-derived pressure context.
+    migration_target: HeartBTB writes DAP_btb or LV_pressure_features; Circulation writes final DAP.
+  PVR:
+    master: Circulation
+    allowed_modifiers: [iNO]
+    rule: Circulation owns final PVR after applying pulmonary vascular modifiers; iNO may currently write reduced PVR as transitional behavior.
+    migration_target: iNO writes ino_PVR_mod only; Circulation writes final PVR.
+  PAP_mean:
+    master: Circulation
+    allowed_modifiers: [iNO]
+    rule: Circulation owns final mean pulmonary artery pressure; iNO contributes via ino_PVR_mod.
+    migration_target: iNO writes ino_PVR_mod/ino_Qs_Qt_mod only; Circulation writes final PAP_mean.
+
+  # ---------------------------------------------------------------------------
+  # Temperature / metabolism
+  # ---------------------------------------------------------------------------
+  T_core:
+    master: Thermoregulation
+    allowed_modifiers: [Metabolism]
+    rule: Thermoregulation owns core temperature trajectory; Metabolism may provide legacy thermal drift/temperature coupling.
+    migration_target: Metabolism writes metabolic_heat_mod or VO2-temperature modifiers; Thermoregulation writes final T_core.
+  setpoint_T:
+    master: Thermoregulation
+    allowed_modifiers: [Metabolism]
+    rule: Thermoregulation owns fever/cooling/warming setpoint; Metabolism may provide legacy antipyretic or disease setpoint coupling.
+    migration_target: Metabolism writes metabolic_setpoint_delta; Thermoregulation writes final setpoint_T.
+  lactate:
+    master: Metabolism
+    allowed_modifiers: [AKI_CRRT_lite]
+    rule: Metabolism owns systemic lactate production/clearance; AKI_CRRT_lite may reduce lactate through CRRT clearance in renal replacement scenarios.
+    migration_target: AKI_CRRT_lite writes CRRT_lactate_clearance_mod; Metabolism writes final lactate.
+
+  # ---------------------------------------------------------------------------
+  # Renal / fluids
+  # ---------------------------------------------------------------------------
+  fluid_balance:
+    master: FluidBalance
+    allowed_modifiers: [AKI_CRRT_lite, Transfusion]
+    rule: FluidBalance owns cumulative fluid balance; AKI_CRRT_lite subtracts UF, Transfusion adds blood products/volume.
+    migration_target: Modules write cumulative inputs/outputs; FluidBalance computes final fluid_balance from ledger.
+  urine_rate_mL_h:
+    master: FluidBalance
+    allowed_modifiers: [AKI_CRRT_lite]
+    rule: FluidBalance owns urine output rate; AKI_CRRT_lite may modify it during diuretic challenge/AKI state estimation.
+    migration_target: AKI_CRRT_lite writes renal_urine_rate_modifier or diuretic_response_index; FluidBalance writes urine_rate_mL_h.
+
+  # ---------------------------------------------------------------------------
+  # Hematology / coagulation / hepatic
+  # ---------------------------------------------------------------------------
+  Hb:
+    master: HematologyOxygenTransport
+    allowed_modifiers: [FluidBalance, Transfusion]
+    rule: Hematology is the interpretive master; FluidBalance may apply dilution, Transfusion may add RBC mass.
+    migration_target: Use RBC_mass/Hb_delta ledger and let Hematology write final Hb.
+  INR:
+    master: Coagulation
+    allowed_modifiers: [HepaticMetabolism, Transfusion]
+    rule: HepaticMetabolism writes hepatic_INR_contribution; Coagulation writes final INR; Transfusion may improve INR after FFP.
+    migration_target: Hepatic writes hepatic_INR_contribution only; Transfusion writes FFP effect; Coagulation writes final INR.
+  PLT_count:
+    master: Coagulation
+    allowed_modifiers: [Transfusion, HematologyOxygenTransport]
+    rule: Coagulation writes final platelet count; Hematology reads/interprets it for bleeding/thrombosis risk; Transfusion can add platelets.
+    migration_target: Transfusion writes PLT_delta; Coagulation writes PLT_count.
+  fibrinogen:
+    master: Coagulation
+    allowed_modifiers: [Transfusion]
+    rule: Coagulation writes final fibrinogen; Transfusion/fibrinogen concentrate can add product effect.
+    migration_target: Transfusion writes fibrinogen_delta; Coagulation writes final fibrinogen.
+  bilirubin_total_mg_dL:
+    master: HepaticMetabolism
+    allowed_modifiers: [HematologyOxygenTransport]
+    rule: Hematology provides hemolysis signal/indirect bilirubin pressure; liver writes direct/indirect/total bilirubin.
+    migration_target: Hematology writes hemolysis_index/indirect_bilirubin_source; Hepatic writes final bilirubin values.

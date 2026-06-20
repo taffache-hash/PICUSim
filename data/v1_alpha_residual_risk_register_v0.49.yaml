@@ -1,0 +1,28 @@
+version: v0.49
+purpose: Residual risk register before v1.0-alpha.
+items:
+  - id: RISK-PKPD-001
+    domain: pharmacology
+    issue: PK/PD scaling is not systematically allometric across all drugs.
+    severity: high
+    mitigation: Restrict claims to educational/physiology simulation; prioritize allometric PK/PD in later release.
+  - id: RISK-CV-001
+    domain: cardiovascular
+    issue: Age-specific cardiovascular scaling remains partial.
+    severity: medium_high
+    mitigation: Add cardiovascular profile scaling after v1.0-alpha or before clinical-facing demonstrations.
+  - id: RISK-VQ-001
+    domain: respiratory
+    issue: V/Q model remains simplified and non-regional.
+    severity: medium_high
+    mitigation: Declare limitation; consider 3-compartment/regional V/Q later.
+  - id: RISK-CRRT-001
+    domain: renal/pharmacology
+    issue: CRRT drug clearance is not implemented.
+    severity: medium_high
+    mitigation: Avoid drug-clearance claims during CRRT scenarios.
+  - id: RISK-VALID-001
+    domain: validation
+    issue: Benchmarking remains envelope-based and not external clinical validation.
+    severity: high
+    mitigation: Use conservative language and pursue expert review/external datasets.

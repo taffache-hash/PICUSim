@@ -1,0 +1,77 @@
+name: airway_hfnc_bronchiolitis_v1_23_1
+description: 'v1.23.1 scenario: infant bronchiolitis on HFNC with oxygen delivery, mild distending pressure and dead-space washout proxies.'
+simulation_time_s: 360
+patient:
+  profile: infant_8kg
+  age_y: 0.6
+  weight_kg: 8
+  sex: F
+airway_interface:
+  interface: HFNC
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  ambient_airway_pressure_cmH2O: 0.0
+  oxygen_interface: HFNC
+  HFNC_flow_L_min: 14.0
+  HFNC_FiO2_set: 0.45
+  mouth_leak_fraction: 0.25
+  note: v1.23.1 HFNC bronchiolitis base
+respiratory:
+  mode: NONE
+  FiO2: 0.45
+  PEEP: 0.0
+  RR: 44
+  Vt: 45
+  C_rs: 0.72
+  R_rs: 14.0
+  SaO2: 0.90
+  PaO2: 58
+  PaCO2: 52
+  non_recruitable_frac: 0.06
+ventilator:
+  mode: NONE
+airway:
+  bronchospasm_index: 0.15
+  mucus_load: 0.38
+  small_airway_obstruction: 0.45
+metabolism:
+  VO2: 75
+  T_core: 38.0
+  lactate: 1.4
+cardiovascular:
+  HR: 148
+  MAP: 55
+  CO: 1.45
+  Hb: 11.0
+perturbations:
+- t: 180
+  action: set_HFNC_flow
+  value: 18.0
+  label: increase HFNC flow
+- t: 180
+  action: set_HFNC_FiO2
+  value: 0.55
+  label: increase HFNC FiO2
+clinical_narrative: An infant with bronchiolitis is managed without intubation using HFNC. Escalating HFNC flow and FiO2 should improve oxygen delivery and modestly reduce dead-space burden while maintaining spontaneous breathing.
+debrief_questions:
+- Which variables show that HFNC is not invasive ventilation?
+- How do flow, leak and FiO2 setting influence delivered oxygen in this educational model?
+- What markers suggest possible HFNC failure?
+outputs:
+- airway_interface
+- oxygen_interface
+- HFNC_flow_L_min
+- HFNC_FiO2_set
+- FiO2_delivered
+- HFNC_distending_pressure_cmH2O
+- HFNC_deadspace_washout
+- HFNC_failure_risk
+- intubated
+- ventilator_connected
+- unassisted_breathing_active
+- Paw
+- PEEP
+- SaO2
+- PaCO2
+- RR_total

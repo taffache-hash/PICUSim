@@ -1,0 +1,95 @@
+version: 0.42
+purpose: >
+  Counterfactual/error-management scenarios for educational stress testing.
+  Each case compares a baseline/reference scenario against a harmful or excessive
+  management strategy. These checks are internal plausibility tests, not clinical
+  validation and not treatment recommendations.
+checks:
+  - id: excessive_peep_ards_vili
+    baseline: ards_mild
+    counterfactual: counterfactual_excessive_PEEP_ARDS
+    variable: VILI_risk
+    statistic: final
+    expected_direction: increase
+    min_delta: 0.005
+    rationale: Excessive PEEP/pressure should increase the qualitative VILI/overdistension burden.
+  - id: excessive_peep_ards_hemodynamic_penalty
+    baseline: ards_mild
+    counterfactual: counterfactual_excessive_PEEP_ARDS
+    variable: MAP
+    statistic: final
+    expected_direction: decrease
+    min_delta: 5.0
+    rationale: Excessive intrathoracic pressure should carry a hemodynamic penalty.
+  - id: asthma_high_rr_airtrapping
+    baseline: status_asthmaticus
+    counterfactual: counterfactual_asthma_high_RR_airtrapping
+    variable: auto_PEEP_obstructive
+    statistic: max
+    expected_direction: increase
+    min_delta: 2.0
+    rationale: Short expiratory time in obstructive physiology should increase auto-PEEP.
+  - id: asthma_high_rr_acidemia
+    baseline: status_asthmaticus
+    counterfactual: counterfactual_asthma_high_RR_airtrapping
+    variable: pH_a
+    statistic: final
+    expected_direction: decrease
+    min_delta: 0.05
+    rationale: Air trapping/hypoventilation should worsen acidemia in this counterfactual.
+  - id: sepsis_fluid_overload
+    baseline: septic_shock
+    counterfactual: counterfactual_fluid_overload_sepsis
+    variable: fluid_overload_percent
+    statistic: final
+    expected_direction: increase
+    min_delta: 3.0
+    rationale: Repeated crystalloid boluses should increase fluid overload.
+  - id: oversedation_hypercapnia
+    baseline: picu_sedation_pkpd
+    counterfactual: counterfactual_oversedation_hypoventilation
+    variable: PaCO2
+    statistic: final
+    expected_direction: increase
+    min_delta: 5.0
+    rationale: Excess sedative/opioid burden with insufficient support should increase CO2 retention.
+  - id: oversedation_sedation_score
+    baseline: picu_sedation_pkpd
+    counterfactual: counterfactual_oversedation_hypoventilation
+    variable: sedation_score
+    statistic: max
+    expected_direction: increase
+    min_delta: 0.05
+    rationale: Excess sedatives should increase the internal sedation burden.
+  - id: insulin_glucose_drop
+    baseline: stress_hyperglycemia_insulin
+    counterfactual: counterfactual_insulin_hypoglycemia
+    variable: glucose_mmol_L
+    statistic: final
+    expected_direction: decrease
+    min_delta: 0.5
+    rationale: Excess insulin/low GIR should reduce glucose relative to stress-hyperglycemia management.
+  - id: hypertonic_overshoot_na
+    baseline: tbi_hypertonic_electrolytes
+    counterfactual: counterfactual_hypertonic_overshoot_TBI
+    variable: Na_mmol_L
+    statistic: max
+    expected_direction: increase
+    min_delta: 5.0
+    rationale: Repeated hypertonic saline should produce sodium/osmolarity overshoot.
+  - id: transfusion_overload_fluid
+    baseline: hematology_anemia_transfusion
+    counterfactual: counterfactual_transfusion_overload
+    variable: fluid_overload_percent
+    statistic: final
+    expected_direction: increase
+    min_delta: 2.0
+    rationale: Excess blood product volume should increase fluid overload.
+  - id: transfusion_overload_hb
+    baseline: hematology_anemia_transfusion
+    counterfactual: counterfactual_transfusion_overload
+    variable: Hb
+    statistic: final
+    expected_direction: increase
+    min_delta: 1.0
+    rationale: Excess RBC transfusion should raise hemoglobin markedly.

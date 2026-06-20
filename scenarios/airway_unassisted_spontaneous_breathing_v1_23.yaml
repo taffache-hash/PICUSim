@@ -1,0 +1,67 @@
+name: airway_unassisted_spontaneous_breathing_v1_23
+description: 'v1.23 base scenario: extubated/unassisted child breathing spontaneously
+  without active ventilator pressure, receiving supplemental oxygen by non-pressurized
+  interface.'
+simulation_time_s: 240
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+airway_interface:
+  interface: UNASSISTED
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  ambient_airway_pressure_cmH2O: 0.0
+  note: v1.23 baseline spontaneous unassisted breathing
+respiratory:
+  mode: NONE
+  FiO2: 0.3
+  PEEP: 0.0
+  RR: 24
+  Vt: 120
+  C_rs: 0.85
+  R_rs: 8.0
+  SaO2: 0.97
+  PaO2: 92
+  PaCO2: 40
+  non_recruitable_frac: 0.02
+ventilator:
+  mode: NONE
+metabolism:
+  VO2: 120
+  T_core: 37.0
+  lactate: 1.0
+cardiovascular:
+  HR: 105
+  MAP: 68
+  CO: 3.8
+  Hb: 11.5
+analgosedation:
+  baseline_pain: 1.0
+drugs:
+  midazolam_mcg_kg_h: 0.0
+  morphine_mcg_kg_h: 0.0
+  rocuronium_mg_kg_h: 0.0
+clinical_narrative: A stable extubated school-age child is breathing spontaneously
+  with a non-pressurized supplemental oxygen interface. The scenario verifies that
+  the model can run without active ventilator pressure.
+debrief_questions:
+- What variables show that the child is not receiving active ventilator pressure?
+- How does Pmus/chemoreflex drive generate tidal ventilation in the absence of ventilator
+  Paw?
+outputs:
+- airway_interface
+- intubated
+- ventilator_connected
+- unassisted_breathing_active
+- Paw
+- PEEP
+- Pmus
+- RR
+- RR_total
+- Vt
+- SaO2
+- PaCO2
+- MV_L_min

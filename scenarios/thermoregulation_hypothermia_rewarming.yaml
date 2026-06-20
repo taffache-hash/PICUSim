@@ -1,0 +1,50 @@
+name: thermoregulation_hypothermia_rewarming
+version: v0.24
+category: thermoregulation
+summary: >
+  Accidental/perioperative hypothermia with active external warming, shivering and coagulopathy modifier.
+patient:
+  profile: child_20kg
+  age_y: 5
+  weight_kg: 18
+  sex: M
+  diagnosis: perioperative_hypothermia
+respiratory:
+  mode: PCV
+  Paw: 17
+  PEEP: 5
+  FiO2: 0.30
+  RR: 22
+  C_rs: 0.85
+  R_rs: 8
+  SaO2: 0.97
+  PaO2: 86
+  PaCO2: 39
+cardiovascular:
+  HR: 90
+  MAP: 58
+  CO: 3.1
+  Hb: 11.0
+metabolism:
+  T_core: 34.4
+  T_setpoint: 37.0
+  SIRS_factor: 1.0
+  VO2: 105
+  lactate: 1.4
+thermoregulation:
+  setpoint_T: 37.0
+  target_temperature_C: 37.0
+  external_warming_active: true
+analgosedation:
+  baseline_pain: 1.0
+perturbations:
+  - {t: 0, action: set_warming, value: true, label: forced-air warming}
+  - {t: 480, action: set_warming, value: false, label: warming off after partial correction}
+outputs:
+  - T_core
+  - hypothermia_index
+  - shivering_index
+  - warming_effect
+  - thermo_coag_mod
+  - thermo_VO2_mod
+simulation_time_s: 900

@@ -1,0 +1,40 @@
+version: v5.0B
+step: 5.0B
+purpose: Massive Monte Carlo stress testing for PDT v3.1 validation pack.
+notes:
+  - Educational/in-silico plausibility audit only; not clinical validation.
+  - Default parameters are inferred from each scenario by tools.simtools.
+  - Bounds are intentionally broad and biological, not treatment recommendations.
+default_n: 200
+seed: 5031
+dt_s: 20.0
+scenarios:
+  healthy_child_20kg:
+    family: baseline
+    max_runtime_s: 120
+  infant_bronchiolitis:
+    family: respiratory_failure
+    max_runtime_s: 180
+  epals_v2_septic_shock_warm:
+    family: distributive_shock
+    max_runtime_s: 180
+  epals_v2_dka_dehydration_shock:
+    family: dehydration_shock
+    max_runtime_s: 180
+  epals_v2_anaphylactic_shock:
+    family: anaphylaxis
+    max_runtime_s: 180
+plausibility_bounds:
+  SaO2_final: [0.35, 1.0]
+  SaO2_min: [0.25, 1.0]
+  PaCO2_final: [10.0, 180.0]
+  PaCO2_max: [10.0, 220.0]
+  pH_a_final: [6.7, 7.8]
+  pH_a_min: [6.6, 7.8]
+  MAP_final: [10.0, 160.0]
+  MAP_min: [5.0, 180.0]
+  HR_final: [30.0, 260.0]
+  lactate_final: [0.2, 25.0]
+  lactate_max: [0.2, 40.0]
+  urine_rate_mL_h_final: [0.0, 500.0]
+  creatinine_mg_dL_final: [0.05, 8.0]

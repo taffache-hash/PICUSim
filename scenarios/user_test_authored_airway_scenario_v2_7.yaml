@@ -1,0 +1,101 @@
+name: test_authored_airway_scenario
+version: v2.7-alpha
+category: airway
+description: Authored airway scenario for automated test. Not for clinical use.
+clinical_narrative: Authored airway scenario for automated test. Not for clinical use.
+patient:
+  profile: child_20kg
+  age_y: 4.0
+  weight_kg: 18.0
+  sex: M
+  diagnosis: airway_deterioration_training
+respiratory:
+  mode: NONE
+  FiO2: 0.8
+  PEEP: 0.0
+  RR: 42
+  Vt: 100
+  C_rs: 0.6
+  R_rs: 16.0
+  SaO2: 0.86
+  PaO2: 54.0
+  PaCO2: 62.0
+  non_recruitable_frac: 0.14
+cardiovascular:
+  HR: 155.0
+  MAP: 52.0
+  CO: 3.2
+metabolism:
+  VO2: 150
+  lactate: 3.2
+perturbations:
+- t: 45
+  action: set_midazolam
+  value: 100
+  label: sedative burden proxy
+outputs:
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP
+- Paw
+- PEEP
+- FiO2
+- FiO2_delivered
+- RR_total
+- Vt
+- lactate
+- airway_interface
+- oxygen_interface
+- vent_mode
+- airway_event_type
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+simulation_time_s: 360.0
+decision_focus:
+- oxygenation failure
+- airway rescue timing
+- escalation to secured airway
+debrief_questions:
+- What failed first?
+- When was rescue ventilation started?
+limitations:
+- Authored educational scenario for simulation training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+airway_interface:
+  interface: HFNC
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: HFNC
+  HFNC_flow_L_min: 30.0
+  HFNC_FiO2_set: 0.8
+  mouth_leak_fraction: 0.3
+airway:
+  bronchospasm_index: 0.15
+  mucus_load: 0.3
+  small_airway_obstruction: 0.4
+ventilator:
+  mode: NONE
+airway_events:
+- t: 90
+  name: failed_intubation_attempt
+  severity: moderate
+  label: first failed attempt
+- t: 150
+  name: start_bag_mask_ventilation
+  severity: difficult
+  label: rescue ventilation
+- t: 260
+  name: perform_intubation
+  severity: emergency
+  label: secured airway
+  PEEP: 7.0
+  Pinsp_cmH2O: 20.0
+  FiO2: 1.0

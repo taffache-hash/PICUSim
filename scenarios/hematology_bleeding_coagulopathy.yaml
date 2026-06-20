@@ -1,0 +1,74 @@
+name: hematology_bleeding_coagulopathy
+version: v0.21
+category: hematology_oxygen_transport
+summary: >
+  Pediatric coagulopathy with thrombocytopenia, active bleeding and staged
+  hemostatic support. Demonstrates bleeding risk, oxygen delivery degradation
+  and response to plasma/platelets/RBC.
+
+patient:
+  profile: child_20kg
+  age_y: 5
+  weight_kg: 18
+  sex: M
+  diagnosis: bleeding_coagulopathy
+
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 20
+  FiO2: 0.45
+  RR: 26
+  C_rs: 0.75
+  R_rs: 9.0
+  PaO2: 82
+  PaCO2: 38
+  SaO2: 0.95
+
+cardiovascular:
+  HR: 150
+  MAP: 54
+  CO: 3.8
+  CVP: 4
+  Hb: 8.2
+
+metabolism:
+  T_core: 37.8
+  VO2: 125
+  lactate: 2.6
+
+coagulation:
+  INR: 2.2
+  PLT: 42
+  fibrinogen: 1.1
+
+hematology:
+  WBC_count: 11.0
+  bleeding_rate_mL_h: 55
+  platelet_function_index: 0.55
+  transfusion_threshold_Hb: 7.0
+
+perturbations:
+  - {t: 60, action: transfuse_FFP, value: 180, label: "FFP support"}
+  - {t: 120, action: transfuse_PLT, value: 1, label: "Platelet transfusion"}
+  - {t: 180, action: fibrinogen_concentrate, value: 1.0, label: "Fibrinogen concentrate"}
+  - {t: 240, action: set_bleeding_rate, value: 10, label: "Bleeding slows after hemostasis"}
+  - {t: 300, action: transfuse_GRC, value: 150, label: "RBC support"}
+
+outputs:
+  - Hb
+  - Hct_percent
+  - DO2
+  - PLT_count
+  - INR
+  - fibrinogen
+  - bleeding_rate_mL_h
+  - bleeding_risk_index
+  - thrombosis_risk_index
+  - transfusion_trigger_score
+  - oxygen_transport_reserve
+  - heme_severity_score
+  - MAP
+  - lactate
+
+simulation_time_s: 480

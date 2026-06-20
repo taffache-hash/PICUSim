@@ -1,0 +1,152 @@
+# Scalable module backlog after v0.15.
+# Prioritized by clinical value, coupling with existing modules, and feasibility.
+
+priority_1_near_term:
+  electrolyte_acid_base:
+    status: "implemented_in_v0.17_basic_qualitative_module"
+    rationale: "Strong PICU relevance; links renal, fluids, ventilation, shock, nutrition."
+    variables:
+      - Na
+      - K
+      - Cl
+      - bicarbonate
+      - base_excess
+      - anion_gap
+      - strong_ion_difference
+    interventions:
+      - sodium_bicarbonate
+      - hypertonic_saline
+      - potassium_replacement
+      - chloride_load
+    coupling:
+      - gas_exchange_pH
+      - renal_GFR_diuresis
+      - fluid_balance
+      - ICP_osmotherapy
+
+  acute_kidney_injury_crrt_stub:
+    rationale: "Renal support is common in PICU; start as simplified clearance/volume module, not full CRRT."
+    variables:
+      - AKI_stage
+      - creatinine
+      - urea
+      - net_ultrafiltration_mL_h
+      - solute_clearance_index
+    interventions:
+      - diuretics
+      - CRRT_start_stop
+      - ultrafiltration_rate
+    coupling:
+      - fluid_balance
+      - electrolytes
+      - drug_clearance
+      - acid_base
+
+  endocrine_stress_axis:
+    rationale: "Complements sepsis, sedation, glucose, steroids."
+    variables:
+      - cortisol_effect
+      - catecholamine_endogenous_tone
+      - insulin_resistance
+      - thyroid_sick_euthyroid_index
+    coupling:
+      - glucose
+      - metabolism
+      - sepsis
+      - baroreflex
+
+priority_2_mid_term:
+  ECMO_simplified:
+    rationale: "High PICU relevance but should be added only after heart-lung and anticoagulation are stable."
+    variables:
+      - ecmo_flow_L_min
+      - sweep_gas_L_min
+      - membrane_FdO2
+      - oxygenator_efficiency
+      - hemolysis_index
+    coupling:
+      - gas_exchange
+      - circulation
+      - coagulation
+      - transfusion
+
+  antimicrobial_pkpd:
+    rationale: "Useful for sepsis but must avoid pseudo-precision without renal/volume compartments."
+    variables:
+      - antibiotic_concentration
+      - target_attainment_index
+      - infection_kill_rate
+    coupling:
+      - renal_clearance
+      - sepsis_infection_load
+      - fluid_balance
+
+  nutrition_advanced:
+    rationale: "Could connect calories, protein, glucose, CO2 production, refeeding risk."
+    variables:
+      - caloric_intake
+      - protein_intake
+      - respiratory_quotient
+      - CO2_production_mod
+      - refeeding_risk
+    coupling:
+      - metabolism
+      - gas_exchange
+      - glucose
+      - electrolytes
+
+priority_3_later:
+  liver_coagulation_metabolism:
+    rationale: "Important but broad; should wait until acid-base/electrolytes and sepsis are stable."
+  congenital_heart_disease_specific:
+    rationale: "High pediatric specificity but requires dedicated shunt/single-ventricle physiology."
+  patient_data_assimilation:
+    rationale: "Bridge toward true digital twin; requires real data, governance, and calibration methods."
+
+implemented_v0_18:
+  - v0.18_AKI_CRRT_lite: qualitative creatinine/urea, AKI staging, fluid overload, diuretic response, CRRT-lite clearance/UF.
+
+implemented_v0_19:
+  - v0.19_endocrine_stress_axis: qualitative HPA/cortisol, catecholamine tone, adrenal-insufficiency signal, insulin resistance, stress hyperglycemia, ADH-like retention and thyroid suppression marker.
+
+implemented_v0_21:
+  - v0.21_hematology_oxygen_transport: qualitative Hb/Hct/RBC, WBC/neutrophils, anemia severity, oxygen-carrying capacity, transfusion-trigger score, bleeding/thrombosis risk, hemolysis proxies and marrow suppression.
+
+
+implemented_v0_23:
+  nutrition_catabolism_v0_23:
+    status: implemented_qualitative
+    scope:
+      - enteral_parenteral_nutrition
+      - energy_protein_balance
+      - catabolism
+      - refeeding_risk
+      - phosphate_magnesium_triglycerides
+      - CRRT_protein_loss
+    limitation: exploratory_not_prescriptive
+
+thermoregulation_v0_24:
+  status: implemented_qualitative
+  notes: fever, hypothermia, shivering, cooling/warming and antipyretic integration.
+
+
+implemented_v0_25:
+  neurofunctional:
+    status: implemented_qualitative
+    scope: GCS proxy, AVPU, RASS proxy, encephalopathy, seizure risk, delirium/withdrawal state, neuro-respiratory and neuro-metabolic modifiers
+
+implemented_v0_26_infection_antimicrobial_basic:
+  status: implemented_qualitative
+  scope:
+    - microbial_burden
+    - antibiotic_timing
+    - antibiotic_coverage
+    - source_control
+    - culture_probability_proxy
+    - escalation_deescalation_signals
+  explicit_non_scope:
+    - antibiotic_prescribing
+    - MIC_based_PKPD
+    - tissue_penetration
+    - organism_specific_guidelines
+

@@ -1,0 +1,89 @@
+release: v1.11-alpha
+name: expert_review_protocol
+purpose: >
+  Structured independent expert review package for PDT face-validity,
+  educational-usefulness, and model-transparency assessment. This is not
+  patient-level clinical validation and does not authorize clinical use.
+minimum_reviewer_panel:
+  pediatric_intensivist: 2
+  clinical_pharmacologist: 1
+  physiology_or_biomedical_engineering_modeler: 1
+optional_reviewers:
+  pediatric_anesthesiologist: 1
+  simulation_educator: 1
+rating_scale:
+  1: implausible_or_not_useful
+  2: major_concerns
+  3: acceptable_with_limitations
+  4: plausible_and_useful
+  5: highly_plausible_or_highly_useful
+review_domains:
+  - physiologic_plausibility
+  - trajectory_plausibility
+  - intervention_response
+  - educational_usefulness
+  - safety_misinterpretation_risk
+  - transparency_of_assumptions
+scenario_set:
+  - scenario: healthy_child_20kg
+    clinical_domain: baseline physiology
+    complexity: beginner
+    primary_objective: Confirm baseline pediatric physiology and output interpretability.
+    variables_to_review: [HR, MAP, CO, SaO2, PaCO2, pH_a, Vt, MP]
+  - scenario: ards_mild
+    clinical_domain: respiratory failure / ARDS
+    complexity: intermediate
+    primary_objective: Assess oxygenation, V/Q impairment, mechanics and ventilator response plausibility.
+    variables_to_review: [SaO2, PaO2, PaCO2, pH_a, Pplat, Pdriving, MP, vq_shunt_frac, vq_deadspace_frac]
+  - scenario: status_asthmaticus
+    clinical_domain: obstructive respiratory failure
+    complexity: intermediate
+    primary_objective: Assess obstructive hypercapnia, airway resistance and acid-base trajectory.
+    variables_to_review: [PaCO2, pH_a, R_rs, auto_PEEP_obstructive, Vt, MP]
+  - scenario: septic_shock
+    clinical_domain: distributive shock
+    complexity: intermediate
+    primary_objective: Assess shock trajectory, lactate, vasoplegia and response to fluids/vasopressors.
+    variables_to_review: [MAP, HR, CO, lactate, vasoplegia_index, fluid_responsiveness, sepsis_severity_score]
+  - scenario: tbi_icp
+    clinical_domain: neurocritical care
+    complexity: intermediate
+    primary_objective: Assess ICP/CPP trajectory and response to neurocritical-care interventions.
+    variables_to_review: [ICP_mmHg, CPP_mmHg, MAP, PaCO2, GCS_proxy, pH_a]
+  - scenario: neonatal_rds_3kg
+    clinical_domain: neonatal/pediatric respiratory transition
+    complexity: intermediate
+    primary_objective: Assess neonatal scaling face-validity and respiratory educational usefulness.
+    variables_to_review: [HR, MAP, SaO2, PaO2, PaCO2, Vt, C_rs, recruited_frac]
+  - scenario: picu_sedation_pkpd
+    clinical_domain: sedation PK/PD
+    complexity: intermediate
+    primary_objective: Assess sedative PK/PD trajectory, respiratory depression, and educational usefulness.
+    variables_to_review: [C_midazolam_ng_mL, C_ketamine_ng_mL, sedation_score, pain_score, PaCO2, MAP]
+  - scenario: picu_crrt_drug_clearance_v1_10
+    clinical_domain: CRRT-lite pharmacology
+    complexity: expert
+    primary_objective: Assess whether the CRRT clearance scaffold is transparent, conservative and educationally useful.
+    variables_to_review: [C_midazolam_ng_mL, C_rocuronium_ng_mL, pk_crrt_effluent_L_min, pk_crrt_total_extra_clearance_L_min]
+module_set:
+  - module: respiratory_mechanics
+    reviewer_role: pediatric_intensivist_or_modeler
+    focus: public single-compartment mechanics, compliance/resistance scaling and injury proxies
+  - module: gas_exchange_vq
+    reviewer_role: pediatric_intensivist_or_modeler
+    focus: three-zone V/Q scaffold, shunt/dead-space burden and hypoxemia/hypercapnia trends
+  - module: cardiovascular_scaling
+    reviewer_role: pediatric_intensivist_or_modeler
+    focus: pediatric HR/SV/elastance/Windkessel scaling and shock plausibility
+  - module: pharmacology_pkpd
+    reviewer_role: clinical_pharmacologist
+    focus: allometry, maturation, priority PICU drugs and CRRT-lite extracorporeal clearance
+  - module: neurology_icp
+    reviewer_role: pediatric_intensivist_or_neurointensivist
+    focus: ICP/CPP behavior, CO2 effects and neurocritical-care educational framing
+acceptance_thresholds:
+  scenario_mean_physiologic_plausibility_min: 3.0
+  scenario_mean_educational_usefulness_min: 3.0
+  major_implausibility_flag_requires_triage: true
+  safety_misinterpretation_risk_ge_4_requires_mitigation: true
+  expert_review_is_not_clinical_validation: true

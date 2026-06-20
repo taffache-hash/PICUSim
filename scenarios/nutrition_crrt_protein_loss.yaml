@@ -1,0 +1,68 @@
+name: nutrition_crrt_protein_loss
+version: v0.23
+category: nutrition_catabolism
+summary: >
+  AKI/CRRT scenario showing protein loss and the need for higher protein delivery.
+patient:
+  profile: child_20kg
+  age_y: 8
+  weight_kg: 24
+  sex: M
+  diagnosis: crrt_nutrition
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 6
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.75
+  R_rs: 9
+  SaO2: 0.95
+  PaO2: 78
+  PaCO2: 41
+cardiovascular:
+  HR: 135
+  MAP: 62
+  CO: 4.1
+  CVP: 9
+  Hb: 9.5
+metabolism:
+  T_core: 38.2
+  VO2: 150
+  lactate: 3.0
+sepsis:
+  phenotype: mixed
+  infection_load: 0.55
+  source_control: 0.25
+  antibiotic_effect: 0.35
+acidbase:
+  K_mmol_L: 5.8
+  HCO3_mmol_L: 17
+  urea_mmol_L: 22
+renal:
+  creatinine_baseline_mg_dL: 0.38
+  creatinine_mg_dL: 0.75
+  CRRT_active: true
+  CRRT_effluent_mL_kg_h: 30
+  CRRT_net_UF_mL_h: 60
+nutrition:
+  GIR_mg_kg_min: 3.5
+  enteral_feed_mL_h: 10
+  enteral_kcal_mL: 1.0
+  parenteral_kcal_kg_day: 20
+  protein_g_kg_day: 1.0
+  lipid_g_kg_day: 0.8
+  phosphate_mmol_L: 1.0
+  magnesium_mmol_L: 0.68
+perturbations:
+  - {t: 300, action: set_protein, value: 2.2, label: increase protein for CRRT losses}
+  - {t: 300, action: set_parenteral_kcal, value: 28, label: increase PN calories}
+  - {t: 420, action: set_phosphate_supplement, value: 6, label: phosphate supplement during CRRT}
+outputs:
+  - CRRT_active_effective
+  - CRRT_protein_loss_g_day
+  - protein_balance_g_day
+  - phosphate_mmol_L
+  - magnesium_mmol_L
+  - nutrition_severity_score
+simulation_time_s: 900

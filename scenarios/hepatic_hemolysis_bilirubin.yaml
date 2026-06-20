@@ -1,0 +1,34 @@
+name: hepatic_hemolysis_bilirubin
+description: Hemolysis-driven indirect bilirubin load with preserved hepatic perfusion and oxygen transport tracking.
+simulation_time_s: 600
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  FiO2: 0.30
+  PEEP: 5
+  Paw: 17
+  RR: 24
+  C_rs: 0.8
+  R_rs: 8
+cardiovascular:
+  MAP: 65
+  HR: 120
+  CO: 4.0
+  Hb: 10.0
+metabolism:
+  T_core: 37.4
+  lactate: 1.8
+hematology:
+  WBC_count: 9
+  neutrophil_count: 6
+hepatic:
+  bilirubin_total_mg_dL: 1.0
+  bilirubin_direct_mg_dL: 0.2
+  albumin_g_dL: 3.7
+perturbations:
+  - {t: 60, action: set_hemolysis, value: 0.45}
+  - {t: 240, action: set_Hb, value: 8.8}
+outputs: [Hb, hemolysis_index, bilirubin_total_mg_dL, bilirubin_indirect_mg_dL, bilirubin_direct_mg_dL, LDH_index, oxygen_transport_reserve, hepatic_severity_score]

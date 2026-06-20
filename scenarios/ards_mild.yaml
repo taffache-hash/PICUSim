@@ -1,0 +1,66 @@
+name: ards_mild_peep_titration
+description: >
+  ARDS lieve in bambino 5 anni, 20 kg.
+  Scenario: PEEP step-up 5→8→12 cmH2O + valutazione risposta.
+  Atteso: aumento EELV, miglioramento SaO2/PaO2, possibile aumento CVP.
+
+patient:
+  age_y: 5
+  weight_kg: 20
+  sex: M
+  diagnosis: ARDS_mild_Berlin
+
+respiratory:
+  PEEP: 5
+  Paw: 22
+  FiO2: 0.50
+  RR: 30
+  C_rs: 0.45           # ridotta (ARDS)
+  R_rs: 10.0
+  PaO2: 65.0           # ipossiemia moderata
+  PaCO2: 42.0
+  SaO2: 0.90
+  recruited_frac: 0.55 # de-recruitment significativo
+  non_recruitable_frac: 0.20  # 20% unità consolidate/non reclutabili (ARDS lieve)
+
+cardiovascular:
+  HR: 130
+  MAP: 62
+  CVP: 6
+  Hb: 10.5
+
+metabolism:
+  T_core: 38.2
+  VO2: 145
+  lactate: 1.8
+
+perturbations:
+  - t: 30
+    action: set_PEEP
+    value: 8
+    label: "PEEP step 5→8"
+  - t: 120
+    action: set_PEEP
+    value: 10
+    label: "PEEP step 8→10"
+  - t: 240
+    action: fluid_bolus_mL
+    value: 100
+    label: "Bolo 100 mL"
+
+outputs:
+  - Paw
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+  - CVP
+  - MP
+  - Pdriving
+
+simulation_time_s: 360

@@ -1,0 +1,48 @@
+version: v0.49
+name: release_candidate_full_test_pack
+purpose: >
+  Pre-release reproducibility and smoke-test package for the Pediatric Critical Care
+  Physiology Simulation Framework. It does not claim clinical validation.
+recommended_dt_s: 2.0
+scenario_smoke_core:
+  - healthy_child_20kg
+  - ards_mild
+  - septic_shock
+  - septic_shock_refractory
+  - status_asthmaticus
+  - near_fatal_status_asthmaticus
+  - tbi_icp
+  - tbi_hypertonic_electrolytes
+  - aki_crrt_lite
+  - hematology_anemia_transfusion
+  - hepatic_sepsis_cholestasis
+  - counterfactual_asthma_high_RR_airtrapping
+static_checks:
+  - compileall
+  - release_candidate_check
+  - dependency_deep_audit
+  - score_registry_audit
+  - profile_usage_audit
+  - literature_source_matrix
+functional_reports:
+  - literature_benchmark_report_core
+  - counterfactual_report
+  - event_demo_report
+  - output_profile_export
+acceptance_policy:
+  hard_fail:
+    - python_compile_error
+    - release_candidate_check_failure
+    - dependency_audit_failure
+    - scenario_runtime_error
+    - missing_required_artifact
+  allowed_review:
+    - dt_convergence_sensitivity_at_dt_1
+    - profile_blind_or_weight_only_modules_already_tracked
+    - literature_envelope_not_clinical_validation
+residual_issues_before_v1_alpha:
+  - PK/PD allometric scaling remains incomplete.
+  - Cardiovascular age-scaling remains partial.
+  - V/Q remains simplified and not regional.
+  - CRRT drug clearance is not implemented.
+  - Expert review from independent clinicians is still required before public scientific claims.

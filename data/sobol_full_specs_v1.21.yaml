@@ -1,0 +1,203 @@
+version: v1.21
+method: saltelli_jansen_monte_carlo_full_runner
+purpose: >
+  Configurable full-run Sobol sensitivity analysis for selected public pediatric
+  critical-care scenarios. This extends the earlier light Sobol scaffold by
+  separating smoke, exploratory, report and paper-oriented presets. The outputs
+  support model-development uncertainty ranking and are not clinical validation.
+presets:
+  smoke:
+    base_samples: 2
+    dt_s: 20.0
+    max_evaluations: 128
+    description: very small regression/pipeline check
+  exploratory:
+    base_samples: 64
+    dt_s: 10.0
+    max_evaluations: 4096
+    description: development-scale uncertainty ranking
+  report:
+    base_samples: 128
+    dt_s: 10.0
+    max_evaluations: 8192
+    description: stronger analysis for internal reports
+  paper:
+    base_samples: 256
+    dt_s: 5.0
+    max_evaluations: 20000
+    description: heavy run suitable for offline/paper-grade exploration if externally reviewed
+
+defaults:
+  preset: smoke
+  random_seed: 121
+  outcomes:
+    - MAP_final
+    - PaO2_final
+    - PaCO2_final
+    - pH_a_final
+    - lactate_final
+    - VILI_risk_final
+    - vq_adaptive_sigma_final
+    - antibiotic_effect_final
+    - glucose_mmol_L_final
+    - C_vancomycin_mg_L_final
+  default_scenarios:
+    - ards_mild
+    - septic_shock
+    - status_asthmaticus
+
+scenarios:
+  ards_mild:
+    scenario: ards_mild
+    focus: respiratory gas exchange and lung-injury risk
+    recommended_preset: exploratory
+    parameters:
+      respiratory.C_rs:
+        low: 12.0
+        high: 35.0
+        label: respiratory_compliance
+      respiratory.R_rs:
+        low: 5.0
+        high: 18.0
+        label: respiratory_resistance
+      respiratory.non_recruitable_frac:
+        low: 0.02
+        high: 0.35
+        label: non_recruitable_fraction
+      respiratory.shunt_frac:
+        low: 0.08
+        high: 0.45
+        label: shunt_fraction
+      cardiovascular.PVR:
+        low: 35.0
+        high: 120.0
+        label: pulmonary_vascular_resistance
+      metabolism.VO2:
+        low: 120.0
+        high: 240.0
+        label: oxygen_consumption
+  septic_shock:
+    scenario: septic_shock
+    focus: hemodynamic shock and inflammatory burden
+    recommended_preset: exploratory
+    parameters:
+      sepsis.infection_load:
+        low: 0.20
+        high: 0.95
+        label: infection_load
+      sepsis.cytokine_drive:
+        low: 0.10
+        high: 0.90
+        label: cytokine_drive
+      cardiovascular.SVR:
+        low: 450.0
+        high: 1300.0
+        label: systemic_vascular_resistance
+      cardiovascular.Hb:
+        low: 7.0
+        high: 13.0
+        label: hemoglobin
+      metabolism.lactate:
+        low: 1.0
+        high: 7.0
+        label: baseline_lactate
+      endocrine.catecholamine_tone:
+        low: 0.2
+        high: 1.0
+        label: catecholamine_tone
+  status_asthmaticus:
+    scenario: status_asthmaticus
+    focus: obstructive physiology, air trapping and hypercapnia
+    recommended_preset: exploratory
+    parameters:
+      airway.bronchospasm_index:
+        low: 0.25
+        high: 0.95
+        label: bronchospasm
+      airway.mucus_load:
+        low: 0.05
+        high: 0.75
+        label: mucus_load
+      airway.small_airway_obstruction:
+        low: 0.10
+        high: 0.90
+        label: small_airway_obstruction
+      respiratory.R_rs:
+        low: 8.0
+        high: 35.0
+        label: respiratory_resistance
+      respiratory.C_rs:
+        low: 10.0
+        high: 35.0
+        label: respiratory_compliance
+      metabolism.VO2:
+        low: 120.0
+        high: 260.0
+        label: oxygen_consumption
+  neonatal_rds_3kg:
+    scenario: neonatal_rds_3kg
+    focus: neonatal oxygenation and shunt/dead-space drivers
+    recommended_preset: exploratory
+    parameters:
+      respiratory.C_rs:
+        low: 2.0
+        high: 8.0
+        label: neonatal_respiratory_compliance
+      respiratory.R_rs:
+        low: 20.0
+        high: 70.0
+        label: neonatal_respiratory_resistance
+      respiratory.non_recruitable_frac:
+        low: 0.10
+        high: 0.55
+        label: non_recruitable_fraction
+      respiratory.shunt_frac:
+        low: 0.10
+        high: 0.55
+        label: shunt_fraction
+      metabolism.VO2:
+        low: 18.0
+        high: 45.0
+        label: neonatal_oxygen_consumption
+  picu_vancomycin_aki_crrt_v1_12:
+    scenario: picu_vancomycin_aki_crrt_v1_12
+    focus: renal-dependent antimicrobial PK and CRRT-lite sensitivity
+    recommended_preset: exploratory
+    parameters:
+      pharmacology.vancomycin_mg_kg_h:
+        low: 0.4
+        high: 2.0
+        label: vancomycin_infusion_rate
+      renal.GFR:
+        low: 8.0
+        high: 80.0
+        label: glomerular_filtration_rate
+      renal.crrt_effluent_mL_kg_h:
+        low: 15.0
+        high: 55.0
+        label: crrt_effluent_rate
+      infection.vancomycin_MIC_mg_L:
+        low: 0.5
+        high: 2.0
+        label: vancomycin_MIC
+  picu_insulin_stress_hyperglycemia_v1_16:
+    scenario: picu_insulin_stress_hyperglycemia_v1_16
+    focus: glucose-insulin stress response
+    recommended_preset: exploratory
+    parameters:
+      pharmacology.insulin_UI_h:
+        low: 0.0
+        high: 4.0
+        label: insulin_infusion_rate
+      nutrition.GIR_mg_kg_min:
+        low: 2.0
+        high: 10.0
+        label: glucose_infusion_rate
+      endocrine.insulin_resistance_index:
+        low: 0.1
+        high: 0.9
+        label: insulin_resistance
+      stress.stress_drive:
+        low: 0.1
+        high: 1.0
+        label: stress_drive

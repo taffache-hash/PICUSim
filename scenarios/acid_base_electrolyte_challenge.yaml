@@ -1,0 +1,52 @@
+name: acid_base_electrolyte_challenge
+simulation_time_s: 720
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 6
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.8
+  R_rs: 9
+  SaO2: 0.96
+  PaO2: 82
+  PaCO2: 42
+ventilator:
+  mode: PCV
+  Pinsp: 12
+  IE_ratio: 0.35
+cardiovascular:
+  HR: 135
+  MAP: 58
+  CO: 3.8
+  CVP: 6
+  Hb: 10.5
+metabolism:
+  T_core: 38.4
+  T_setpoint: 38.7
+  lactate: 4.5
+  SIRS_factor: 1.25
+sepsis:
+  phenotype: warm
+  infection_load: 0.65
+  source_control: 0.1
+  antibiotic_effect: 0.1
+acidbase:
+  Na_mmol_L: 137
+  K_mmol_L: 4.6
+  Cl_mmol_L: 104
+  HCO3_mmol_L: 19
+  urea_mmol_L: 6
+perturbations:
+  - {t: 60, action: set_norad, value: 0.08, label: low-dose noradrenaline}
+  - {t: 120, action: set_normal_saline, value: 400, label: 0.9% saline load}
+  - {t: 240, action: set_balanced_crystalloid, value: 250, label: balanced crystalloid switch}
+  - {t: 360, action: set_bicarbonate, value: 20, label: cautious bicarbonate buffer}
+  - {t: 420, action: set_potassium, value: 5, label: potassium supplementation}
+  - {t: 480, action: set_antibiotic_effect, value: 0.55, label: improving antimicrobial effect}
+  - {t: 540, action: set_source_control, value: 0.45, label: partial source control}
+outputs: [pH_a, PaCO2, HCO3_mmol_L, base_excess_mmol_L, anion_gap_mmol_L, corrected_anion_gap_mmol_L, Na_mmol_L, K_mmol_L, Cl_mmol_L, lactate, MAP]

@@ -1,0 +1,115 @@
+name: epals_hyperkalemia_aki
+version: v1.22.1-alpha
+category: epals_5h_hyperkalaemia_metabolic
+epals:
+  group: H
+  cause: hypo_hyperkalaemia_metabolic
+  reversible_cause: Hyperkalaemia / metabolic disorder with AKI
+  teaching_level: intermediate
+clinical_narrative: Ten-year-old child with AKI-associated hyperkalaemia and metabolic acidosis. The educational
+  target is recognition of electrolyte/metabolic instability and temporizing shift plus renal support.
+patient:
+  profile: child_20kg
+  age_y: 10
+  weight_kg: 30
+  sex: M
+  diagnosis: epals_hyperkalemia_aki
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 20
+  FiO2: 0.4
+  RR: 26
+  C_rs: 0.8
+  R_rs: 9.0
+  PaO2: 90.0
+  PaCO2: 36.0
+  SaO2: 0.97
+ventilator:
+  mode: PCV
+  Pinsp: 14
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 38
+cardiovascular:
+  HR: 130
+  MAP: 58
+  CO: 4.4
+  CVP: 7
+  Hb: 10.5
+renal:
+  creatinine_mg_dL: 2.0
+  creatinine_baseline_mg_dL: 0.45
+  GFR_baseline: 105
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+  CRRT_dialysate_K_mmol_L: 2.0
+  CRRT_bicarbonate_mmol_L: 32
+acidbase:
+  Na_mmol_L: 135
+  K_mmol_L: 6.8
+  Cl_mmol_L: 103
+  HCO3_mmol_L: 17
+  urea_mmol_L: 18
+nutrition:
+  glucose_mmol_L: 7.5
+  GIR_mg_kg_min: 3.5
+  insulin_UI_h: 0.0
+metabolism:
+  T_core: 37.4
+  VO2: 160
+  lactate: 2.4
+perturbations:
+- t: 60
+  action: set_insulin
+  value: 2.0
+  label: insulin-dextrose shift proxy
+- t: 60
+  action: set_GIR
+  value: 6.0
+  label: dextrose support proxy
+- t: 120
+  action: set_bicarbonate
+  value: 18
+  label: buffer metabolic acidosis proxy
+- t: 180
+  action: set_K
+  value: 5.5
+  label: potassium decreases after temporizing therapy
+- t: 240
+  action: set_CRRT_active
+  value: true
+  label: start renal replacement support proxy
+- t: 240
+  action: set_CRRT_effluent
+  value: 35
+  label: CRRT effluent 35 mL/kg/h
+- t: 300
+  action: set_K
+  value: 4.9
+  label: continued potassium control with CRRT
+expected_response:
+- K is dangerous at baseline, falls after shift therapy and stabilizes after CRRT proxy.
+- Acid-base and urea/creatinine remain abnormal but trajectory is safer.
+debrief_questions:
+- What made this primarily a metabolic cause?
+- Which interventions were temporizing and which addressed elimination?
+outputs:
+- K_mmol_L
+- pH_a
+- HCO3_mmol_L
+- base_excess_mmol_L
+- creatinine_mg_dL
+- urea_mmol_L
+- AKI_stage
+- RRT_indication_score
+- CRRT_active_effective
+- glucose_mmol_L
+- insulin_potassium_shift_signal
+- MAP
+- HR
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+simulation_time_s: 420

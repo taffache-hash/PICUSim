@@ -1,0 +1,101 @@
+name: picu_sedation_pkpd
+description: >
+  ARDS moderata + shock settico parzialmente trattato.
+  Bambino 6 anni 22 kg. Scenario completo con:
+  - Ketamina IV per sedazione/analgesia procedurale
+  - Noradrenalina per vasopressione
+  - Midazolam infusione continua per sedazione
+  - PEEP titration
+  - Risposta termica e metabolica SIRS
+  - Monitoraggio renale: diuresi, GFR, AKI index, bilancio idrico
+
+patient:
+  age_y: 6
+  weight_kg: 22
+  sex: M
+  diagnosis: ARDS_moderate_septic_shock
+
+respiratory:
+  PEEP: 8
+  Paw: 22
+  FiO2: 0.55
+  RR: 28
+  C_rs: 0.50
+  R_rs: 11.0
+  PaO2: 62.0
+  PaCO2: 44.0
+  SaO2: 0.90
+
+cardiovascular:
+  HR: 135
+  MAP: 52
+  CVP: 4
+  Hb: 10.0
+
+metabolism:
+  T_core: 38.8
+  T_setpoint: 39.0        # febbre attiva
+  SIRS_factor: 1.35       # sepsi: +35% VO2
+  VO2: 160
+  lactate: 3.2
+
+drugs:
+  norad_mcg_kg_min: 0.20   # norad in corso
+  midazolam_mcg_kg_h: 100  # sedazione continua (mcg/kg/h)
+
+perturbations:
+  # t=30s: bolo ketamina per aspirato tracheale (5 mg/kg = 110 mg in 5 min)
+  - t: 30
+    action: set_ketamine
+    value: 6.0              # mg/kg/h per 5 min = 0.5 mg/kg/min → dose procedurale
+    label: "Ketamina bolo procedurale"
+  - t: 330
+    action: set_ketamine
+    value: 0.0
+    label: "Stop ketamina"
+  # t=120s: PEEP up
+  - t: 120
+    action: set_PEEP
+    value: 10
+    label: "PEEP 8→10 cmH2O"
+  # t=240s: titolazione norad
+  - t: 240
+    action: set_norad
+    value: 0.35
+    label: "Norad 0.20→0.35 mcg/kg/min"
+  # t=360s: bolo fluidi
+  - t: 360
+    action: fluid_bolus_mL
+    value: 220
+    label: "Bolo 10 mL/kg = 220 mL"
+  # t=480s: risposta termica (paracetamolo)
+  - t: 480
+    action: set_paracetamol
+    value: true
+    label: "Paracetamolo → riduzione setpoint"
+
+outputs:
+  - Paw
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - CO
+  - HR
+  - EELV
+  - C_ketamine_mg_L
+  - C_midazolam_ng_mL
+  - C_norad_ng_mL
+  - drug_drive_mod
+  - drug_MAP_mod
+  - VO2
+  - T_core
+  - lactate
+  - GFR
+  - urine_rate_mL_h
+  - fluid_balance
+  - AKI_index
+  - Hb
+
+simulation_time_s: 720

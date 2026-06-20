@@ -1,0 +1,273 @@
+version: '0.40'
+purpose: Heuristic causal traceability layer for key bedside variables. This is not
+  a mechanistic mass-balance proof; it exposes the major internal contributors/modifiers
+  used by the simulator.
+normalization: Contributor scores are directional and normalized within each target
+  for readability. They are not additive physiologic units unless explicitly labelled.
+targets:
+  lactate:
+    value_key: lactate
+    unit: mmol/L
+    interpretation: Final lactate reflects production from sepsis/hypoperfusion/thermoregulation
+      and clearance from liver/CRRT.
+    contributors:
+    - name: sepsis_inflammatory_drive
+      sign: positive
+      expr: max(sepsis_severity_score, cytokine_drive, infection_severity_score) *
+        1.0
+      rationale: Sepsis and inflammatory burden increase lactate production.
+    - name: hypoperfusion_low_MAP
+      sign: positive
+      expr: max(0.0, (60.0 - MAP) / 60.0)
+      rationale: Low perfusion pressure increases anaerobic lactate generation.
+    - name: oxygen_delivery_deficit
+      sign: positive
+      expr: max(0.0, (VO2 / max(DO2, 1.0)) - 0.30)
+      rationale: High extraction relative to delivery suggests oxygen supply-demand
+        stress.
+    - name: hepatic_clearance_impairment
+      sign: positive
+      expr: max(0.0, 1.0 - hepatic_lactate_clearance_mod)
+      rationale: Reduced hepatic clearance keeps lactate elevated.
+    - name: temperature_shivering_drive
+      sign: positive
+      expr: max(0.0, thermo_lactate_mod - 1.0) + shivering_index * 0.25
+      rationale: Fever/shivering can increase lactate production.
+    - name: CRRT_lactate_clearance
+      sign: negative
+      expr: CRRT_active_effective * max(0.0, 1.0 - CRRT_lactate_target_mmol_L / max(lactate,
+        0.1))
+      rationale: CRRT-lite can partially clear lactate in the model.
+  MAP:
+    value_key: MAP
+    unit: mmHg
+    interpretation: MAP reflects systemic resistance, cardiac output, vasoplegia,
+      vasoactives and heart-lung interaction.
+    contributors:
+    - name: cardiac_output_support
+      sign: positive
+      expr: CO / 5.0
+      rationale: Higher CO supports arterial pressure.
+    - name: systemic_vascular_tone
+      sign: positive
+      expr: SVR / 1200.0
+      rationale: Higher SVR supports MAP.
+    - name: vasoplegia
+      sign: negative
+      expr: vasoplegia_index
+      rationale: Septic vasoplegia lowers effective vascular tone.
+    - name: norepinephrine_adrenaline_support
+      sign: positive
+      expr: min(1.0, norad_mcg_kg_min / 0.2) + min(1.0, adrenaline_mcg_kg_min / 0.2)
+      rationale: Catecholamine infusions support MAP.
+    - name: vasopressin_support
+      sign: positive
+      expr: min(1.0, vasopressin_mU_kg_min / 0.06)
+      rationale: Vasopressin supports SVR/MAP in vasoplegia.
+    - name: heart_lung_preload_penalty
+      sign: negative
+      expr: max(0.0, 1.0 - heart_lung_CO_mod) + PEEP_hemodynamic_penalty
+      rationale: High intrathoracic pressure/PEEP can reduce venous return and CO.
+  PaO2:
+    value_key: PaO2
+    unit: mmHg
+    interpretation: PaO2 is driven by FiO2, recruitment/shunt, airway obstruction
+      and pulmonary vascular/VQ modifiers.
+    contributors:
+    - name: FiO2_support
+      sign: positive
+      expr: FiO2
+      rationale: Higher inspired oxygen raises alveolar oxygen.
+    - name: recruitment_support
+      sign: positive
+      expr: recruited_frac
+      rationale: Recruitment improves effective gas exchange surface.
+    - name: airway_obstruction_VQ_penalty
+      sign: negative
+      expr: airway_obstruction_index + airway_shunt_add
+      rationale: Obstruction/mucus worsen V/Q matching.
+    - name: VILI_overdistension_penalty
+      sign: negative
+      expr: overdistension_index + VILI_risk * 0.5
+      rationale: Overdistension/VILI risk can worsen gas exchange.
+    - name: iNO_shunt_modifier
+      sign: positive
+      expr: max(0.0, 1.0 - ino_Qs_Qt_mod)
+      rationale: iNO can improve V/Q matching in pulmonary hypertension scenarios.
+  PaCO2:
+    value_key: PaCO2
+    unit: mmHg
+    interpretation: PaCO2 reflects alveolar ventilation, dead-space/obstruction, CO2
+      production and sedation/drive effects.
+    contributors:
+    - name: low_minute_ventilation
+      sign: positive
+      expr: max(0.0, 1.0 - ((Vt/1000.0) * max(RR_total, RR) / 3.0))
+      rationale: Low minute ventilation tends to raise PaCO2.
+    - name: airway_dead_space
+      sign: positive
+      expr: airway_VdVt_add + airway_obstruction_index * 0.5
+      rationale: Obstruction and dead space reduce alveolar ventilation.
+    - name: CO2_production_RQ
+      sign: positive
+      expr: max(0.0, VCO2_mod - 1.0) + max(0.0, respiratory_quotient - 0.85)
+      rationale: Higher carbohydrate load/RQ increases CO2 generation.
+    - name: sedation_opioid_depression
+      sign: positive
+      expr: max(0.0, 1.0 - sed_resp_mod) + opioid_resp_depression
+      rationale: Sedation/opioids can reduce respiratory drive.
+    - name: controlled_ventilation_support
+      sign: negative
+      expr: max(0.0, ((Vt/1000.0) * max(RR_total, RR) / 3.0) - 1.0)
+      rationale: Higher effective ventilation clears CO2.
+  pH_a:
+    value_key: pH_a
+    unit: pH
+    interpretation: pH reflects respiratory CO2 load and metabolic acid-base state.
+    contributors:
+    - name: respiratory_acidosis_CO2
+      sign: negative
+      expr: max(0.0, (PaCO2 - 40.0) / 40.0)
+      rationale: Hypercapnia lowers pH.
+    - name: metabolic_buffer_HCO3
+      sign: positive
+      expr: max(0.0, (HCO3_mmol_L - 22.0) / 10.0)
+      rationale: Higher bicarbonate buffers acidosis.
+    - name: lactate_anion_gap_acidosis
+      sign: negative
+      expr: max(0.0, (lactate - 2.0) / 8.0) + metabolic_acidosis_index
+      rationale: Lactate and metabolic acidosis lower pH.
+    - name: CRRT_bicarbonate_support
+      sign: positive
+      expr: CRRT_active_effective * max(0.0, (CRRT_HCO3_target_mmol_L - HCO3_mmol_L)
+        / 20.0)
+      rationale: CRRT bicarbonate target can support metabolic pH.
+  DO2:
+    value_key: DO2
+    unit: mL/min
+    interpretation: DO2 is mainly determined by Hb, SaO2/PaO2 and CO.
+    contributors:
+    - name: hemoglobin_capacity
+      sign: positive
+      expr: Hb / 11.0
+      rationale: Hb is the main O2 content determinant.
+    - name: arterial_saturation
+      sign: positive
+      expr: SaO2
+      rationale: Higher saturation improves oxygen content.
+    - name: cardiac_output
+      sign: positive
+      expr: CO / 4.0
+      rationale: Cardiac output delivers arterial oxygen to tissues.
+    - name: methemoglobin_penalty
+      sign: negative
+      expr: methemoglobin_percent / 10.0
+      rationale: Methemoglobinemia reduces functional Hb.
+    - name: anemia_severity_penalty
+      sign: negative
+      expr: anemia_severity_index
+      rationale: Anemia reduces transport reserve.
+  ICP_mmHg:
+    value_key: ICP_mmHg
+    unit: mmHg
+    interpretation: ICP is influenced by TBI burden, CO2, osmolar therapy, CPP/perfusion
+      and fever/agitation.
+    contributors:
+    - name: hypercapnia_cerebral_vasodilation
+      sign: positive
+      expr: max(0.0, (PaCO2 - 40.0) / 30.0)
+      rationale: Hypercapnia can increase cerebral blood volume/ICP.
+    - name: osmotherapy_hypertonic_effect
+      sign: negative
+      expr: max(0.0, (Na_mmol_L - 140.0) / 20.0) + max(0.0, (osmolarity_mOsm_L - 290.0)
+        / 40.0)
+      rationale: Hyperosmolar therapy tends to lower ICP.
+    - name: low_CPP_risk
+      sign: positive
+      expr: max(0.0, (50.0 - CPP_mmHg) / 50.0)
+      rationale: Low CPP can worsen cerebral physiology.
+    - name: fever_agitation_burden
+      sign: positive
+      expr: hyperthermia_index + shivering_index * 0.5 + max(0.0, RASS_proxy / 4.0)
+      rationale: Fever/shivering/agitation increase cerebral metabolic burden.
+    - name: hepatic_metabolic_encephalopathy
+      sign: positive
+      expr: hepatic_encephalopathy_index + max(0.0, (ammonia_umol_L - 50.0) / 100.0)
+      rationale: Ammonia/encephalopathy can worsen neurologic state.
+  fluid_balance:
+    value_key: fluid_balance
+    unit: mL
+    interpretation: 'Fluid balance is ledger-driven: inputs minus urine, CRRT UF and
+      insensible losses.'
+    contributors:
+    - name: cumulative_inputs
+      sign: positive
+      expr: cumulative_fluid_input_mL + external_fluid_input_mL
+      rationale: Fluids, transfusion and electrolyte therapies increase balance.
+    - name: urine_output
+      sign: negative
+      expr: cumulative_urine_output_mL
+      rationale: Urine output lowers balance.
+    - name: CRRT_ultrafiltration
+      sign: negative
+      expr: cumulative_crrt_UF_mL
+      rationale: Net UF lowers balance.
+    - name: insensible_losses
+      sign: negative
+      expr: cumulative_insensible_loss_mL
+      rationale: Insensible losses lower balance.
+    - name: ADH_fluid_retention
+      sign: positive
+      expr: ADH_water_retention_index * 100.0
+      rationale: ADH-like stress response reduces free-water loss.
+  Hb:
+    value_key: Hb
+    unit: g/dL
+    interpretation: Hb changes with transfusion, bleeding, dilution and hemolysis.
+    contributors:
+    - name: RBC_transfusion
+      sign: positive
+      expr: RBC_transfused_mL / max(weight_kg * 10.0, 1.0)
+      rationale: Packed RBC increases Hb.
+    - name: active_bleeding
+      sign: negative
+      expr: bleeding_rate_mL_h / max(weight_kg * 10.0, 1.0)
+      rationale: Bleeding lowers Hb.
+    - name: hemodilution_fluid_overload
+      sign: negative
+      expr: max(0.0, fluid_overload_percent) / 20.0
+      rationale: Fluid overload can dilute Hb.
+    - name: hemolysis
+      sign: negative
+      expr: hemolysis_index
+      rationale: Hemolysis lowers effective RBC mass.
+    - name: marrow_suppression
+      sign: negative
+      expr: marrow_suppression_index * 0.5
+      rationale: Marrow suppression reduces RBC reserve over longer horizons.
+  K_mmol_L:
+    value_key: K_mmol_L
+    unit: mmol/L
+    interpretation: K reflects renal clearance, CRRT target, insulin shift, supplementation
+      and hemolysis.
+    contributors:
+    - name: renal_AKI_retention
+      sign: positive
+      expr: AKI_stage / 3.0 + max(0.0, 1.0 - GFR / 100.0)
+      rationale: AKI reduces potassium excretion.
+    - name: CRRT_potassium_removal
+      sign: negative
+      expr: CRRT_active_effective * max(0.0, K_mmol_L - CRRT_K_target_mmol_L) / 3.0
+      rationale: CRRT can move potassium toward dialysate target.
+    - name: insulin_intracellular_shift
+      sign: negative
+      expr: min(1.0, insulin_UI_h / 2.0)
+      rationale: Insulin shifts potassium intracellularly.
+    - name: hemolysis_release
+      sign: positive
+      expr: hemolysis_index * 0.5
+      rationale: Hemolysis can increase measured potassium.
+    - name: potassium_supplement
+      sign: positive
+      expr: potassium_mmol / max(weight_kg * 2.0, 1.0)
+      rationale: K supplementation raises potassium burden.

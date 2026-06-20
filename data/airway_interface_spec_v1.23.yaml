@@ -1,0 +1,29 @@
+release: v1.23-alpha
+airway_interfaces:
+  ETT:
+    implemented: true
+    description: Connected invasive airway; pressure delivery allowed.
+  TRACHEOSTOMY:
+    implemented: true
+    description: Connected invasive airway placeholder; pressure delivery allowed.
+  UNASSISTED:
+    implemented: true
+    description: No active ventilator pressure; Paw ambient, PEEP zero, Pmus-driven
+      breathing.
+  NONE:
+    implemented: true
+    description: Alias for UNASSISTED.
+  HFNC:
+    implemented: false
+    planned: v1.23.1
+  NIV_CPAP:
+    implemented: false
+    planned: v1.23.2
+  NIV_BIPAP:
+    implemented: false
+    planned: v1.23.2
+behavioral_checks:
+- NONE/UNASSISTED sets Paw_current to ambient pressure
+- NONE/UNASSISTED sets PEEP to zero
+- NONE/UNASSISTED sets intubated false
+- NONE/UNASSISTED leaves Pmus-driven mechanics active

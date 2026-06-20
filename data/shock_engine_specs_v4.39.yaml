@@ -1,0 +1,32 @@
+version: v3.1-step4.39
+module: ShockEngine
+educational_only: true
+non_clinical_use: true
+phenotypes:
+  distributive:
+    expected_direction: [SVR_down, HR_up, lactate_up]
+    drivers: [shock_severity, infection_load, vasoplegia_index]
+  hypovolemic:
+    expected_direction: [preload_down, SVR_up, HR_up, lactate_up]
+    drivers: [shock_severity, fluid_balance, shock_hypovolemia_index]
+  cardiogenic:
+    expected_direction: [contractility_down, CO_down, lactate_up]
+    drivers: [shock_severity, myocardial_depression_index, shock_low_output_index]
+  obstructive:
+    expected_direction: [preload_down, RV_afterload_up, CO_down, lactate_up]
+    drivers: [shock_severity, RV_afterload_index, PEEP_hemodynamic_penalty]
+contract_fields:
+  outputs:
+    - shock_engine_revision
+    - shock_type
+    - shock_severity
+    - shock_stage
+    - shock_SVR_mod
+    - shock_preload_mod
+    - shock_contractility_mod
+    - shock_HR_add
+    - shock_lactate_prod_mod
+    - shock_lactate_clearance_mod
+    - shock_sympathetic_tone
+    - shock_decompensation_index
+    - shock_perfusion_pressure_mmHg

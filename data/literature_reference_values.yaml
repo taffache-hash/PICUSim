@@ -1,0 +1,101 @@
+# Pediatric Digital Twin v0.16
+# Literature-informed anchor values for plausibility checks and scenario defaults.
+# These are NOT clinical decision thresholds.
+# Sources are summarized in docs/LITERATURE_ALIGNMENT_v0.16.md and CHANGELOG_v0.16.md.
+
+metadata:
+  version: v0.16
+  purpose: "Reference anchors for pediatric in-silico simulation plausibility, calibration and future validation."
+  caveat: "Use as broad priors/ranges only; not validated for bedside decisions."
+
+vital_signs:
+  # RCH normal physiological variable ranges; broad awake-child anchors.
+  term_neonate:
+    weight_kg: [3.0, 4.0]
+    systolic_bp_mmHg: [60, 95]
+    HR_bpm: [120, 170]
+    RR_bpm: [25, 60]
+  infant_6mo:
+    weight_kg: [7.0, 9.0]
+    systolic_bp_mmHg: [75, 105]
+    HR_bpm: [110, 170]
+    RR_bpm: [20, 55]
+  toddler_2y:
+    weight_kg: [10.0, 14.0]
+    systolic_bp_mmHg: [70, 105]
+    HR_bpm: [95, 150]
+    RR_bpm: [20, 40]
+  child_6y:
+    weight_kg: [18.0, 22.0]
+    systolic_bp_mmHg: [80, 115]
+    HR_bpm: [75, 140]
+    RR_bpm: [16, 30]
+  adolescent_12_18y:
+    systolic_bp_mmHg: [90, 130]
+    HR_bpm: [55, 110]
+    RR_bpm: [12, 22]
+
+respiratory:
+  normal_tidal_volume_ml_kg:
+    broad: [5, 8]
+    default: 6.5
+    note: "Normal/resting and lung-protective pediatric target range; PALICC-2 allows <=6-8 mL/kg, lower when needed to keep pressures safe."
+  protective_ards_tidal_volume_ml_kg:
+    mild_moderate: [6, 8]
+    severe_or_pressure_limited: [4, 6]
+  anatomic_dead_space_ml_kg:
+    child_broad: [2.0, 3.0]
+    term_infant_reference: 2.7
+    lung_disease_infant_reference: [4.5, 6.0]
+  peep_pards_min_cmH2O: 5
+  plateau_pressure_pards_cmH2O:
+    target_upper_soft: 28
+    high_chest_wall_or_severe_context: 32
+  driving_pressure_cmH2O:
+    conservative_target: [0, 15]
+    warning_above: 15
+
+circulation_and_blood:
+  blood_volume_ml_kg:
+    preterm_neonate: [90, 100]
+    term_neonate: [80, 90]
+    infant: [70, 80]
+    child: [70, 75]
+    adolescent_adult_like: [65, 70]
+  cardiac_index_L_min_m2:
+    broad_pediatric_resting: [2.5, 5.5]
+  oxygen_delivery:
+    lower_bound_pediatric_cardiac_surgery_ml_min_m2: 340
+    note: "Useful warning threshold for DO2 indexed models; not directly interchangeable with all PICU states."
+
+renal:
+  normal_egfr_ml_min_1_73m2:
+    children_over_2y: [90, 120]
+    warning_below: 60
+  bedside_schwartz:
+    formula: "eGFR = 0.41 * height_cm / serum_creatinine_mg_dL"
+    note: "Future module can calculate patient-specific renal function if height and creatinine are supplied."
+
+sepsis:
+  guideline_framework: "Surviving Sepsis Campaign Children 2020"
+  modeling_targets:
+    fluids_should_be_context_sensitive: true
+    vasoactive_choice_should_depend_on_phenotype: true
+    hemodynamic_response_should_not_erase_biologic_severity: true
+
+ards:
+  guideline_framework: "PALICC-2 2023"
+  modeling_targets:
+    oxygenation_severity_requires_peep: true
+    ventilation_should_balance_vt_pressure_deadspace: true
+    peep_should_have_recruitment_and_hemodynamic_tradeoffs: true
+
+hematology_v0_21_anchors:
+  intent: "Qualitative anchors for hematology/oxygen-transport simulation; not a transfusion prescription protocol."
+  restrictive_RBC_transfusion_anchor:
+    stable_critically_ill_child_Hb_g_dL: "~7, context-dependent"
+    source_note: "TAXI pediatric critical care transfusion consensus and subsequent institutional guidelines commonly use restrictive thresholds in stable critically ill children, while unstable shock requires individualized judgment."
+  oxygen_content_formula:
+    CaO2_mL_dL: "1.34 * Hb * SaO2 + 0.003 * PaO2"
+  coagulation_relevance:
+    source_note: "Phoenix pediatric sepsis criteria include coagulation dysfunction as one of the four organ-system domains."

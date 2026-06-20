@@ -1,0 +1,29 @@
+# Local/runtime caches
+.git/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+.mypy_cache/
+
+# Virtual environments and dependencies
+.venv/
+venv/
+env/
+node_modules/
+
+# Local server logs
+server_8765_stdout.log
+server_8765_stderr.log
+
+# Local/private Codex workspace state
+.agents/
+.codex/
+
+# Release archives are deposited separately as assets/Zenodo files
+outputs/release_archives/*.zip
+outputs/release_archives/*.sha256
+
+# OS clutter
+.DS_Store
+Thumbs.db

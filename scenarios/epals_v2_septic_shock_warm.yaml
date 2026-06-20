@@ -1,0 +1,17 @@
+name: epals_v2_septic_shock_warm
+description: EPALS scenario engine v2 warm septic/distributive shock case.
+patient: {age_y: 6, weight_kg: 20, sex: F, diagnosis: warm_septic_shock}
+respiratory: {FiO2: 0.50, PEEP: 6, Paw: 18, RR: 34, PaO2: 68, PaCO2: 31, SaO2: 0.91}
+cardiovascular: {HR: 162, MAP: 44, CVP: 3, Hb: 10.1, preload_mod: 0.82}
+metabolism: {T_core: 39.2, lactate: 5.6}
+infection: {infection_load: 0.85, antibiotic_started: false, antibiotic_coverage: 0.0, source_control: 0.0}
+shock: {type: distributive, severity: 0.78, stage: decompensated}
+drugs: {norad_mcg_kg_min: 0.0}
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 200, label: 10 mL/kg crystalloid}
+  - {t: 75, action: set_antibiotic_started, value: true, label: antibiotics started}
+  - {t: 120, action: set_antibiotic_coverage, value: 0.75, label: adequate antimicrobial coverage}
+  - {t: 150, action: set_norad, value: 0.12, label: norepinephrine started}
+  - {t: 260, action: set_norad, value: 0.30, label: norepinephrine escalated}
+outputs: [MAP, HR, CO, SVR, lactate, urine_rate_mL_h, decision_priority, decision_warning]
+simulation_time_s: 420

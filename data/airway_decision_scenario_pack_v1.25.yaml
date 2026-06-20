@@ -1,0 +1,181 @@
+version: v1.25-alpha
+purpose: Airway decision scenario pack for educational debriefing; no engine changes beyond v1.24 event
+  system.
+scenario_count: 6
+scenarios:
+- id: airway_failed_intubation_cannot_oxygenate_v1_25
+  path: scenarios/airway_failed_intubation_cannot_oxygenate_v1_25.yaml
+  decision_focus:
+  - recognize failed oxygenation
+  - avoid fixation on repeated attempts
+  - start rescue ventilation
+  - secure airway after rescue
+  critical_events:
+  - failed_intubation_attempt
+  - failed_intubation_attempt
+  - laryngospasm
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which variables mark transition from hypoxic respiratory failure to failed airway?
+  - How many failed attempts occurred before rescue ventilation?
+  - Did oxygenation support begin before the airway was finally secured?
+- id: airway_extubation_failure_bronchiolitis_v1_25
+  path: scenarios/airway_extubation_failure_bronchiolitis_v1_25.yaml
+  decision_focus:
+  - recognize extubation failure
+  - track HFNC support limits
+  - rescue before deterioration
+  - re-intubate when failure markers persist
+  critical_events:
+  - planned_extubation
+  - airway_obstruction_event
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which variables confirm the planned extubation occurred?
+  - Which markers suggest HFNC support is failing?
+  - What changed after re-intubation?
+- id: airway_laryngospasm_post_extubation_v1_25
+  path: scenarios/airway_laryngospasm_post_extubation_v1_25.yaml
+  decision_focus:
+  - identify upper-airway obstruction
+  - track laryngospasm score
+  - recognize poor mask ventilation
+  - secure airway if obstruction persists
+  critical_events:
+  - planned_extubation
+  - laryngospasm
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which variables distinguish laryngospasm from parenchymal lung disease?
+  - Did rescue ventilation occur before re-intubation?
+  - What are the limits of this proxy model?
+- id: airway_aspiration_during_rsi_v1_25
+  path: scenarios/airway_aspiration_during_rsi_v1_25.yaml
+  decision_focus:
+  - recognize aspiration risk
+  - track oxygenation burden
+  - secure/protect airway
+  - separate aspiration from failed laryngoscopy
+  critical_events:
+  - aspiration_event
+  - failed_intubation_attempt
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which fields quantify aspiration risk and airway protection?
+  - How does the model separate aspiration from failed intubation?
+  - What changed after securing the airway?
+- id: airway_opioid_sedation_apnea_v1_25
+  path: scenarios/airway_opioid_sedation_apnea_v1_25.yaml
+  decision_focus:
+  - recognize sedative respiratory depression
+  - start rescue ventilation
+  - secure airway if ventilation remains inadequate
+  critical_events:
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which variables suggest respiratory drive suppression rather than primary lung disease?
+  - Did bag-mask ventilation occur before intubation?
+  - Why is this scenario not a medication dosing model?
+- id: airway_niv_failure_to_intubation_v1_25
+  path: scenarios/airway_niv_failure_to_intubation_v1_25.yaml
+  decision_focus:
+  - recognize NIV failure
+  - track leak and hypercapnia burden
+  - start rescue ventilation
+  - intubate after failure markers persist
+  critical_events:
+  - start_bag_mask_ventilation
+  - perform_intubation
+  expected_final_state: secured_ETT
+  key_outputs:
+  - airway_interface
+  - oxygen_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - intubation_attempt_count
+  - failed_intubation_count
+  - intubation_success_time_s
+  - extubation_time_s
+  debrief_questions:
+  - Which variables show NIV was active before intubation?
+  - Which markers suggest NIV failure?
+  - What changed after invasive ventilation started?

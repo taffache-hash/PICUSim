@@ -1,0 +1,48 @@
+version: v5.1D
+purpose: Publication-oriented sensitivity maps for parameter-to-outcome behavior.
+inputs:
+  - name: preload_factor
+    min: 0.65
+    max: 1.25
+    default: 1.0
+    domain: hemodynamics
+  - name: svr_factor
+    min: 0.55
+    max: 1.45
+    default: 1.0
+    domain: hemodynamics
+  - name: contractility_factor
+    min: 0.55
+    max: 1.35
+    default: 1.0
+    domain: hemodynamics
+  - name: alveolar_oxygen_reserve
+    min: 0.45
+    max: 1.30
+    default: 1.0
+    domain: respiration
+  - name: airway_resistance_factor
+    min: 0.80
+    max: 2.20
+    default: 1.0
+    domain: respiration
+  - name: lactate_clearance_factor
+    min: 0.45
+    max: 1.30
+    default: 1.0
+    domain: metabolism
+outcomes:
+  - spo2_nadir
+  - map_nadir
+  - lactate_peak
+  - rescue_margin
+scenarios:
+  - septic_shock
+  - anaphylaxis
+  - bronchiolitis_failure
+  - tamponade
+  - dka_shock
+thresholds:
+  dominant_rank_min: 0.20
+  fragile_gradient_min: 0.25
+  interaction_review_min: 0.12

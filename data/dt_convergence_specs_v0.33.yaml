@@ -1,0 +1,66 @@
+version: v0.33
+purpose: >-
+  Stricter numerical convergence screening for PDT scenarios. The finest dt is
+  treated as the reference. Primary variables are expected to remain within
+  tighter tolerances than secondary variables. This is internal numerical
+  stability screening, not clinical validation.
+reference_dt: 0.1
+recommended_dts: [1.0, 0.5, 0.2, 0.1]
+quick_dts: [1.0, 0.5, 0.2]
+default_primary_rel_tol: 0.10
+default_secondary_rel_tol: 0.15
+default_pH_abs_tol: 0.03
+scenarios:
+  healthy_child_20kg:
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+      MAP_final: {rel_tol: 0.10}
+      HR_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+    secondary:
+      PaO2_final: {rel_tol: 0.15}
+      CO_final: {rel_tol: 0.15}
+      lactate_final: {rel_tol: 0.15}
+  ards_mild:
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+      PaO2_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+    secondary:
+      CO_final: {rel_tol: 0.15}
+      lactate_final: {rel_tol: 0.15}
+      VILI_risk_final: {abs_tol: 0.08}
+  septic_shock:
+    primary:
+      MAP_final: {rel_tol: 0.10}
+      HR_final: {rel_tol: 0.10}
+      lactate_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.04}
+      PaCO2_final: {rel_tol: 0.10}
+    secondary:
+      CO_final: {rel_tol: 0.15}
+      SaO2_final: {abs_tol: 0.04}
+      fluid_balance_final: {rel_tol: 0.15}
+  tbi_icp:
+    primary:
+      ICP_mmHg_final: {rel_tol: 0.10, abs_tol: 1.5}
+      CPP_mmHg_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.03}
+    secondary:
+      GCS_proxy_final: {abs_tol: 1.0}
+      Na_mmol_L_final: {abs_tol: 2.0}
+  status_asthmaticus:
+    primary:
+      PaCO2_final: {rel_tol: 0.10}
+      pH_a_final: {abs_tol: 0.04}
+      R_rs_final: {rel_tol: 0.10}
+      Vt_final: {rel_tol: 0.10}
+      MAP_final: {rel_tol: 0.10}
+    secondary:
+      auto_PEEP_obstructive_final: {abs_tol: 0.5}
+      airway_obstruction_index_final: {abs_tol: 0.08}

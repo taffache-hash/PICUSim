@@ -1,0 +1,77 @@
+name: pulmonary_hypertension_ino
+description: >
+  Ipertensione polmonare severa post-cardiochirurgia, bambino 3 anni 14 kg.
+  PAP elevata, RV dilatato, iNO titolatato 5→20 ppm.
+  Monitoraggio: PVR, PAP, CO, SaO2, bilancio idrico.
+
+patient:
+  age_y: 3
+  weight_kg: 14
+  sex: F
+  diagnosis: post_cardiac_surgery_PHT
+
+respiratory:
+  PEEP: 6
+  Paw: 16
+  FiO2: 0.50
+  RR: 26
+  C_rs: 0.80
+  R_rs: 7.0
+  PaO2: 72.0
+  PaCO2: 38.0
+  SaO2: 0.92
+
+cardiovascular:
+  HR: 120
+  MAP: 60
+  CVP: 10
+  PAP_mean: 42
+  Hb: 13.0
+
+metabolism:
+  T_core: 37.2
+  VO2: 80
+  lactate: 1.5
+
+drugs:
+  ino_ppm: 0.0              # partenza senza iNO
+
+perturbations:
+  - t: 30
+    action: set_ino_ppm
+    value: 5
+    label: "iNO 5 ppm"
+  - t: 120
+    action: set_ino_ppm
+    value: 10
+    label: "iNO 10 ppm"
+  - t: 240
+    action: set_ino_ppm
+    value: 20
+    label: "iNO 20 ppm"
+  - t: 400
+    action: set_ino_ppm
+    value: 10
+    label: "iNO weaning 20→10 ppm"
+  - t: 550
+    action: set_ino_ppm
+    value: 5
+    label: "iNO weaning 10→5 ppm"
+  - t: 650
+    action: set_ino_ppm
+    value: 0
+    label: "Stop iNO"
+
+outputs:
+  - PVR
+  - PAP_mean
+  - CO
+  - SaO2
+  - MAP
+  - CVP
+  - ino_PVR_mod
+  - ino_Qs_Qt_mod
+  - HR
+  - DO2
+
+simulation_time_s: 720

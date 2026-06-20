@@ -1,0 +1,44 @@
+name: neuro_metabolic_seizure_risk
+simulation_time_s: 720
+description: Electrolyte/glucose/osmolar disturbance with seizure-risk trajectory and treatment signal.
+patient:
+  profile: child_20kg
+  age_y: 5
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  FiO2: 0.35
+  PEEP: 5
+  Paw: 17
+  RR: 24
+  C_rs: 0.80
+  R_rs: 8
+  SaO2: 0.96
+  PaO2: 86
+  PaCO2: 39
+cardiovascular:
+  HR: 135
+  MAP: 65
+  CO: 4.0
+  Hb: 11.0
+metabolism:
+  T_core: 38.4
+  lactate: 2.1
+acidbase:
+  Na_mmol_L: 126
+  K_mmol_L: 3.2
+  Cl_mmol_L: 94
+  HCO3_mmol_L: 22
+  urea_mmol_L: 8
+nutrition:
+  glucose_mmol_L: 2.8
+hepatic:
+  ammonia_umol_L: 52
+neurofunctional:
+  GCS_proxy: 14
+perturbations:
+  - {t: 120, action: set_Na, value: 132, label: cautious sodium correction}
+  - {t: 180, action: set_GIR, value: 6.0, label: glucose support}
+  - {t: 240, action: set_seizure_treatment, value: 0.65, label: anticonvulsant effect}
+  - {t: 360, action: set_T_core, value: 37.6, label: fever control}
+outputs: [GCS_proxy, AVPU_state, metabolic_encephalopathy_index, seizure_risk_index, neuro_severity_score, Na_mmol_L, glucose_mmol_L, osmolarity_mOsm_L, T_core]

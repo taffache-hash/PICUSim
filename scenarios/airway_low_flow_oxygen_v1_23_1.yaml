@@ -1,0 +1,58 @@
+name: airway_low_flow_oxygen_v1_23_1
+description: 'v1.23.1 scenario: extubated spontaneous breathing with non-pressurised low-flow oxygen delivery.'
+simulation_time_s: 240
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: M
+airway_interface:
+  interface: LOW_FLOW_OXYGEN
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  ambient_airway_pressure_cmH2O: 0.0
+  oxygen_interface: LOW_FLOW_OXYGEN
+  oxygen_flow_L_min: 2.0
+  oxygen_FiO2_set: 1.0
+  mouth_leak_fraction: 0.35
+  note: v1.23.1 low-flow oxygen spontaneous breathing
+respiratory:
+  mode: NONE
+  FiO2: 0.24
+  PEEP: 0.0
+  RR: 28
+  Vt: 110
+  C_rs: 0.8
+  R_rs: 8.5
+  SaO2: 0.93
+  PaO2: 68
+  PaCO2: 43
+  non_recruitable_frac: 0.04
+ventilator:
+  mode: NONE
+metabolism:
+  VO2: 125
+  T_core: 37.1
+  lactate: 1.1
+cardiovascular:
+  HR: 115
+  MAP: 66
+  CO: 3.7
+  Hb: 11.2
+clinical_narrative: A stable extubated school-age child receives low-flow nasal oxygen. The scenario verifies oxygen delivery without active airway pressure.
+debrief_questions:
+- Why does low-flow oxygen increase effective FiO2 without adding PEEP?
+- Which fields confirm that the ventilator is disconnected?
+outputs:
+- oxygen_interface
+- oxygen_flow_L_min
+- FiO2_delivered
+- FiO2_delivery_efficiency
+- airway_interface
+- intubated
+- ventilator_connected
+- Paw
+- PEEP
+- SaO2
+- PaCO2

@@ -1,0 +1,77 @@
+name: septic_cold_myocardial_dysfunction
+version: v0.14
+category: advanced_sepsis
+summary: >
+  Pediatric cold septic shock phenotype with myocardial depression and response
+  to adrenaline plus low-dose milrinone after initial stabilization.
+
+patient:
+  profile: child_20kg
+  age_y: 5
+  weight_kg: 18
+  sex: F
+  diagnosis: cold_septic_shock_myocardial_dysfunction
+
+respiratory:
+  mode: PCV
+  PEEP: 7
+  Paw: 21
+  FiO2: 0.50
+  RR: 28
+  C_rs: 0.65
+  R_rs: 10.0
+  PaO2: 70
+  PaCO2: 36
+  SaO2: 0.91
+  non_recruitable_frac: 0.15
+
+cardiovascular:
+  HR: 150
+  MAP: 48
+  CVP: 6
+  PAWP: 9
+  PAP_mean: 20
+  CO: 2.0
+  Hb: 10.0
+  preload_mod: 0.85
+
+metabolism:
+  T_core: 38.9
+  VO2: 155
+  lactate: 4.5
+
+sepsis:
+  phenotype: myocardial
+  infection_load: 0.80
+  source_control: 0.0
+  antibiotic_effect: 0.0
+
+drugs:
+  norad_mcg_kg_min: 0.05
+  adrenaline_mcg_kg_min: 0.0
+  milrinone_mcg_kg_min: 0.0
+
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 120, label: "Careful fluid challenge"}
+  - {t: 70, action: set_adrenaline, value: 0.08, label: "Start adrenaline"}
+  - {t: 160, action: set_adrenaline, value: 0.16, label: "Escalate adrenaline"}
+  - {t: 240, action: set_milrinone, value: 0.35, label: "Add low-dose milrinone"}
+  - {t: 300, action: set_norad, value: 0.12, label: "Maintain perfusion pressure"}
+  - {t: 360, action: set_antibiotic_effect, value: 0.5, label: "Antimicrobial effect"}
+
+outputs:
+  - MAP
+  - HR
+  - CO
+  - SVR
+  - lactate
+  - DO2
+  - VO2
+  - cytokine_drive
+  - vasoplegia_index
+  - myocardial_depression_index
+  - microcirculatory_failure_index
+  - sepsis_CO_mod
+  - sepsis_SVR_mod
+
+simulation_time_s: 520

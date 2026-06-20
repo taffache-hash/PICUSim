@@ -1,0 +1,15 @@
+name: epals_v2_dka_dehydration_shock
+description: EPALS scenario engine v2 DKA-like dehydration shock and potassium-risk teaching case.
+patient: {age_y: 10, weight_kg: 32, sex: F, diagnosis: dka_dehydration_shock}
+respiratory: {FiO2: 0.21, PEEP: 0, Paw: 0, RR: 38, PaO2: 96, PaCO2: 22, SaO2: 0.98}
+cardiovascular: {HR: 145, MAP: 50, CVP: 2, Hb: 14.5, preload_mod: 0.65}
+acidbase: {K_mmol_L: 5.6, HCO3_mmol_L: 8, Na_mmol_L: 130}
+nutrition: {glucose_mmol_L: 24.0, insulin_UI_h: 0.0}
+metabolism: {lactate: 3.6}
+shock: {type: hypovolemic, severity: 0.62, stage: decompensated}
+perturbations:
+  - {t: 30, action: fluid_bolus_mL, value: 320, label: cautious isotonic fluid bolus}
+  - {t: 100, action: set_insulin, value: 0.06, label: insulin infusion surrogate}
+  - {t: 180, action: set_K, value: 4.6, label: potassium falls after insulin/rehydration}
+outputs: [MAP, pH_a, HCO3_mmol_L, glucose_mmol_L, K_mmol_L, lactate]
+simulation_time_s: 420

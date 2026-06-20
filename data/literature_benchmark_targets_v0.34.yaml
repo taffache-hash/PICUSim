@@ -1,0 +1,158 @@
+version: v0.34
+purpose: >-
+  External-literature benchmark anchors for selected PDT scenarios. These targets
+  are deliberately broad and are intended for plausibility/face-validity
+  screening, not external clinical validation or bedside decision support.
+principles:
+  - Compare only variables for which the model has a reasonably analogous output.
+  - Use broad ranges when literature values depend strongly on age, illness severity, ventilation mode or timing.
+  - Keep source identifiers explicit so reviewers can inspect assumptions.
+  - A failed check is a review signal, not automatic proof that the model is wrong.
+sources:
+  RCH_vitals:
+    title: Royal Children's Hospital Melbourne - acceptable ranges for physiological variables
+    url: https://www.rch.org.au/clinicalguide/guideline_index/normal_ranges_for_physiological_variables/
+    notes: Age-banded HR, RR and systolic BP ranges for unwell children.
+  Fleming_2011_vitals:
+    title: Normal ranges of heart rate and respiratory rate in children from birth to 18 years
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3789232/
+    notes: Systematic review centile curves for HR and RR.
+  PALICC2_2023:
+    title: Second Pediatric Acute Lung Injury Consensus Conference PALICC-2 executive summary
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC9848214/
+    notes: Pediatric ARDS guidance and contextual targets for protective ventilation.
+  PALICC2_overview_2025:
+    title: Advances in the diagnosis and management of PARDS, overview of PALICC-2
+    url: https://journals.lww.com/prcm/fulltext/2025/01000/advances_in_the_diagnosis_and_management_of.2.aspx
+    notes: "Summarizes tidal volume guidance: physiologic 6-8 mL/kg, 4-6 mL/kg when pressure limits are exceeded."
+  TAXI_RBC_2018:
+    title: TAXI consensus recommendations for RBC transfusion in critically ill children
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6126913/
+    notes: Restrictive transfusion anchor; stable critically ill children rarely transfused when Hb >= 7 g/dL.
+  Phoenix_Sepsis_2024:
+    title: International Consensus Criteria for Pediatric Sepsis and Septic Shock / Phoenix Sepsis Score
+    url: https://pubmed.ncbi.nlm.nih.gov/38245889/
+    notes: Pediatric sepsis organ dysfunction framework; not a physiologic target table.
+  Kidney_Schwartz:
+    title: National Kidney Foundation pediatric eGFR / Schwartz calculator background
+    url: https://www.kidney.org/professionals/kdoqi/gfr_calculatorPed
+    notes: Pediatric kidney function reference anchor for future renal benchmarks.
+scenarios:
+  healthy_child_20kg:
+    description: Broad physiologic anchors for a stable school-age child, evaluated after model settling.
+    compare_at: final
+    targets:
+      HR:
+        range: [70, 140]
+        source: [RCH_vitals, Fleming_2011_vitals]
+        rationale: Broad school-age unwell/stable pediatric range; intentionally wider than healthy resting limits.
+      PaCO2:
+        range: [35, 45]
+        source: [PALICC2_2023]
+        rationale: Normocapnic anchor for a stable ventilated/noncritically ill child.
+      pH_a:
+        range: [7.35, 7.45]
+        source: [PALICC2_2023]
+        rationale: Normal acid-base anchor for stable scenario.
+      Vt_per_kg:
+        range: [5.0, 9.0]
+        source: [PALICC2_overview_2025]
+        derived_from: Vt / patient.weight_kg
+        rationale: Physiologic/protective tidal volume anchor.
+      SaO2:
+        range: [0.92, 1.00]
+        source: [PALICC2_2023]
+        rationale: Stable oxygenation anchor.
+  ards_mild:
+    description: PARDS/PARDS-like protective ventilation plausibility anchors, not outcome validation.
+    compare_at: final
+    targets:
+      Vt_per_kg:
+        range: [4.0, 8.5]
+        source: [PALICC2_overview_2025]
+        derived_from: Vt / patient.weight_kg
+      PaCO2:
+        range: [35, 65]
+        source: [PALICC2_2023]
+        rationale: Allows mild permissive hypercapnia without severe acidemia.
+      pH_a:
+        range: [7.20, 7.45]
+        source: [PALICC2_2023]
+      SaO2:
+        range: [0.88, 0.99]
+        source: [PALICC2_2023]
+      VILI_risk:
+        range: [0.0, 0.5]
+        source: [PALICC2_2023]
+        rationale: Qualitative model-specific safety signal; should not be extreme in mild ARDS scenario.
+  septic_shock:
+    description: Broad pediatric septic shock plausibility anchors under resuscitation/vasoactive support.
+    compare_at: final
+    targets:
+      HR:
+        range: [100, 190]
+        source: [RCH_vitals, Phoenix_Sepsis_2024]
+      MAP:
+        range: [45, 110]
+        source: [RCH_vitals, Phoenix_Sepsis_2024]
+        rationale: Broad resuscitated shock envelope; not an age-specific treatment target.
+      lactate:
+        range: [2.0, 8.0]
+        source: [Phoenix_Sepsis_2024]
+        rationale: Qualitative hyperlactatemia anchor for severe infection/shock.
+      pH_a:
+        range: [7.00, 7.40]
+        source: [Phoenix_Sepsis_2024]
+      Hb:
+        range: [7.0, 12.5]
+        source: [TAXI_RBC_2018]
+        rationale: Avoids unexplained severe anemia in generic shock scenario.
+  tbi_icp:
+    description: Neurocritical scenario anchors; broad enough for osmotherapy/CPP-management exploration.
+    compare_at: final
+    targets:
+      PaCO2:
+        range: [35, 45]
+        source: [PALICC2_2023]
+        rationale: Avoids sustained severe hypo/hypercapnia in generic controlled TBI scenario.
+      Na_mmol_L:
+        range: [135, 155]
+        source: [RCH_vitals]
+        rationale: Broad sodium/osmotherapy safety envelope.
+      ICP_mmHg:
+        range: [3, 25]
+        source: [PALICC2_2023]
+        rationale: Broad model anchor for treated ICP scenario; not a clinical target claim.
+      CPP_mmHg:
+        range: [45, 95]
+        source: [RCH_vitals]
+  status_asthmaticus:
+    description: Obstructive ventilation plausibility anchors for pediatric status asthmaticus.
+    compare_at: final
+    targets:
+      PaCO2:
+        range: [45, 90]
+        source: [PALICC2_2023]
+        rationale: Allows obstructive hypercapnia while excluding runaway ventilatory failure in demo scenario.
+      pH_a:
+        range: [7.05, 7.35]
+        source: [PALICC2_2023]
+      R_rs:
+        range: [15, 60]
+        source: [PALICC2_2023]
+        rationale: Model-specific obstructive resistance envelope.
+      auto_PEEP_obstructive:
+        range: [0, 10]
+        source: [PALICC2_2023]
+        rationale: Model-specific obstruction/air-trapping plausibility envelope.
+  hematology_anemia_transfusion:
+    description: Restrictive transfusion plausibility anchor.
+    compare_at: final
+    targets:
+      Hb:
+        range: [7.0, 11.5]
+        source: [TAXI_RBC_2018]
+      DO2:
+        range: [250, 900]
+        source: [TAXI_RBC_2018]
+        rationale: Broad oxygen-delivery plausibility envelope, not a validation target.

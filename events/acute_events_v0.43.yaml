@@ -1,0 +1,56 @@
+version: v0.43
+purpose: Standardized acute event definitions for educational in-silico scenarios. Heuristic only.
+events:
+  pneumothorax:
+    description: Acute pleural air with loss of compliance and cardiopulmonary compromise.
+    severities:
+      mild: {C_rs_factor: 0.80, R_rs_add: 2, shunt_add: 0.04, PVR_factor: 1.10, MAP_factor: 0.97, CO_factor: 0.97, SaO2_sub: 0.02, RV_afterload_add: 0.08}
+      moderate: {C_rs_factor: 0.60, R_rs_add: 4, shunt_add: 0.08, PVR_factor: 1.25, MAP_factor: 0.92, CO_factor: 0.90, SaO2_sub: 0.05, RV_afterload_add: 0.18}
+      severe: {C_rs_factor: 0.45, R_rs_add: 6, shunt_add: 0.12, PVR_factor: 1.45, MAP_factor: 0.84, CO_factor: 0.82, SaO2_sub: 0.08, RV_afterload_add: 0.30}
+      tension: {C_rs_factor: 0.35, R_rs_add: 8, shunt_add: 0.16, PVR_factor: 1.75, MAP_factor: 0.72, CO_factor: 0.70, SaO2_sub: 0.12, RV_afterload_add: 0.45, CVP_add: 4}
+  tube_obstruction:
+    description: Endotracheal tube obstruction or dense secretions.
+    severities:
+      mild: {R_rs_add: 5, Vt_factor: 0.92, PaCO2_add: 4, airway_obstruction_add: 0.08}
+      moderate: {R_rs_add: 10, Vt_factor: 0.82, PaCO2_add: 10, airway_obstruction_add: 0.18}
+      severe: {R_rs_add: 18, Vt_factor: 0.65, PaCO2_add: 18, airway_obstruction_add: 0.30}
+  accidental_extubation:
+    description: Loss of invasive ventilation/PEEP or circuit disconnection.
+    severities:
+      moderate: {PEEP_set: 0, Paw_factor: 0.25, Vt_factor: 0.45, SaO2_sub: 0.10, PaCO2_add: 15, alarm_flag: 1}
+      severe: {PEEP_set: 0, Paw_factor: 0.15, Vt_factor: 0.25, SaO2_sub: 0.18, PaCO2_add: 25, alarm_flag: 1}
+  bronchospasm_acute:
+    description: Abrupt bronchospasm with air trapping.
+    severities:
+      mild: {bronchospasm_add: 0.15, R_rs_add: 5, auto_PEEP_add: 1.5, PaCO2_add: 5, MAP_factor: 0.97}
+      moderate: {bronchospasm_add: 0.30, R_rs_add: 11, auto_PEEP_add: 3.0, PaCO2_add: 12, MAP_factor: 0.93}
+      severe: {bronchospasm_add: 0.45, R_rs_add: 18, auto_PEEP_add: 5.0, PaCO2_add: 22, MAP_factor: 0.86}
+  acute_bleeding:
+    description: Acute blood loss with anemia and hypovolemia.
+    severities:
+      mild: {Hb_sub: 0.8, blood_loss_mL: 120, MAP_factor: 0.95, HR_add: 8, lactate_add: 0.4}
+      moderate: {Hb_sub: 1.8, blood_loss_mL: 300, MAP_factor: 0.86, HR_add: 18, lactate_add: 1.2}
+      severe: {Hb_sub: 3.0, blood_loss_mL: 600, MAP_factor: 0.72, HR_add: 32, lactate_add: 2.5}
+  seizure:
+    description: Generalized seizure with increased metabolic demand.
+    severities:
+      mild: {VO2_factor: 1.15, lactate_add: 0.7, T_add: 0.2, seizure_risk_add: 0.20, GCS_sub: 1}
+      moderate: {VO2_factor: 1.35, lactate_add: 1.6, T_add: 0.5, seizure_risk_add: 0.45, GCS_sub: 3}
+      severe: {VO2_factor: 1.60, lactate_add: 3.0, T_add: 0.9, seizure_risk_add: 0.70, GCS_sub: 5, PaCO2_add: 8}
+  hypoglycemia_severe:
+    description: Acute severe hypoglycemia with neurofunctional risk.
+    severities:
+      moderate: {glucose_set: 2.5, GIR_set: 0.0, insulin_set: 5.0, seizure_risk_add: 0.30, GCS_sub: 2, catecholamine_add: 0.15}
+      severe: {glucose_set: 1.8, GIR_set: 0.0, insulin_set: 8.0, seizure_risk_add: 0.65, GCS_sub: 5, catecholamine_add: 0.30}
+  sedative_bolus_hypotension:
+    description: Excess sedative bolus causing hypotension and hypoventilation.
+    severities:
+      mild: {midazolam_set: 100, fentanyl_set: 2, sedation_add: 0.15, MAP_factor: 0.92, sed_resp_factor: 0.88, PaCO2_add: 5}
+      moderate: {midazolam_set: 200, fentanyl_set: 4, sedation_add: 0.35, MAP_factor: 0.82, sed_resp_factor: 0.70, PaCO2_add: 12}
+      severe: {midazolam_set: 350, fentanyl_set: 6, sedation_add: 0.60, MAP_factor: 0.68, sed_resp_factor: 0.50, PaCO2_add: 22}
+  transfusion_reaction:
+    description: Febrile/hemolytic transfusion reaction proxy.
+    severities:
+      mild: {T_add: 0.6, inflammatory_add: 0.10, MAP_factor: 0.96, hemolysis_add: 0.10, K_add: 0.1}
+      moderate: {T_add: 1.2, inflammatory_add: 0.25, MAP_factor: 0.88, hemolysis_add: 0.30, K_add: 0.3, bilirubin_indirect_add: 0.5}
+      severe: {T_add: 2.0, inflammatory_add: 0.45, MAP_factor: 0.76, hemolysis_add: 0.60, K_add: 0.6, bilirubin_indirect_add: 1.2}

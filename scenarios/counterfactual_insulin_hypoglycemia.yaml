@@ -1,0 +1,81 @@
+name: counterfactual_insulin_hypoglycemia
+version: '0.42'
+category: endocrine_stress_axis
+summary: 'Stress hyperglycemia during PICU inflammation with insulin resistance and
+  insulin titration.
+
+  '
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 22
+  sex: F
+  diagnosis: stress_hyperglycemia
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 18
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.8
+  R_rs: 8
+  PaO2: 86
+  PaCO2: 40
+  SaO2: 0.96
+cardiovascular:
+  HR: 125
+  MAP: 75
+  CO: 4.1
+  CVP: 5
+  Hb: 10.5
+metabolism:
+  T_core: 38.5
+  T_setpoint: 38.6
+  lactate: 2.5
+  SIRS_factor: 1.25
+sepsis:
+  phenotype: warm
+  infection_load: 0.35
+  source_control: 0.2
+  antibiotic_effect: 0.2
+nutrition:
+  GIR: 6.5
+  glucose_mmol_L: 11.5
+drugs:
+  dexamethasone_mcg_kg_h: 90
+  insulin_UI_h: 0.0
+endocrine:
+  cortisol_activity: 0.34
+  catecholamine_tone: 0.32
+perturbations:
+- t: 30
+  action: set_GIR
+  value: 0.0
+  label: stop glucose delivery
+- t: 60
+  action: set_insulin
+  value: 30.0
+  label: excess insulin
+- t: 300
+  action: set_insulin
+  value: 45.0
+  label: continued excessive insulin
+outputs:
+- glucose_mmol_L
+- insulin_resistance_index
+- stress_hyperglycemia_index
+- cortisol_activity
+- catecholamine_tone
+- endocrine_glucose_prod_mod
+- insulin_sensitivity_mod
+- urine_rate_mL_h
+- MAP
+- HR
+- K_mmol_L
+- seizure_risk_index
+- GCS_proxy
+- neuro_severity_score
+simulation_time_s: 1800
+counterfactual: true
+description: 'Counterfactual endocrine: excessive insulin and GIR reduction. Expected:
+  glucose falls excessively with increased neuro-metabolic risk.'

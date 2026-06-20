@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pediatric-critical-care-physiology-sim"
+version = "3.1.0rc12"
+description = "Apache-2.0 release-candidate pediatric critical-care physiology simulation framework with final public release candidate; not for clinical use."
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.9"
+authors = [
+  {name = "Paolo Taffache"}
+]
+keywords = ["pediatric intensive care", "physiology simulation", "critical care", "medical education", "in-silico"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Education",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+  "Programming Language :: Python :: 3",
+]
+dynamic = ["dependencies"]
+license-files = ["LICENSE", "NOTICE"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*", "modules*", "data*", "events*", "api*"]
+

@@ -1,0 +1,103 @@
+version: v0.46
+method: morris_screening_lightweight
+purpose: >
+  Lightweight global sensitivity screening for core PDT scenarios. This is not
+  a full variance decomposition and does not replace calibration or external
+  validation. It identifies influential parameters and non-linear/interaction
+  signals using elementary effects.
+defaults:
+  levels: 4
+  trajectories: 1
+  delta_fraction: 0.6666667
+  random_seed: 46
+  dt_s: 8.0
+  outcomes:
+    - MAP_final
+    - PaCO2_final
+    - PaO2_final
+    - pH_a_final
+    - lactate_final
+    - VILI_risk_final
+    - auto_PEEP_obstructive_final
+scenarios:
+  ards_mild:
+    scenario: ards_mild
+    parameters:
+      respiratory.C_rs:
+        low: 12.0
+        high: 35.0
+        label: respiratory_compliance
+      respiratory.R_rs:
+        low: 5.0
+        high: 18.0
+        label: respiratory_resistance
+      respiratory.non_recruitable_frac:
+        low: 0.02
+        high: 0.35
+        label: non_recruitable_fraction
+      respiratory.shunt_frac:
+        low: 0.08
+        high: 0.45
+        label: shunt_fraction
+      cardiovascular.PVR:
+        low: 35.0
+        high: 120.0
+        label: pulmonary_vascular_resistance
+      metabolism.VO2:
+        low: 120.0
+        high: 240.0
+        label: oxygen_consumption
+  septic_shock:
+    scenario: septic_shock
+    parameters:
+      sepsis.infection_load:
+        low: 0.20
+        high: 0.95
+        label: infection_load
+      sepsis.cytokine_drive:
+        low: 0.10
+        high: 0.90
+        label: cytokine_drive
+      cardiovascular.SVR:
+        low: 450.0
+        high: 1300.0
+        label: systemic_vascular_resistance
+      cardiovascular.Hb:
+        low: 7.0
+        high: 13.0
+        label: hemoglobin
+      metabolism.lactate:
+        low: 1.0
+        high: 7.0
+        label: baseline_lactate
+      endocrine.catecholamine_tone:
+        low: 0.2
+        high: 1.0
+        label: catecholamine_tone
+  status_asthmaticus:
+    scenario: status_asthmaticus
+    parameters:
+      airway.bronchospasm_index:
+        low: 0.25
+        high: 0.95
+        label: bronchospasm
+      airway.mucus_load:
+        low: 0.05
+        high: 0.75
+        label: mucus_load
+      airway.small_airway_obstruction:
+        low: 0.10
+        high: 0.90
+        label: small_airway_obstruction
+      respiratory.R_rs:
+        low: 8.0
+        high: 35.0
+        label: respiratory_resistance
+      respiratory.C_rs:
+        low: 10.0
+        high: 35.0
+        label: respiratory_compliance
+      metabolism.VO2:
+        low: 120.0
+        high: 260.0
+        label: oxygen_consumption

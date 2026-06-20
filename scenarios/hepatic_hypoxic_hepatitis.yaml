@@ -1,0 +1,51 @@
+name: hepatic_hypoxic_hepatitis
+description: Low perfusion/hypoxic hepatic injury phenotype with AST/ALT rise, lactate clearance impairment and INR contribution.
+simulation_time_s: 720
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  FiO2: 0.60
+  PEEP: 9
+  Paw: 22
+  RR: 28
+  C_rs: 0.55
+  R_rs: 10
+  SaO2: 0.88
+  PaO2: 58
+  PaCO2: 44
+cardiovascular:
+  MAP: 42
+  HR: 165
+  CO: 3.2
+  CVP: 12
+  Hb: 8.8
+metabolism:
+  T_core: 38.2
+  lactate: 7.0
+sepsis:
+  infection_load: 0.55
+  phenotype: mixed
+  source_control: 0.10
+  antibiotic_effect: 0.15
+coagulation:
+  INR: 1.35
+  PLT: 100
+  fibrinogen: 1.8
+hepatic:
+  albumin_g_dL: 2.8
+  bilirubin_total_mg_dL: 0.9
+  bilirubin_direct_mg_dL: 0.35
+  AST_U_L: 180
+  ALT_U_L: 130
+  ammonia_umol_L: 52
+drugs:
+  norad_mcg_kg_min: 0.12
+  adrenaline_mcg_kg_min: 0.02
+perturbations:
+  - {t: 90, action: set_norad, value: 0.22}
+  - {t: 180, action: set_adrenaline, value: 0.05}
+  - {t: 300, action: set_normal_saline, value: 250}
+outputs: [MAP, CO, lactate, AST_U_L, ALT_U_L, INR, hepatic_hypoxic_injury_index, hepatocellular_injury_index, hepatic_perfusion_index, hepatic_severity_score]

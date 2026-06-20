@@ -1,0 +1,1377 @@
+version: v1.18
+purpose: Expanded literature-anchor plausibility corridors for public-clean PDT v1.18.
+  Adds scenario coverage for bronchiolitis, neonatal RDS, new PK/PD scaffolds, endocrine,
+  hepatic, hemolysis and pulmonary hypertension scenarios. Not external clinical validation.
+principles:
+- Separate normal physiology anchors from disease severity anchors and management
+  targets.
+- Attach every benchmark variable to source identifiers, target_type, severity_band
+  and notes on interpretation.
+- Use broad but clinically meaningful envelopes; failed checks trigger review rather
+  than automatic model rejection.
+- Prefer age-banded anchors where available; otherwise document the reason for broad
+  pediatric ranges.
+- Keep intentional extreme scenarios separate from common didactic scenarios.
+- v1.18 adds broad scenario-level corridors and source-traceability gaps; passing
+  these checks means plausible alpha behavior, not patient-level validation.
+target_types:
+  normal_physiology: stable age-banded physiological range or broad normal anchor
+  disease_severity: expected disease-state severity envelope
+  management_safety: broad safety/management envelope for simulated treatment context
+  model_specific: qualitative PDT variable without direct clinical equivalent; used
+    only for internal plausibility
+sources:
+  RCH_vitals:
+    title: Royal Children's Hospital Melbourne - acceptable ranges for physiological
+      variables
+    url: https://www.rch.org.au/clinicalguide/guideline_index/normal_ranges_for_physiological_variables/
+    notes: Age-banded HR, RR and blood pressure anchors for children.
+  Fleming_2011_vitals:
+    title: 'Normal ranges of heart rate and respiratory rate in children from birth
+      to 18 years: systematic review'
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3789232/
+    notes: Centile curves for pediatric HR/RR; used as normal physiology context.
+  PALICC2_exec_2023:
+    title: Executive Summary of the Second Pediatric Acute Lung Injury Consensus Conference
+      (PALICC-2)
+    url: https://pubmed.ncbi.nlm.nih.gov/36661420/
+    notes: Pediatric ARDS consensus framework.
+  PALICC2_overview_2025:
+    title: 'Advances in the diagnosis and management of PARDS: overview of PALICC-2'
+    url: https://journals.lww.com/prcm/fulltext/2025/01000/advances_in_the_diagnosis_and_management_of.2.aspx
+    notes: Summarizes protective ventilation concepts including 6-8 mL/kg and 4-6
+      mL/kg when pressures are high.
+  PALICC2_guideline_summary:
+    title: Pediatric ARDS guideline summary including SpO2 and permissive hypercapnia
+      concepts
+    url: https://emedicine.medscape.com/article/803573-guidelines
+    notes: Used as accessible summary for SpO2 92-97% in mild/moderate PARDS and permissive
+      hypercapnia to pH about 7.20.
+  SSC_peds_2020:
+    title: Surviving Sepsis Campaign international guidelines for septic shock and
+      sepsis-associated organ dysfunction in children
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7095013/
+    notes: Pediatric sepsis management framework; fluid/vasoactive context.
+  SSC_peds_resources:
+    title: Surviving Sepsis Campaign pediatric guideline resources
+    url: https://www.sccm.org/survivingsepsiscampaign/guidelines-and-resources/surviving-sepsis-campaign-pediatric-guidelines
+    notes: Accessible resource for pediatric septic shock resuscitation statements.
+  Phoenix_Sepsis_2024:
+    title: International consensus criteria for pediatric sepsis and septic shock
+      / Phoenix Sepsis Score
+    url: https://pubmed.ncbi.nlm.nih.gov/38245889/
+    notes: Modern pediatric sepsis organ dysfunction framework.
+  BTF_peds_TBI_2019:
+    title: Brain Trauma Foundation pediatric severe TBI guidelines, third edition
+    url: https://braintrauma.org/coma/guidelines/pediatric
+    notes: ICP <20 mmHg and CPP minimum 40 mmHg suggested thresholds.
+  Woods_2021_neurocritical:
+    title: Intracranial and cerebral perfusion pressure thresholds in pediatric neurocritical
+      care
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7855782/
+    notes: Discusses pediatric ICP/CPP thresholds and age dependence.
+  TAXI_RBC_2018:
+    title: TAXI consensus recommendations for RBC transfusion in critically ill children
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6126913/
+    notes: Restrictive transfusion anchor around Hb 7 g/dL for stable critically ill
+      children; contextual, not automatic threshold.
+  NearFatalAsthma_review:
+    title: 'Fatal and near-fatal asthma in children: critical care review'
+    url: https://www.intensivo.sochipe.cl/subidos/catalogo3/asma%20grave%20en%20ni%EF%BF%BDos%20JPediatr%202012.pdf
+    notes: Used for separating severe status asthmaticus from near-fatal/peri-arrest
+      physiology.
+  AAP_bronchiolitis_2014:
+    title: American Academy of Pediatrics bronchiolitis clinical practice guideline
+      (diagnosis, management, and prevention)
+    url: https://pubmed.ncbi.nlm.nih.gov/25349312/
+    notes: Used only for broad educational bronchiolitis context; not for bedside
+      targets.
+  Sweet_RDS_2019:
+    title: European Consensus Guidelines on the Management of Respiratory Distress
+      Syndrome - 2019 Update
+    url: https://pubmed.ncbi.nlm.nih.gov/30974433/
+    notes: Used for broad neonatal RDS oxygenation/ventilation context; PDT neonatal
+      physiology remains alpha.
+  KDIGO_AKI_2012:
+    title: KDIGO Clinical Practice Guideline for Acute Kidney Injury
+    url: https://kdigo.org/guidelines/acute-kidney-injury/
+    notes: Used for broad renal dysfunction/CRRT educational context; not patient-specific
+      renal dosing.
+  Vancomycin_peds_Marsot_2012:
+    title: Vancomycin pharmacokinetic variability in pediatric patients - systematic
+      review/meta-analysis context
+    url: https://pubmed.ncbi.nlm.nih.gov/22149255/
+    notes: Used as broad PK plausibility source identifier for vancomycin scaffold.
+  Furosemide_neonate_PK:
+    title: Furosemide pharmacokinetics in premature infants / neonatal context
+    url: https://pubmed.ncbi.nlm.nih.gov/7094973/
+    notes: Used as broad source identifier for age/renal-function-sensitive furosemide
+      scaffold.
+  Morphine_peds_PK_review:
+    title: Morphine pharmacokinetics and pharmacodynamics in children / renal metabolite
+      context
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6432942/
+    notes: Used for broad morphine/M6G educational context.
+  Clonidine_PICU_review:
+    title: Clonidine use in pediatric intensive care sedation, analgesia, and withdrawal
+      context
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC6530669/
+    notes: Used for broad clonidine/withdrawal educational context.
+  SCCM_glycemic_control_peds:
+    title: Pediatric critical-care glycemic control and stress hyperglycemia consensus
+      context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+critical+care+stress+hyperglycemia+insulin+guideline
+    notes: Source identifier placeholder for broad stress-hyperglycemia educational
+      corridor; exact patient-level target not implied.
+  Piperacillin_peds_critically_ill_2022:
+    title: Piperacillin/tazobactam pharmacokinetics and target attainment in critically
+      ill pediatric patients
+    url: https://pubmed.ncbi.nlm.nih.gov/36342152/
+    notes: Used as broad beta-lactam fT>MIC/renal-function PK source identifier.
+  Pediatric_pulmonary_hypertension_guideline:
+    title: Pediatric pulmonary hypertension guideline/scientific statement context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+pulmonary+hypertension+guidelines+inhaled+nitric+oxide
+    notes: Used for broad pulmonary hypertension educational scenario context.
+  Pediatric_liver_failure_context:
+    title: Pediatric acute liver failure / hypoxic hepatitis clinical context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+acute+liver+failure+hypoxic+hepatitis+lactate
+    notes: Used for broad hepatic scenario plausibility context.
+  Hemolysis_anemia_context:
+    title: Pediatric hemolysis/anemia oxygen transport clinical context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=pediatric+hemolysis+anemia+oxygen+transport+critical+care
+    notes: Used for broad hemolysis and oxygen transport plausibility context.
+  Kidney_Schwartz:
+    title: Pediatric estimated GFR / bedside Schwartz equation context
+    url: https://pubmed.ncbi.nlm.nih.gov/?term=bedside+Schwartz+equation+pediatric+GFR
+    notes: Used as renal-function source identifier for broad AKI/CRRT benchmark corridors.
+age_bands:
+  neonate: 0-28 days; not fully supported by PDT default PK/PD; use broad caution
+  infant: 1-12 months
+  child: 1-12 years
+  adolescent: 13-18 years
+scenarios:
+  healthy_child_20kg:
+    description: Stable school-age child after settling; normal physiology anchors,
+      not disease targets.
+    age_band: child
+    severity_band: stable
+    compare_at: final
+    targets:
+      HR:
+        range:
+        - 70
+        - 140
+        source:
+        - RCH_vitals
+        - Fleming_2011_vitals
+        target_type: normal_physiology
+        severity_band: stable
+        rationale: Broad school-age HR envelope.
+      MAP:
+        range:
+        - 55
+        - 90
+        source:
+        - RCH_vitals
+        target_type: normal_physiology
+        severity_band: stable
+        rationale: Broad MAP/systolic-BP-derived safety envelope for a 20 kg child.
+      PaCO2:
+        range:
+        - 35
+        - 45
+        source:
+        - PALICC2_exec_2023
+        target_type: normal_physiology
+        severity_band: stable
+        rationale: Normocapnic anchor.
+      pH_a:
+        range:
+        - 7.35
+        - 7.45
+        source:
+        - PALICC2_exec_2023
+        target_type: normal_physiology
+        severity_band: stable
+        rationale: Normal acid-base anchor.
+      Vt_per_kg:
+        range:
+        - 5.0
+        - 9.0
+        source:
+        - PALICC2_overview_2025
+        target_type: management_safety
+        severity_band: stable
+        rationale: Physiologic/protective tidal volume envelope.
+        derived_from: Vt / patient.weight_kg
+      SaO2:
+        range:
+        - 0.92
+        - 1.0
+        source:
+        - PALICC2_guideline_summary
+        target_type: normal_physiology
+        severity_band: stable
+        rationale: Stable oxygenation envelope.
+  ards_mild:
+    description: Mild PARDS-like protective ventilation scenario; permissive hypercapnia
+      allowed but severe acidemia should not occur.
+    age_band: child
+    severity_band: mild_PARDS
+    compare_at: final
+    targets:
+      Vt_per_kg:
+        range:
+        - 4.0
+        - 8.5
+        source:
+        - PALICC2_overview_2025
+        target_type: management_safety
+        severity_band: mild_PARDS
+        rationale: Protective ventilation envelope.
+        derived_from: Vt / patient.weight_kg
+      PaCO2:
+        range:
+        - 35
+        - 65
+        source:
+        - PALICC2_guideline_summary
+        target_type: management_safety
+        severity_band: mild_PARDS
+        rationale: Allows mild permissive hypercapnia.
+      pH_a:
+        range:
+        - 7.2
+        - 7.45
+        source:
+        - PALICC2_guideline_summary
+        target_type: management_safety
+        severity_band: mild_PARDS
+        rationale: Permissive hypercapnia lower pH boundary around 7.20.
+      SaO2:
+        range:
+        - 0.88
+        - 0.99
+        source:
+        - PALICC2_guideline_summary
+        target_type: management_safety
+        severity_band: mild_PARDS
+        rationale: Broad PARDS oxygenation envelope.
+      VILI_risk:
+        range:
+        - 0
+        - 0.55
+        source:
+        - PALICC2_exec_2023
+        target_type: model_specific
+        severity_band: mild_PARDS
+        rationale: Model-specific VILI signal should not be extreme in mild ARDS.
+  septic_shock:
+    description: Resuscitated pediatric septic shock scenario; broad organ dysfunction
+      envelope.
+    age_band: child
+    severity_band: resuscitated_shock
+    compare_at: final
+    targets:
+      HR:
+        range:
+        - 100
+        - 190
+        source:
+        - RCH_vitals
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: resuscitated_shock
+        rationale: Tachycardia/stress envelope for pediatric shock.
+      MAP:
+        range:
+        - 45
+        - 110
+        source:
+        - RCH_vitals
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: resuscitated_shock
+        rationale: Broad resuscitated shock MAP envelope.
+      lactate:
+        range:
+        - 2.0
+        - 8.0
+        source:
+        - SSC_peds_2020
+        - Phoenix_Sepsis_2024
+        target_type: disease_severity
+        severity_band: resuscitated_shock
+        rationale: Hyperlactatemia disease envelope.
+      pH_a:
+        range:
+        - 7.0
+        - 7.4
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: resuscitated_shock
+        rationale: Acidemia allowed in shock but extreme values trigger review.
+      Hb:
+        range:
+        - 7.0
+        - 12.5
+        source:
+        - TAXI_RBC_2018
+        target_type: management_safety
+        severity_band: resuscitated_shock
+        rationale: Avoids unexplained severe anemia in generic septic shock.
+  septic_shock_refractory:
+    description: Refractory/vasoplegic septic shock under vasoactive and steroid support;
+      should remain biologically severe.
+    age_band: child
+    severity_band: refractory_shock
+    compare_at: final
+    targets:
+      MAP:
+        range:
+        - 45
+        - 95
+        source:
+        - SSC_peds_2020
+        - SSC_peds_resources
+        target_type: disease_severity
+        severity_band: refractory_shock
+        rationale: Refractory shock should improve but not become hypertensive.
+      HR:
+        range:
+        - 120
+        - 200
+        source:
+        - RCH_vitals
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: refractory_shock
+        rationale: Persistent catecholamine/stress tachycardia envelope.
+      lactate:
+        range:
+        - 3.0
+        - 10.0
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: refractory_shock
+        rationale: Persistent hyperlactatemia expected.
+      sepsis_severity_score:
+        range:
+        - 0.25
+        - 0.85
+        source:
+        - Phoenix_Sepsis_2024
+        target_type: model_specific
+        severity_band: refractory_shock
+        rationale: Model-specific severity signal should remain present.
+  tbi_icp:
+    description: Treated severe TBI/ICP scenario; anchors use guideline thresholds
+      but remain broad.
+    age_band: child
+    severity_band: treated_TBI
+    compare_at: final
+    targets:
+      PaCO2:
+        range:
+        - 35
+        - 45
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI
+        rationale: Avoids sustained severe hypo/hypercapnia in generic controlled
+          TBI.
+      Na_mmol_L:
+        range:
+        - 135
+        - 155
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI
+        rationale: Broad osmotherapy sodium safety envelope.
+      ICP_mmHg:
+        range:
+        - 3
+        - 25
+        source:
+        - BTF_peds_TBI_2019
+        - Woods_2021_neurocritical
+        target_type: management_safety
+        severity_band: treated_TBI
+        rationale: Treated ICP scenario; <20 target but broader review envelope allows
+          model settling.
+      CPP_mmHg:
+        range:
+        - 40
+        - 95
+        source:
+        - BTF_peds_TBI_2019
+        - Woods_2021_neurocritical
+        target_type: management_safety
+        severity_band: treated_TBI
+        rationale: CPP minimum around 40 mmHg suggested; broad upper envelope.
+  tbi_hypertonic_electrolytes:
+    description: TBI with hypertonic/osmotherapy and electrolyte tracking.
+    age_band: child
+    severity_band: treated_TBI_osmotherapy
+    compare_at: final
+    targets:
+      Na_mmol_L:
+        range:
+        - 140
+        - 160
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI_osmotherapy
+        rationale: Hypertonic therapy expected to increase sodium but avoid runaway
+          hypernatremia.
+      osmolarity_mOsm_L:
+        range:
+        - 285
+        - 330
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI_osmotherapy
+        rationale: Broad osmolarity plausibility envelope.
+      ICP_mmHg:
+        range:
+        - 3
+        - 25
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI_osmotherapy
+        rationale: Treated ICP envelope.
+      CPP_mmHg:
+        range:
+        - 40
+        - 100
+        source:
+        - BTF_peds_TBI_2019
+        target_type: management_safety
+        severity_band: treated_TBI_osmotherapy
+        rationale: Broad CPP envelope.
+  status_asthmaticus:
+    description: Severe but non-peri-arrest pediatric status asthmaticus; intentionally
+      separated from near-fatal scenario.
+    age_band: child
+    severity_band: severe_asthma_not_near_fatal
+    compare_at: final
+    targets:
+      PaCO2:
+        range:
+        - 45
+        - 85
+        source:
+        - NearFatalAsthma_review
+        - PALICC2_guideline_summary
+        target_type: disease_severity
+        severity_band: severe_asthma_not_near_fatal
+        rationale: Obstructive hypercapnia but not peri-arrest in demo scenario.
+      pH_a:
+        range:
+        - 7.1
+        - 7.35
+        source:
+        - NearFatalAsthma_review
+        - PALICC2_guideline_summary
+        target_type: disease_severity
+        severity_band: severe_asthma_not_near_fatal
+        rationale: Severe asthma may be acidemic but should not be near-fatal if this
+          scenario is non-peri-arrest.
+      R_rs:
+        range:
+        - 15
+        - 60
+        source:
+        - NearFatalAsthma_review
+        target_type: model_specific
+        severity_band: severe_asthma_not_near_fatal
+        rationale: Model-specific obstructive resistance envelope.
+      auto_PEEP_obstructive:
+        range:
+        - 0
+        - 10
+        source:
+        - NearFatalAsthma_review
+        target_type: model_specific
+        severity_band: severe_asthma_not_near_fatal
+        rationale: Model-specific air-trapping envelope.
+  near_fatal_status_asthmaticus:
+    description: Near-fatal/peri-arrest obstructive physiology; severe hypercapnia/acidemia
+      intentionally allowed.
+    age_band: child
+    severity_band: near_fatal_asthma
+    compare_at: final
+    targets:
+      PaCO2:
+        range:
+        - 70
+        - 110
+        source:
+        - NearFatalAsthma_review
+        target_type: disease_severity
+        severity_band: near_fatal_asthma
+        rationale: Intentional near-fatal hypercapnia envelope.
+      pH_a:
+        range:
+        - 6.9
+        - 7.2
+        source:
+        - NearFatalAsthma_review
+        target_type: disease_severity
+        severity_band: near_fatal_asthma
+        rationale: Intentional near-fatal acidemia envelope.
+      R_rs:
+        range:
+        - 20
+        - 90
+        source:
+        - NearFatalAsthma_review
+        target_type: model_specific
+        severity_band: near_fatal_asthma
+        rationale: Model-specific severe obstruction envelope.
+      SaO2:
+        range:
+        - 0.75
+        - 0.98
+        source:
+        - NearFatalAsthma_review
+        target_type: disease_severity
+        severity_band: near_fatal_asthma
+        rationale: Broad near-fatal oxygenation envelope.
+  hematology_anemia_transfusion:
+    description: Anemia/transfusion scenario with restrictive transfusion anchor.
+    age_band: child
+    severity_band: critical_anemia_after_support
+    compare_at: final
+    targets:
+      Hb:
+        range:
+        - 7.0
+        - 11.5
+        source:
+        - TAXI_RBC_2018
+        target_type: management_safety
+        severity_band: critical_anemia_after_support
+        rationale: Post-support Hb should be compatible with restrictive transfusion
+          framework.
+      DO2:
+        range:
+        - 250
+        - 900
+        source:
+        - TAXI_RBC_2018
+        target_type: model_specific
+        severity_band: critical_anemia_after_support
+        rationale: Broad oxygen-delivery plausibility envelope, not a validation target.
+      transfusion_trigger_score:
+        range:
+        - 0
+        - 0.75
+        source:
+        - TAXI_RBC_2018
+        target_type: model_specific
+        severity_band: critical_anemia_after_support
+        rationale: Model-specific score should not remain maximal after adequate support.
+  aki_crrt_lite:
+    description: AKI/CRRT-lite scenario; broad plausibility anchors for electrolyte/acid-base
+      response, not prescription validation.
+    age_band: child
+    severity_band: AKI_on_CRRT_lite
+    compare_at: final
+    targets:
+      K_mmol_L:
+        range:
+        - 3.0
+        - 6.8
+        source:
+        - Kidney_Schwartz
+        target_type: management_safety
+        severity_band: AKI_on_CRRT_lite
+        rationale: Allows residual hyperkalemia while avoiding extreme runaway values.
+      HCO3_mmol_L:
+        range:
+        - 12
+        - 32
+        source:
+        - Kidney_Schwartz
+        target_type: management_safety
+        severity_band: AKI_on_CRRT_lite
+        rationale: Broad acid-base response envelope.
+      urea_mmol_L:
+        range:
+        - 5
+        - 35
+        source:
+        - Kidney_Schwartz
+        target_type: disease_severity
+        severity_band: AKI_on_CRRT_lite
+        rationale: Broad uremia envelope for qualitative CRRT-lite.
+      fluid_overload_percent:
+        range:
+        - 0
+        - 20
+        source:
+        - SSC_peds_resources
+        target_type: management_safety
+        severity_band: AKI_on_CRRT_lite
+        rationale: Broad fluid-overload safety envelope.
+  hepatic_sepsis_cholestasis:
+    description: Sepsis-associated hepatic dysfunction/cholestasis scenario; qualitative
+      organ dysfunction envelope.
+    age_band: child
+    severity_band: sepsis_cholestasis
+    compare_at: final
+    targets:
+      bilirubin_total_mg_dL:
+        range:
+        - 0.5
+        - 8.0
+        source:
+        - Phoenix_Sepsis_2024
+        target_type: disease_severity
+        severity_band: sepsis_cholestasis
+        rationale: Broad hepatic dysfunction envelope; Phoenix includes organ dysfunction
+          concepts, not direct target.
+      INR:
+        range:
+        - 1.0
+        - 2.5
+        source:
+        - Phoenix_Sepsis_2024
+        target_type: disease_severity
+        severity_band: sepsis_cholestasis
+        rationale: Broad coagulation/hepatic dysfunction envelope.
+      lactate:
+        range:
+        - 2.0
+        - 10.0
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: sepsis_cholestasis
+        rationale: Lactate should remain compatible with septic hypoperfusion/clearance
+          impairment.
+      hepatic_severity_score:
+        range:
+        - 0.05
+        - 0.75
+        source:
+        - Phoenix_Sepsis_2024
+        target_type: model_specific
+        severity_band: sepsis_cholestasis
+        rationale: Model-specific hepatic severity signal.
+  infant_bronchiolitis:
+    description: Infant bronchiolitis with obstructive small-airway disease and hypercapnic
+      respiratory failure; broad alpha plausibility corridor.
+    age_band: infant
+    severity_band: severe_bronchiolitis
+    compare_at: final
+    targets:
+      HR:
+        range:
+        - 120
+        - 220
+        source:
+        - RCH_vitals
+        - AAP_bronchiolitis_2014
+        target_type: disease_severity
+        severity_band: severe_bronchiolitis
+        rationale: Tachycardic infant range during significant respiratory distress.
+      SaO2:
+        range:
+        - 0.82
+        - 0.97
+        source:
+        - AAP_bronchiolitis_2014
+        - PALICC2_guideline_summary
+        target_type: disease_severity
+        severity_band: severe_bronchiolitis
+        rationale: Allows hypoxemia in severe bronchiolitis while avoiding impossible
+          saturation values.
+      PaCO2:
+        range:
+        - 45
+        - 110
+        source:
+        - AAP_bronchiolitis_2014
+        target_type: disease_severity
+        severity_band: severe_bronchiolitis
+        rationale: Hypercapnia expected in severe obstructive bronchiolitis.
+      pH_a:
+        range:
+        - 6.95
+        - 7.35
+        source:
+        - AAP_bronchiolitis_2014
+        target_type: disease_severity
+        severity_band: severe_bronchiolitis
+        rationale: Broad respiratory-acidosis corridor; v1.20 adaptive dead-space can place the severe teaching case just below 7.00 while remaining clamped as a non-clinical alpha scenario.
+      VILI_risk:
+        range:
+        - 0
+        - 0.45
+        source:
+        - PALICC2_exec_2023
+        target_type: model_specific
+        severity_band: severe_bronchiolitis
+        rationale: Model-specific injury signal should remain non-extreme in bronchiolitis
+          teaching case.
+  neonatal_rds_3kg:
+    description: Neonatal RDS scenario using the neonate profile. PDT neonatal physiology
+      is alpha and interpreted cautiously.
+    age_band: neonate
+    severity_band: neonatal_RDS
+    compare_at: final
+    targets:
+      HR:
+        range:
+        - 110
+        - 230
+        source:
+        - RCH_vitals
+        - Sweet_RDS_2019
+        target_type: disease_severity
+        severity_band: neonatal_RDS
+        rationale: Broad neonatal HR corridor under respiratory distress.
+      MAP:
+        range:
+        - 30
+        - 60
+        source:
+        - RCH_vitals
+        target_type: management_safety
+        severity_band: neonatal_RDS
+        rationale: Broad neonatal perfusion envelope for an educational scenario.
+      SaO2:
+        range:
+        - 0.88
+        - 0.98
+        source:
+        - Sweet_RDS_2019
+        target_type: management_safety
+        severity_band: neonatal_RDS
+        rationale: Broad oxygenation envelope; not a patient-specific target.
+      PaCO2:
+        range:
+        - 35
+        - 70
+        source:
+        - Sweet_RDS_2019
+        target_type: management_safety
+        severity_band: neonatal_RDS
+        rationale: Permits mild/moderate hypercapnia in ventilated neonatal RDS teaching
+          case.
+      Vt_per_kg:
+        range:
+        - 3.5
+        - 7.0
+        source:
+        - Sweet_RDS_2019
+        target_type: management_safety
+        severity_band: neonatal_RDS
+        rationale: Broad lung-protective neonatal Vt-per-kg envelope.
+        derived_from: Vt / patient.weight_kg
+  picu_crrt_drug_clearance_v1_10:
+    description: CRRT-lite educational scenario; corridor checks renal/electrolyte
+      plausibility and CRRT drug-clearance fields.
+    age_band: child
+    severity_band: AKI_CRRT
+    compare_at: final
+    targets:
+      MAP:
+        range:
+        - 40
+        - 85
+        source:
+        - SSC_peds_2020
+        - KDIGO_AKI_2012
+        target_type: management_safety
+        severity_band: AKI_CRRT
+        rationale: Broad perfusion range for resuscitated AKI/CRRT scenario.
+      K_mmol_L:
+        range:
+        - 3.0
+        - 7.0
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: AKI_CRRT
+        rationale: Allows hyperkalemia in renal failure teaching scenario.
+      creatinine_mg_dL:
+        range:
+        - 0.3
+        - 2.5
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: AKI_CRRT
+        rationale: Broad pediatric AKI creatinine plausibility corridor.
+      GFR:
+        range:
+        - 0.5
+        - 30
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: AKI_CRRT
+        rationale: Reduced simulated GFR expected.
+      fluid_balance:
+        range:
+        - -50
+        - 100
+        source:
+        - KDIGO_AKI_2012
+        target_type: management_safety
+        severity_band: AKI_CRRT
+        rationale: CRRT scenario should avoid extreme runaway positive balance by
+          final time.
+  picu_vancomycin_aki_crrt_v1_12:
+    description: Vancomycin in sepsis/AKI/CRRT-lite; target attainment is qualitative
+      and not a dosing recommendation.
+    age_band: child
+    severity_band: sepsis_AKI_CRRT_PK
+    compare_at: final
+    targets:
+      C_vancomycin_mg_L:
+        range:
+        - 2
+        - 35
+        source:
+        - Vancomycin_peds_Marsot_2012
+        target_type: model_specific
+        severity_band: sepsis_AKI_CRRT_PK
+        rationale: Broad concentration plausibility corridor for educational one-compartment
+          scaffold.
+      vancomycin_target_attainment:
+        range:
+        - 0
+        - 1
+        source:
+        - Vancomycin_peds_Marsot_2012
+        target_type: model_specific
+        severity_band: sepsis_AKI_CRRT_PK
+        rationale: Bounded qualitative target-attainment score.
+      creatinine_mg_dL:
+        range:
+        - 0.3
+        - 2.0
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: sepsis_AKI_CRRT_PK
+        rationale: Renal dysfunction expected but bounded.
+      GFR:
+        range:
+        - 1
+        - 40
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: sepsis_AKI_CRRT_PK
+        rationale: Reduced GFR expected in AKI/CRRT context.
+      antibiotic_coverage:
+        range:
+        - 0
+        - 1
+        source:
+        - Vancomycin_peds_Marsot_2012
+        target_type: model_specific
+        severity_band: sepsis_AKI_CRRT_PK
+        rationale: Bounded qualitative antimicrobial coverage modifier.
+  picu_furosemide_fluid_overload_v1_13:
+    description: Furosemide exposure, early AKI and fluid overload. PD signal is qualitative.
+    age_band: infant
+    severity_band: fluid_overload_AKI_diuretic
+    compare_at: final
+    targets:
+      C_furosemide_mg_L:
+        range:
+        - 0
+        - 20
+        source:
+        - Furosemide_neonate_PK
+        target_type: model_specific
+        severity_band: fluid_overload_AKI_diuretic
+        rationale: Broad concentration range for educational furosemide scaffold.
+      furosemide_effect_signal:
+        range:
+        - 0
+        - 1
+        source:
+        - Furosemide_neonate_PK
+        target_type: model_specific
+        severity_band: fluid_overload_AKI_diuretic
+        rationale: Bounded qualitative diuretic-effect signal.
+      urine_rate_mL_h:
+        range:
+        - 0
+        - 30
+        source:
+        - KDIGO_AKI_2012
+        target_type: management_safety
+        severity_band: fluid_overload_AKI_diuretic
+        rationale: Pediatric urine-output envelope for a diuretic challenge scenario.
+      fluid_balance:
+        range:
+        - -50
+        - 300
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: fluid_overload_AKI_diuretic
+        rationale: Allows positive balance in fluid-overload teaching scenario.
+      K_mmol_L:
+        range:
+        - 2.5
+        - 6.5
+        source:
+        - KDIGO_AKI_2012
+        target_type: management_safety
+        severity_band: fluid_overload_AKI_diuretic
+        rationale: Electrolyte safety corridor.
+  picu_morphine_analgesia_aki_v1_14:
+    description: Morphine analgesia with AKI and qualitative M6G accumulation proxy.
+    age_band: child
+    severity_band: opioid_analgesia_AKI
+    compare_at: final
+    targets:
+      C_morphine_ng_mL:
+        range:
+        - 0
+        - 10
+        source:
+        - Morphine_peds_PK_review
+        target_type: model_specific
+        severity_band: opioid_analgesia_AKI
+        rationale: Broad parent-drug concentration corridor for educational scaffold.
+      M6G_accumulation_proxy:
+        range:
+        - 0
+        - 1
+        source:
+        - Morphine_peds_PK_review
+        - KDIGO_AKI_2012
+        target_type: model_specific
+        severity_band: opioid_analgesia_AKI
+        rationale: Bounded renal-metabolite accumulation proxy.
+      PaCO2:
+        range:
+        - 35
+        - 70
+        source:
+        - PALICC2_guideline_summary
+        - Morphine_peds_PK_review
+        target_type: management_safety
+        severity_band: opioid_analgesia_AKI
+        rationale: Allows mild opioid-associated hypoventilation but flags severe
+          hypercapnia.
+      pH_a:
+        range:
+        - 7.2
+        - 7.45
+        source:
+        - PALICC2_guideline_summary
+        target_type: management_safety
+        severity_band: opioid_analgesia_AKI
+        rationale: Avoids severe acidemia in analgesia teaching case.
+  picu_clonidine_withdrawal_weaning_v1_15:
+    description: Clonidine sedative-weaning/withdrawal educational scenario.
+    age_band: child
+    severity_band: sedation_weaning_withdrawal
+    compare_at: final
+    targets:
+      C_clonidine_ng_mL:
+        range:
+        - 0
+        - 2.0
+        source:
+        - Clonidine_PICU_review
+        target_type: model_specific
+        severity_band: sedation_weaning_withdrawal
+        rationale: Broad concentration corridor for qualitative clonidine scaffold.
+      clonidine_withdrawal_mod:
+        range:
+        - 0
+        - 1
+        source:
+        - Clonidine_PICU_review
+        target_type: model_specific
+        severity_band: sedation_weaning_withdrawal
+        rationale: Bounded qualitative withdrawal modifier.
+      HR:
+        range:
+        - 70
+        - 190
+        source:
+        - RCH_vitals
+        - Clonidine_PICU_review
+        target_type: management_safety
+        severity_band: sedation_weaning_withdrawal
+        rationale: Flags extreme brady/tachycardia while allowing withdrawal physiology.
+      MAP:
+        range:
+        - 45
+        - 90
+        source:
+        - RCH_vitals
+        - Clonidine_PICU_review
+        target_type: management_safety
+        severity_band: sedation_weaning_withdrawal
+        rationale: Broad hemodynamic safety envelope.
+      VILI_risk:
+        range:
+        - 0
+        - 0.7
+        source:
+        - PALICC2_exec_2023
+        target_type: model_specific
+        severity_band: sedation_weaning_withdrawal
+        rationale: Model-specific lung-stress signal should stay bounded.
+  picu_insulin_stress_hyperglycemia_v1_16:
+    description: Stress hyperglycemia and insulin PD scaffold. Not a glucose-management
+      protocol.
+    age_band: child
+    severity_band: stress_hyperglycemia_insulin
+    compare_at: final
+    targets:
+      glucose_mmol_L:
+        range:
+        - 4.0
+        - 18.0
+        source:
+        - SCCM_glycemic_control_peds
+        target_type: disease_severity
+        severity_band: stress_hyperglycemia_insulin
+        rationale: Stress hyperglycemia corridor; not an insulin target.
+      C_insulin_mU_L:
+        range:
+        - 0
+        - 200
+        source:
+        - SCCM_glycemic_control_peds
+        target_type: model_specific
+        severity_band: stress_hyperglycemia_insulin
+        rationale: Broad qualitative insulin concentration proxy corridor.
+      insulin_hypoglycemia_risk:
+        range:
+        - 0
+        - 1
+        source:
+        - SCCM_glycemic_control_peds
+        target_type: model_specific
+        severity_band: stress_hyperglycemia_insulin
+        rationale: Bounded hypoglycemia-risk proxy.
+      K_mmol_L:
+        range:
+        - 2.8
+        - 6.0
+        source:
+        - SCCM_glycemic_control_peds
+        target_type: management_safety
+        severity_band: stress_hyperglycemia_insulin
+        rationale: Insulin-related potassium-shift corridor.
+  picu_piperacillin_tazobactam_sepsis_v1_17:
+    description: Piperacillin/tazobactam sepsis PK/PD scaffold with qualitative fT>MIC
+      and antibiotic coverage.
+    age_band: child
+    severity_band: sepsis_beta_lactam_PK
+    compare_at: final
+    targets:
+      C_piperacillin_mg_L:
+        range:
+        - 0
+        - 200
+        source:
+        - Piperacillin_peds_critically_ill_2022
+        target_type: model_specific
+        severity_band: sepsis_beta_lactam_PK
+        rationale: Broad concentration corridor for educational beta-lactam scaffold.
+      piperacillin_ft_above_MIC:
+        range:
+        - 0
+        - 1
+        source:
+        - Piperacillin_peds_critically_ill_2022
+        target_type: model_specific
+        severity_band: sepsis_beta_lactam_PK
+        rationale: Bounded qualitative fT>MIC score.
+      antibiotic_coverage:
+        range:
+        - 0
+        - 1
+        source:
+        - Piperacillin_peds_critically_ill_2022
+        - SSC_peds_2020
+        target_type: model_specific
+        severity_band: sepsis_beta_lactam_PK
+        rationale: Bounded qualitative antimicrobial coverage output.
+      infection_severity_score:
+        range:
+        - 0
+        - 1
+        source:
+        - SSC_peds_2020
+        - Phoenix_Sepsis_2024
+        target_type: model_specific
+        severity_band: sepsis_beta_lactam_PK
+        rationale: Bounded infection severity proxy.
+      lactate:
+        range:
+        - 0.5
+        - 8.0
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: sepsis_beta_lactam_PK
+        rationale: Sepsis lactate plausibility corridor.
+  endocrine_adrenal_shock:
+    description: Adrenal shock / endocrine stress scenario; broad shock and adrenal-axis
+      plausibility corridors.
+    age_band: child
+    severity_band: adrenal_shock
+    compare_at: final
+    targets:
+      MAP:
+        range:
+        - 35
+        - 90
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: adrenal_shock
+        rationale: Broad perfusion envelope after simulated treatment.
+      lactate:
+        range:
+        - 1.0
+        - 10.0
+        source:
+        - SSC_peds_2020
+        target_type: disease_severity
+        severity_band: adrenal_shock
+        rationale: Shock-related lactate corridor.
+      K_mmol_L:
+        range:
+        - 3.0
+        - 7.0
+        source:
+        - SCCM_glycemic_control_peds
+        target_type: disease_severity
+        severity_band: adrenal_shock
+        rationale: Allows adrenal/renal potassium disturbance.
+      cortisol_activity:
+        range:
+        - 0
+        - 1
+        source:
+        - SSC_peds_2020
+        target_type: model_specific
+        severity_band: adrenal_shock
+        rationale: Bounded cortisol activity proxy.
+      adrenal_insufficiency_index:
+        range:
+        - 0
+        - 1
+        source:
+        - SSC_peds_2020
+        target_type: model_specific
+        severity_band: adrenal_shock
+        rationale: Bounded adrenal-insufficiency proxy.
+  hemolysis_oxygen_transport:
+    description: Hemolysis and oxygen transport scenario.
+    age_band: child
+    severity_band: hemolysis_anemia
+    compare_at: final
+    targets:
+      Hb:
+        range:
+        - 6.0
+        - 12.5
+        source:
+        - Hemolysis_anemia_context
+        - TAXI_RBC_2018
+        target_type: disease_severity
+        severity_band: hemolysis_anemia
+        rationale: Anemia expected but bounded.
+      SaO2:
+        range:
+        - 0.9
+        - 1.0
+        source:
+        - Hemolysis_anemia_context
+        target_type: management_safety
+        severity_band: hemolysis_anemia
+        rationale: Saturation may remain preserved despite impaired oxygen content.
+      lactate:
+        range:
+        - 0.5
+        - 5.0
+        source:
+        - Hemolysis_anemia_context
+        target_type: disease_severity
+        severity_band: hemolysis_anemia
+        rationale: Tissue oxygen delivery stress corridor.
+      hemolysis_index:
+        range:
+        - 0
+        - 1
+        source:
+        - Hemolysis_anemia_context
+        target_type: model_specific
+        severity_band: hemolysis_anemia
+        rationale: Bounded hemolysis proxy.
+      bilirubin_total_mg_dL:
+        range:
+        - 0.2
+        - 5.0
+        source:
+        - Hemolysis_anemia_context
+        target_type: disease_severity
+        severity_band: hemolysis_anemia
+        rationale: Bilirubin elevation expected but bounded.
+  hepatic_hypoxic_hepatitis:
+    description: Hypoxic hepatitis / shock-liver educational scenario.
+    age_band: child
+    severity_band: hypoxic_hepatitis_shock
+    compare_at: final
+    targets:
+      MAP:
+        range:
+        - 30
+        - 80
+        source:
+        - SSC_peds_2020
+        - Pediatric_liver_failure_context
+        target_type: disease_severity
+        severity_band: hypoxic_hepatitis_shock
+        rationale: Shock physiology expected.
+      lactate:
+        range:
+        - 3.0
+        - 15.0
+        source:
+        - SSC_peds_2020
+        - Pediatric_liver_failure_context
+        target_type: disease_severity
+        severity_band: hypoxic_hepatitis_shock
+        rationale: Marked lactate burden expected.
+      bilirubin_total_mg_dL:
+        range:
+        - 0.3
+        - 6.0
+        source:
+        - Pediatric_liver_failure_context
+        target_type: disease_severity
+        severity_band: hypoxic_hepatitis_shock
+        rationale: Bilirubin/liver injury marker bounded in short scenario.
+      GFR:
+        range:
+        - 0.1
+        - 30.0
+        source:
+        - KDIGO_AKI_2012
+        target_type: disease_severity
+        severity_band: hypoxic_hepatitis_shock
+        rationale: Renal dysfunction expected during shock.
+      pH_a:
+        range:
+        - 7.0
+        - 7.35
+        source:
+        - PALICC2_guideline_summary
+        target_type: disease_severity
+        severity_band: hypoxic_hepatitis_shock
+        rationale: Acidemia expected but bounded.
+  hepatic_hemolysis_bilirubin:
+    description: Hemolysis-associated bilirubin/hepatic handling scenario.
+    age_band: child
+    severity_band: hemolysis_bilirubin
+    compare_at: final
+    targets:
+      Hb:
+        range:
+        - 6.0
+        - 12.5
+        source:
+        - Hemolysis_anemia_context
+        - TAXI_RBC_2018
+        target_type: disease_severity
+        severity_band: hemolysis_bilirubin
+        rationale: Hemolysis/anemia corridor.
+      bilirubin_total_mg_dL:
+        range:
+        - 0.5
+        - 8.0
+        source:
+        - Hemolysis_anemia_context
+        - Pediatric_liver_failure_context
+        target_type: disease_severity
+        severity_band: hemolysis_bilirubin
+        rationale: Bilirubin increase expected but bounded.
+      hemolysis_index:
+        range:
+        - 0
+        - 1
+        source:
+        - Hemolysis_anemia_context
+        target_type: model_specific
+        severity_band: hemolysis_bilirubin
+        rationale: Bounded hemolysis proxy.
+      lactate:
+        range:
+        - 0.5
+        - 5.0
+        source:
+        - Hemolysis_anemia_context
+        target_type: disease_severity
+        severity_band: hemolysis_bilirubin
+        rationale: Should not behave as severe shock unless configured.
+  pulmonary_hypertension_ino:
+    description: Pulmonary hypertension / inhaled nitric oxide educational scenario.
+    age_band: child
+    severity_band: pulmonary_hypertension_iNO
+    compare_at: final
+    targets:
+      PAP_mean:
+        range:
+        - 20
+        - 80
+        source:
+        - Pediatric_pulmonary_hypertension_guideline
+        target_type: disease_severity
+        severity_band: pulmonary_hypertension_iNO
+        rationale: Elevated pulmonary arterial pressure expected.
+      PVR:
+        range:
+        - 15
+        - 120
+        source:
+        - Pediatric_pulmonary_hypertension_guideline
+        target_type: disease_severity
+        severity_band: pulmonary_hypertension_iNO
+        rationale: Elevated pulmonary vascular resistance expected.
+      SaO2:
+        range:
+        - 0.88
+        - 1.0
+        source:
+        - Pediatric_pulmonary_hypertension_guideline
+        - PALICC2_guideline_summary
+        target_type: management_safety
+        severity_band: pulmonary_hypertension_iNO
+        rationale: Oxygenation should remain broadly plausible.
+      CO:
+        range:
+        - 1.0
+        - 8.0
+        source:
+        - Pediatric_pulmonary_hypertension_guideline
+        target_type: management_safety
+        severity_band: pulmonary_hypertension_iNO
+        rationale: Cardiac output bounded during RV afterload stress.

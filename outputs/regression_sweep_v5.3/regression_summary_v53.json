@@ -1,0 +1,47 @@
+{
+  "step": "5.3",
+  "status": "targeted_sweep_passed_after_cli_portability_hotfix",
+  "date": "2026-06-20",
+  "environment": {
+    "os": "Windows 11",
+    "python": "3.14.5",
+    "python_executable": "C:\\Users\\taffa\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "pytest_available": false
+  },
+  "results": {
+    "initial_public_api_ui_rc_subset": {
+      "passed": 11,
+      "failed": 0
+    },
+    "validation_pack_5_0A_to_5_1D": {
+      "passed": 19,
+      "failed": 0
+    },
+    "advanced_engines_4_39_to_4_51": {
+      "passed": 35,
+      "failed": 0
+    },
+    "ui_api_rcp_arrhythmia_regression": {
+      "passed": 61,
+      "failed": 0
+    },
+    "js_syntax_check": "passed",
+    "total_contract_checks": 126,
+    "total_passed": 126,
+    "total_failed": 0
+  },
+  "fixed_failures": [
+    {
+      "test": "tests/test_public_smoke.py::test_healthy_child_smoke",
+      "classification": "windows_cli_encoding_portability",
+      "fix": "core/engine.py now uses ASCII-safe CLI progress output",
+      "status": "passed_after_hotfix"
+    }
+  ],
+  "coherence_findings_for_step_5_4": [
+    "VERSION still reads 3.1-step4.50-full-prevalidation-audit",
+    "README_FIRST_START_HERE.txt references older Step 4.13 instructions",
+    "pyproject.toml version remains 3.0.0a0",
+    "manuscript metadata placeholders and version drift remain"
+  ]
+}

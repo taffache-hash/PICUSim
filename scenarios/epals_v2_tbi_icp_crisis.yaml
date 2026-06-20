@@ -1,0 +1,15 @@
+name: epals_v2_tbi_icp_crisis
+description: EPALS scenario engine v2 TBI with raised ICP and CPP-risk surrogate.
+patient: {age_y: 12, weight_kg: 42, sex: M, diagnosis: severe_tbi_icp_crisis}
+respiratory: {FiO2: 0.60, PEEP: 6, Paw: 20, RR: 20, PaO2: 92, PaCO2: 48, SaO2: 0.97}
+cardiovascular: {HR: 92, MAP: 62, CVP: 8, Hb: 10.5}
+neuro: {ICP_mmHg: 31, CPP_mmHg: 31, cerebral_edema_index: 0.85}
+neurofunctional: {GCS_proxy: 5, encephalopathy_index: 0.8}
+metabolism: {lactate: 2.2}
+perturbations:
+  - {t: 30, action: osmo_therapy, value: true, label: hyperosmolar therapy surrogate}
+  - {t: 60, action: set_PaCO2, value: 38, label: controlled ventilation toward normocapnia}
+  - {t: 90, action: set_norad, value: 0.10, label: MAP/CPP support}
+  - {t: 160, action: ICP_mmHg, value: 22, label: ICP improves}
+outputs: [ICP_mmHg, CPP_mmHg, MAP, PaCO2, SaO2, decision_priority]
+simulation_time_s: 360

@@ -1,0 +1,113 @@
+name: epals_toxicologic_opioid_benzodiazepine
+version: v1.22.2-alpha
+category: epals_5t_toxins
+epals:
+  group: T
+  cause: toxins
+  reversible_cause: Toxins / opioid-benzodiazepine respiratory depression
+  teaching_level: intermediate
+clinical_narrative: 'Toddler with mixed opioid/benzodiazepine physiology: depressed respiratory drive, CO2 retention,
+  reduced consciousness and falling oxygenation. Reversal is represented as reduced sedative infusion and assisted
+  ventilation proxy.'
+patient:
+  profile: toddler_12kg
+  age_y: 2
+  weight_kg: 12
+  sex: M
+  diagnosis: epals_toxicologic_opioid_benzodiazepine
+respiratory:
+  mode: CPAP
+  PEEP: 5
+  Paw: 5
+  FiO2: 0.4
+  RR: 14
+  C_rs: 0.95
+  R_rs: 8.0
+  PaO2: 72.0
+  PaCO2: 58.0
+  SaO2: 0.9
+  non_recruitable_frac: 0.06
+ventilator:
+  mode: CPAP
+  PS: 0
+  trigger_thresh: 1.5
+  IE_ratio: 0.4
+cardiovascular:
+  HR: 105
+  MAP: 55
+  CO: 2.0
+  CVP: 5
+  Hb: 11.0
+neurology:
+  GCS_proxy: 8
+  withdrawal_state_index: 0.0
+  delirium_state_index: 0.0
+metabolism:
+  T_core: 36.6
+  VO2: 80
+  lactate: 1.2
+drugs:
+  fentanyl_mcg_kg_h: 5.0
+  midazolam_mcg_kg_h: 250
+  morphine_mcg_kg_h: 0.0
+events:
+- t: 60
+  name: sedative_bolus_hypotension
+  severity: moderate
+  label: toxin-like sedative/opioid peak
+perturbations:
+- t: 140
+  action: set_FiO2
+  value: 0.9
+  label: oxygen support
+- t: 150
+  action: set_fentanyl
+  value: 0.0
+  label: opioid exposure stopped / reversal proxy
+- t: 150
+  action: set_midazolam
+  value: 0.0
+  label: benzodiazepine exposure stopped / reversal proxy
+- t: 170
+  action: set_mode
+  value: PCV
+  label: assisted ventilation proxy
+- t: 170
+  action: set_Paw
+  value: 20.0
+  label: ventilatory support
+- t: 170
+  action: set_RR
+  value: 28.0
+  label: ventilatory support RR
+- t: 230
+  action: set_GCS
+  value: 11.0
+  label: improving consciousness proxy
+expected_response:
+- Sedation/toxin physiology increases PaCO2 and depresses consciousness.
+- Stopping exposure plus ventilatory support improves oxygenation and CO2 trend.
+debrief_questions:
+- Was hypoxaemia primary or secondary to hypoventilation?
+- Which trace shows respiratory depression before circulatory collapse?
+outputs:
+- PaCO2
+- SaO2
+- PaO2
+- pH_a
+- drive_level
+- Pmus
+- sedation_score
+- opioid_resp_depression
+- GCS_proxy
+- MAP
+- HR
+- C_fentanyl_ng_mL
+- C_midazolam_ng_mL
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified physiology proxies for reversible-cause teaching, not treatment protocols.
+- Specific antidote pharmacology is not implemented; reversal is represented by exposure removal and ventilation
+  support.
+simulation_time_s: 360

@@ -1,0 +1,57 @@
+name: infection_source_control
+version: v0.26
+category: infection_antimicrobial
+summary: >
+  Intra-abdominal infection with source-control dependence: antibiotics alone only partially reduce infection burden.
+
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 22
+  diagnosis: abdominal_sepsis_source_control
+
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 20
+  FiO2: 0.40
+  RR: 24
+  C_rs: 0.7
+  R_rs: 9
+  SaO2: 0.95
+  PaO2: 78
+  PaCO2: 40
+
+cardiovascular:
+  HR: 145
+  MAP: 56
+  CO: 4.4
+  CVP: 6
+  Hb: 10.0
+
+metabolism:
+  T_core: 38.8
+  lactate: 3.2
+
+infection:
+  infection_focus: abdominal
+  microbial_burden: 0.82
+  pathogen_virulence: 0.70
+  pathogen_resistance_index: 0.18
+  antibiotic_started: true
+  antibiotic_coverage: 0.70
+  source_control: 0.05
+  culture_drawn: true
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.82
+  source_control: 0.05
+
+perturbations:
+  - {t: 180, action: set_source_control, value: 0.30, label: "Drainage / partial control"}
+  - {t: 360, action: set_source_control, value: 0.75, label: "Definitive source control"}
+  - {t: 420, action: set_antibiotic_coverage, value: 0.82, label: "Targeted therapy"}
+
+outputs: [microbial_burden, source_control, source_control_need_index, antibiotic_effect, antimicrobial_deescalation_readiness, antimicrobial_escalation_score, culture_positivity_probability, MAP, lactate, sepsis_severity_score]
+simulation_time_s: 900

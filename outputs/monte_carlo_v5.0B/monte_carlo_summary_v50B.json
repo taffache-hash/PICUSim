@@ -1,0 +1,10 @@
+{
+  "release_step": "5.0B",
+  "scenarios": 3,
+  "runs_per_scenario": 5,
+  "total_runs": 15,
+  "flagged_runs": 0,
+  "stable_runs": 15,
+  "dt_s": 30.0,
+  "seed": 5031
+}

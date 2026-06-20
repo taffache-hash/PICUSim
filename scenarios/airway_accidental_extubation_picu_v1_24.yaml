@@ -1,0 +1,80 @@
+name: airway_accidental_extubation_picu_v1_24
+description: "Educational v1.24 scenario: ventilated PICU child with accidental extubation, bag-mask rescue, then re-intubation."
+version: v1.24-alpha
+patient:
+  profile: toddler_12kg
+  age_y: 2.0
+  weight_kg: 12.0
+  sex: F
+  diagnosis: PICU invasive ventilation with unplanned extubation risk
+simulation_time_s: 420
+airway_interface:
+  interface: ETT
+  intubated: true
+  ventilator_connected: true
+  tube_internal_diameter_mm: 4.0
+  tube_length_cm: 14.0
+  cuff_leak_fraction: 0.05
+  tube_obstruction_score: 0.05
+  oxygen_interface: VENTILATOR
+  FiO2_set: 0.45
+respiratory:
+  mode: PCV
+  FiO2: 0.45
+  PEEP: 5.0
+  RR: 28
+  Paw: 19.0
+  Vt: 80
+  C_rs: 0.70
+  R_rs: 9.0
+  SaO2: 0.96
+  PaO2: 85.0
+  PaCO2: 42.0
+  non_recruitable_frac: 0.04
+ventilator:
+  mode: PCV
+  Pinsp: 14.0
+  IE_ratio: 0.35
+cardiovascular:
+  HR: 125
+  MAP: 58
+  CO: 2.2
+airway_events:
+  - t: 120
+    name: accidental_extubation
+    severity: severe
+    label: unplanned extubation with loss of pressure delivery
+  - t: 175
+    name: start_bag_mask_ventilation
+    severity: difficult
+    label: difficult bag-mask ventilation rescue
+  - t: 260
+    name: perform_intubation
+    severity: emergency
+    label: re-intubation after accidental extubation
+    tube_internal_diameter_mm: 4.0
+    tube_length_cm: 14.0
+    PEEP: 5.0
+    Pinsp_cmH2O: 16.0
+    FiO2: 0.70
+clinical_narrative: A toddler is invasively ventilated in PICU and has an accidental extubation. The scenario highlights recognition of lost pressure delivery, bag-mask rescue, and re-intubation.
+debrief_questions:
+  - Which variables mark loss of invasive ventilation?
+  - Did rescue ventilation restore an interface before re-intubation?
+  - Which counters distinguish failed attempts from successful intubation?
+outputs:
+  - airway_interface
+  - intubated
+  - ventilator_connected
+  - airway_pressure_delivery_enabled
+  - airway_event_type
+  - airway_event_status
+  - airway_rescue_state
+  - extubation_time_s
+  - intubation_success_time_s
+  - manual_ventilation_active
+  - bag_mask_ventilation_active
+  - Paw
+  - PEEP
+  - SaO2
+  - PaCO2

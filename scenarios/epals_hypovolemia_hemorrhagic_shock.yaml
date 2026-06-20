@@ -1,0 +1,103 @@
+name: epals_hypovolemia_hemorrhagic_shock
+version: v1.22.1-alpha
+category: epals_5h_hypovolaemia
+epals:
+  group: H
+  cause: hypovolaemia
+  reversible_cause: Hypovolaemia / hemorrhagic shock
+  teaching_level: intermediate
+clinical_narrative: Eight-year-old child with hemorrhagic hypovolaemic shock physiology. Low preload, falling oxygen
+  delivery and rising lactate are treated with haemorrhage control, fluid and blood-product proxies.
+patient:
+  profile: child_20kg
+  age_y: 8
+  weight_kg: 25
+  sex: F
+  diagnosis: epals_hypovolemia_hemorrhagic_shock
+respiratory:
+  mode: PCV
+  PEEP: 5
+  Paw: 18
+  FiO2: 0.5
+  RR: 28
+  C_rs: 0.8
+  R_rs: 9.0
+  PaO2: 82.0
+  PaCO2: 36.0
+  SaO2: 0.95
+ventilator:
+  mode: PCV
+  Pinsp: 13
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 38
+cardiovascular:
+  HR: 165
+  MAP: 46
+  CO: 2.4
+  CVP: 2
+  Hb: 8.5
+  preload_mod: 0.62
+hematology:
+  bleeding_rate_mL_h: 180
+  platelet_function_index: 0.35
+  transfusion_threshold_Hb: 7.0
+coagulation:
+  INR: 1.8
+  PLT: 85
+  fibrinogen: 1.6
+metabolism:
+  T_core: 36.7
+  VO2: 155
+  lactate: 4.8
+events:
+- t: 60
+  name: acute_bleeding
+  severity: moderate
+  label: continued blood loss
+perturbations:
+- t: 120
+  action: set_bleeding_rate
+  value: 40
+  label: bleeding control proxy
+- t: 150
+  action: fluid_bolus_mL
+  value: 250
+  label: 10 mL/kg crystalloid bolus
+- t: 210
+  action: transfuse_GRC
+  value: 250
+  label: packed red cell support
+- t: 260
+  action: transfuse_FFP
+  value: 200
+  label: plasma support
+- t: 320
+  action: set_norad
+  value: 0.05
+  label: low-dose vasoactive support after volume
+expected_response:
+- MAP and DO2 reach nadir during bleeding and improve after haemorrhage control plus volume/blood support.
+- Lactate rise slows after oxygen delivery improves.
+debrief_questions:
+- Was the main shock mechanism preload, pump or vasodilation?
+- Why is vasopressor-alone an incomplete response to haemorrhage?
+outputs:
+- MAP
+- HR
+- CO
+- SV
+- CVP
+- Hb
+- DO2
+- lactate
+- fluid_balance
+- bleeding_rate_mL_h
+- oxygen_transport_reserve
+- heme_severity_score
+- INR
+- PLT_count
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+simulation_time_s: 420

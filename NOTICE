@@ -1,0 +1,8 @@
+PICUSim / Pediatric Critical Care Sim
+Copyright 2026 Paolo Taffache
+
+This product includes software, documentation, educational scenarios and validation-support artifacts developed for pediatric critical-care simulation, education, scenario design, in-silico research prototyping, software testing and hypothesis generation.
+
+Clinical-use restriction notice: this software is not a medical device and is not for clinical use. Do not use it for diagnosis, treatment, prescribing, triage, bedside monitoring, prognostication, device control, patient-specific modelling, or any patient-care decision.
+
+The clinical-use restriction and safety disclaimer are informational notices and do not replace or modify the Apache License, Version 2.0.

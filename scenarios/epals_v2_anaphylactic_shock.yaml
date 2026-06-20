@@ -1,0 +1,16 @@
+name: epals_v2_anaphylactic_shock
+description: EPALS scenario engine v2 anaphylaxis with airway edema and distributive shock.
+patient: {age_y: 9, weight_kg: 30, sex: M, diagnosis: anaphylaxis}
+respiratory: {FiO2: 0.40, PEEP: 4, Paw: 24, RR: 38, R_rs: 22, PaO2: 58, PaCO2: 48, SaO2: 0.86}
+airway: {bronchospasm_index: 0.65, small_airway_obstruction: 0.55}
+cardiovascular: {HR: 170, MAP: 42, CVP: 4, Hb: 12.0}
+metabolism: {lactate: 4.1}
+shock: {type: distributive, severity: 0.74, stage: decompensated, vasoplegia_index: 0.85}
+drugs: {adrenaline_mcg_kg_min: 0.0}
+perturbations:
+  - {t: 20, action: set_FiO2, value: 1.0, label: high-flow oxygen}
+  - {t: 45, action: fluid_bolus_mL, value: 300, label: 10 mL/kg fluid bolus}
+  - {t: 60, action: set_adrenaline, value: 0.05, label: adrenaline infusion surrogate}
+  - {t: 140, action: set_bronchospasm, value: 0.30, label: bronchodilator/adrenaline airway response}
+outputs: [SaO2, Paw, MAP, HR, SVR, lactate, decision_priority]
+simulation_time_s: 300

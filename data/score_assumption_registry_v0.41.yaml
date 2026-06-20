@@ -1,0 +1,2460 @@
+version: v0.41
+purpose: Registry of qualitative scores, proxies, risk indices and modifiers used
+  by the Pediatric in-silico physiology simulator.
+required_fields:
+- variable
+- module
+- kind
+- range
+- formula_status
+- inputs
+- affects
+- interpretation
+- validation_status
+- assumption_level
+- clinical_use
+entries:
+- variable: recruited_frac
+  module: RespiratoryMechanics/ChemoreflexModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for recruited frac; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: drive_level
+  module: RespiratoryMechanics/ChemoreflexModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for drive level; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: fever_drive
+  module: ThermoregulationModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for fever drive; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hypothermia_index
+  module: ThermoregulationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hypothermia index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hyperthermia_index
+  module: ThermoregulationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hyperthermia index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: shivering_index
+  module: ThermoregulationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for shivering index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: cooling_effect
+  module: ThermoregulationModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for cooling effect; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: warming_effect
+  module: ThermoregulationModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for warming effect; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: antipyretic_effect
+  module: ThermoregulationModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for antipyretic effect; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: heat_loss_index
+  module: ThermoregulationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for heat loss index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: thermo_VO2_mod
+  module: ThermoregulationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of thermo VO2 mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: thermo_HR_add
+  module: ThermoregulationModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of thermo HR add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: thermo_coag_mod
+  module: ThermoregulationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of thermo coag mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: thermo_lactate_mod
+  module: ThermoregulationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of thermo lactate mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: temperature_instability_score
+  module: ThermoregulationModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for temperature instability score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: ino_PVR_mod
+  module: INOModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of ino PVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: ino_Qs_Qt_mod
+  module: INOModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of ino Qs Qt mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: steroid_SVR_mod
+  module: SteroidsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of steroid SVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: steroid_SIRS_mod
+  module: SteroidsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of steroid SIRS mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: steroid_glucose_add
+  module: SteroidsModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of steroid glucose add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: steroid_ICP_mod
+  module: SteroidsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of steroid ICP mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: coag_score
+  module: CoagulationModule
+  kind: score
+  range:
+    typical: 0-4
+    hard: integer non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for coag score; empirical and
+    intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: anemia_severity_index
+  module: HematologyOxygenTransportModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for anemia severity index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: transfusion_trigger_score
+  module: HematologyOxygenTransportModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for transfusion trigger score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: bleeding_risk_index
+  module: HematologyOxygenTransportModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for bleeding risk index; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: thrombosis_risk_index
+  module: HematologyOxygenTransportModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for thrombosis risk index; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: hemolysis_index
+  module: HematologyOxygenTransportModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hemolysis index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: LDH_index
+  module: HematologyOxygenTransportModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for LDH index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: marrow_suppression_index
+  module: HematologyOxygenTransportModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for marrow suppression index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: platelet_function_index
+  module: HematologyOxygenTransportModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for platelet function index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: heme_severity_score
+  module: HematologyOxygenTransportModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for heme severity score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: hepatic_perfusion_index
+  module: HepaticMetabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hepatic perfusion index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hepatic_hypoxic_injury_index
+  module: HepaticMetabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hepatic hypoxic injury index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hepatocellular_injury_index
+  module: HepaticMetabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hepatocellular injury index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: cholestasis_index
+  module: HepaticMetabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for cholestasis index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: oncotic_pressure_proxy
+  module: HepaticMetabolismModule
+  kind: proxy
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating oncotic pressure proxy; not equivalent
+    to the bedside clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: hepatic_lactate_clearance_mod
+  module: HepaticMetabolismModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of hepatic lactate clearance mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hepatic_drug_clearance_mod
+  module: HepaticMetabolismModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of hepatic drug clearance mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hepatic_encephalopathy_index
+  module: HepaticMetabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hepatic encephalopathy index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hepatic_severity_score
+  module: HepaticMetabolismModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for hepatic severity score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: liver_SOFA_proxy
+  module: HepaticMetabolismModule
+  kind: proxy
+  range:
+    typical: 0-4
+    hard: integer non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating liver SOFA proxy; not equivalent to
+    the bedside clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: hepatic_fluid_leak_mod
+  module: HepaticMetabolismModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of hepatic fluid leak mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: VCO2_mod
+  module: NutritionCatabolismModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of VCO2 mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: catabolism_index
+  module: NutritionCatabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for catabolism index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: nitrogen_balance_proxy
+  module: NutritionCatabolismModule
+  kind: proxy
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating nitrogen balance proxy; not equivalent
+    to the bedside clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: malnutrition_index
+  module: NutritionCatabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for malnutrition index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: feeding_intolerance_index
+  module: NutritionCatabolismModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for feeding intolerance index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: refeeding_risk_index
+  module: NutritionCatabolismModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for refeeding risk index; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: nutrition_albumin_mod
+  module: NutritionCatabolismModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of nutrition albumin mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: nutrition_severity_score
+  module: NutritionCatabolismModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for nutrition severity score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: ICP_alert
+  module: NeuroFunctionalModule/ICPModule
+  kind: alert_flag
+  range:
+    typical: true/false
+    hard: boolean
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Boolean alert flag for ICP alert; used for report/UI logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: GCS_proxy
+  module: NeuroFunctionalModule/ICPModule
+  kind: proxy
+  range:
+    typical: 3-15
+    hard: 3-15
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating GCS proxy; not equivalent to the bedside
+    clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: consciousness_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for consciousness index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: encephalopathy_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for encephalopathy index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: septic_encephalopathy_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for septic encephalopathy index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: metabolic_encephalopathy_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for metabolic encephalopathy index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hypoxic_ischemic_neuro_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hypoxic ischemic neuro index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: seizure_risk_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for seizure risk index; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: delirium_state_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for delirium state index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: withdrawal_state_index
+  module: NeuroFunctionalModule/ICPModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for withdrawal state index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: cerebral_metabolic_rate_mod
+  module: NeuroFunctionalModule/ICPModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of cerebral metabolic rate mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: neuro_resp_drive_mod
+  module: NeuroFunctionalModule/ICPModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of neuro resp drive mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: neuro_HR_add
+  module: NeuroFunctionalModule/ICPModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of neuro HR add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: neuro_sympathetic_mod
+  module: NeuroFunctionalModule/ICPModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of neuro sympathetic mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: neuro_severity_score
+  module: NeuroFunctionalModule/ICPModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for neuro severity score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: neuro_alert
+  module: NeuroFunctionalModule/ICPModule
+  kind: alert_flag
+  range:
+    typical: true/false
+    hard: boolean
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Boolean alert flag for neuro alert; used for report/UI logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: RASS_proxy
+  module: NeuroFunctionalModule/ICPModule
+  kind: proxy
+  range:
+    typical: -5 to +4
+    hard: -5 to +4
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating RASS proxy; not equivalent to the bedside
+    clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: seizure_treatment_effect
+  module: NeuroFunctionalModule/ICPModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for seizure treatment effect; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: cycling_frac
+  module: VentilatorModule
+  kind: setting_fraction
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Ventilator cycling fraction setting used for PSV-like cycling logic;
+    not a clinical score.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: low
+  clinical_use: not for clinical decision support
+- variable: drug_MAP_mod
+  module: PKPDModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of drug MAP mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: drug_HR_mod
+  module: PKPDModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of drug HR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: drug_drive_mod
+  module: PKPDModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of drug drive mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: drug_SVR_mod
+  module: PKPDModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of drug SVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: drug_NMB_frac
+  module: PKPDModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for drug NMB frac; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: AKI_index
+  module: AKICRRTModule/FluidBalanceModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for AKI index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: capillary_leak_index
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for capillary leak index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: venous_return_mod
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of venous return mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: heart_lung_CO_mod
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of heart lung CO mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: RV_afterload_index
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for RV afterload index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: overdistension_index
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for overdistension index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: atelectrauma_index
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for atelectrauma index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: VILI_risk
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for VILI risk; intended for scenario comparison
+    and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: PEEP_hemodynamic_penalty
+  module: HeartLung/RespiratoryMechanicsModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of PEEP hemodynamic penalty; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: pain_score
+  module: PainStressSedationModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for pain score; empirical and
+    intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: stress_index
+  module: PainStressSedationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for stress index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sedation_score
+  module: PainStressSedationModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for sedation score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: analgesia_score
+  module: PainStressSedationModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for analgesia score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: sympathetic_tone
+  module: PainStressSedationModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for sympathetic tone; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: delirium_risk
+  module: PainStressSedationModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for delirium risk; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: withdrawal_risk
+  module: PainStressSedationModule
+  kind: risk_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative risk index for withdrawal risk; intended for scenario
+    comparison and education, not prediction.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: sed_resp_mod
+  module: PainStressSedationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sed resp mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sed_VO2_mod
+  module: PainStressSedationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sed VO2 mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sed_HR_mod
+  module: PainStressSedationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sed HR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sed_SVR_mod
+  module: PainStressSedationModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sed SVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: airway_obstruction_index
+  module: AirwayObstructionModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for airway obstruction index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: bronchospasm_index
+  module: AirwayObstructionModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for bronchospasm index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: air_trapping_index
+  module: AirwayObstructionModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for air trapping index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: airway_resistance_mod
+  module: AirwayObstructionModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of airway resistance mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: airway_VdVt_add
+  module: AirwayObstructionModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of airway VdVt add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: airway_shunt_add
+  module: AirwayObstructionModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of airway shunt add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: bronchodilator_effect
+  module: AirwayObstructionModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for bronchodilator effect; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: microbial_burden
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for microbial burden; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: pathogen_resistance_index
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for pathogen resistance index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: antibiotic_delay_harm_index
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for antibiotic delay harm index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: source_control_need_index
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for source control need index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: antimicrobial_escalation_score
+  module: InfectionAntimicrobialBasicModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for antimicrobial escalation score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: antimicrobial_deescalation_readiness
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for antimicrobial deescalation readiness;
+    empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: inadequate_coverage_index
+  module: InfectionAntimicrobialBasicModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for inadequate coverage index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: infection_severity_score
+  module: InfectionAntimicrobialBasicModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for infection severity score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: procalcitonin_proxy
+  module: InfectionAntimicrobialBasicModule
+  kind: proxy
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating procalcitonin proxy; not equivalent
+    to the bedside clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: CRP_proxy
+  module: InfectionAntimicrobialBasicModule
+  kind: proxy
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Proxy variable approximating CRP proxy; not equivalent to the bedside
+    clinical measurement.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: infection_fever_drive
+  module: InfectionAntimicrobialBasicModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for infection fever drive; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: infection_lactate_mod
+  module: InfectionAntimicrobialBasicModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of infection lactate mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: CRRT_UF_mL_h_effective
+  module: AKICRRTModule/FluidBalanceModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for CRRT UF mL h effective; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: antibiotic_effect
+  module: InfectionAntimicrobialBasicModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for antibiotic effect; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: cytokine_drive
+  module: AdvancedSepsisModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for cytokine drive; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: vasoplegia_index
+  module: AdvancedSepsisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for vasoplegia index; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: myocardial_depression_index
+  module: AdvancedSepsisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for myocardial depression index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endothelial_leak_index
+  module: AdvancedSepsisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for endothelial leak index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: microcirculatory_failure_index
+  module: AdvancedSepsisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for microcirculatory failure index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_SVR_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis SVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_CO_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis CO mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_HR_add
+  module: AdvancedSepsisModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of sepsis HR add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_VO2_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis VO2 mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_lactate_prod_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis lactate prod mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_GFR_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis GFR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_coag_mod
+  module: AdvancedSepsisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of sepsis coag mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: sepsis_severity_score
+  module: AdvancedSepsisModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for sepsis severity score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: metabolic_acidosis_index
+  module: AcidBaseElectrolyteModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for metabolic acidosis index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: respiratory_acidosis_index
+  module: AcidBaseElectrolyteModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for respiratory acidosis index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hyperchloremia_index
+  module: AcidBaseElectrolyteModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hyperchloremia index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hypokalemia_index
+  module: AcidBaseElectrolyteModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hypokalemia index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: hyperkalemia_index
+  module: AcidBaseElectrolyteModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for hyperkalemia index; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: diuretic_effect
+  module: AKICRRTModule/FluidBalanceModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for diuretic effect; empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: diuretic_response_index
+  module: AKICRRTModule/FluidBalanceModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for diuretic response index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: CRRT_active_effective
+  module: AKICRRTModule/FluidBalanceModule
+  kind: effect_index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for CRRT active effective; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: CRRT_clearance_mod
+  module: AKICRRTModule/FluidBalanceModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of CRRT clearance mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: RRT_indication_score
+  module: AKICRRTModule/FluidBalanceModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for RRT indication score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: renal_severity_score
+  module: AKICRRTModule/FluidBalanceModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for renal severity score; empirical
+    and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support
+- variable: catecholamine_tone
+  module: EndocrineStressAxisModule
+  kind: drive_or_tone
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for catecholamine tone; empirical and
+    scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: adrenal_insufficiency_index
+  module: EndocrineStressAxisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for adrenal insufficiency index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: critical_illness_steroid_need_index
+  module: EndocrineStressAxisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for critical illness steroid need index;
+    empirical and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: insulin_resistance_index
+  module: EndocrineStressAxisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for insulin resistance index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: stress_hyperglycemia_index
+  module: PainStressSedationModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for stress hyperglycemia index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_glucose_prod_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of endocrine glucose prod mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: insulin_sensitivity_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of insulin sensitivity mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_SVR_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of endocrine SVR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_HR_add
+  module: EndocrineStressAxisModule
+  kind: additive_modifier
+  range:
+    typical: small additive term; unit depends on target variable
+    hard: scenario-specific
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Additive term used by downstream modules to express the qualitative
+    effect of endocrine HR add; unit depends on target variable.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_VO2_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of endocrine VO2 mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_lactate_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of endocrine lactate mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: ADH_water_retention_index
+  module: EndocrineStressAxisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for ADH water retention index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_GFR_mod
+  module: EndocrineStressAxisModule
+  kind: modifier
+  range:
+    typical: 0.5-1.5 or scenario-specific
+    hard: non-negative
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Multiplier used by downstream modules to express the qualitative
+    effect of endocrine GFR mod; not a directly validated clinical endpoint.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: thyroid_suppression_index
+  module: EndocrineStressAxisModule
+  kind: index
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Qualitative internal state for thyroid suppression index; empirical
+    and scenario-dependent.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: moderate
+  clinical_use: not for clinical decision support
+- variable: endocrine_severity_score
+  module: EndocrineStressAxisModule
+  kind: score
+  range:
+    typical: 0-1 qualitative unless documented otherwise
+    hard: usually clamped 0-1
+  formula_status: empirical_or_heuristic
+  inputs:
+  - see module implementation and causal_trace_specs_v0.40 where applicable
+  affects:
+  - see dependency audit / module downstream reads
+  interpretation: Composite severity/response score for endocrine severity score;
+    empirical and intended for internal simulation logic.
+  validation_status: internal plausibility only; not externally validated
+  assumption_level: high
+  clinical_use: not for clinical decision support

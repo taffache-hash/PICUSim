@@ -1,0 +1,89 @@
+name: neonatal_rds_3kg
+version: 1.05
+category: neonatal_respiratory
+description: >
+  Term or near-term neonate, 3 kg, with respiratory distress physiology.
+  Educational scenario focused on oxygenation, low respiratory-system compliance,
+  careful PEEP/FiO2 titration, treated/stabilized ventilator optimization, and limited
+  cardiovascular reserve. The scenario is qualitative and is not intended to represent
+  a specific gestational-age disease model.
+
+patient:
+  profile: neonate_3kg
+  age_y: 0.02
+  weight_kg: 3
+  sex: F
+  diagnosis: neonatal_respiratory_distress
+
+respiratory:
+  mode: PCV
+  PEEP: 5
+  Paw: 16
+  FiO2: 0.45
+  RR: 45
+  C_rs: 0.55
+  R_rs: 25.0
+  PaO2: 55.0
+  PaCO2: 50.0
+  SaO2: 0.88
+  non_recruitable_frac: 0.10
+
+ventilator:
+  mode: PCV
+  Pinsp: 11
+  IE_ratio: 0.38
+  T_rise_s: 0.05
+  alarm_Ppeak_max: 30
+
+cardiovascular:
+  HR: 155
+  MAP: 45
+  CVP: 4
+  Hb: 15.0
+
+metabolism:
+  T_core: 36.8
+  VO2: 32
+  lactate: 1.8
+
+perturbations:
+  - t: 60
+    action: set_FiO2
+    value: 0.60
+    label: "FiO2 escalation 0.45->0.60"
+  - t: 120
+    action: set_PEEP
+    value: 6
+    label: "Careful PEEP increase 5->6 cmH2O"
+
+  - t: 180
+    action: set_RR
+    value: 65
+    label: "Ventilation optimization RR 45->65/min for treated neonatal RDS"
+  - t: 210
+    action: set_FiO2
+    value: 0.50
+    label: "FiO2 stabilization after recruitment response"
+
+outputs:
+  - Paw
+  - Vt
+  - EELV
+  - recruited_frac
+  - SaO2
+  - PaO2
+  - PaCO2
+  - pH_a
+  - MAP
+  - HR
+  - CO
+  - MP
+  - Pdriving
+
+limitations:
+  - Qualitative neonatal respiratory-distress teaching scenario after basic ventilator optimization.
+  - Not calibrated to gestational age, surfactant status, persistent pulmonary hypertension, or congenital cardiac shunts.
+  - Neonatal renal/urine-output and AKI-stage outputs are not calibrated for this scenario and should not be used for debriefing.
+  - Not for treatment decisions or patient-specific prediction.
+
+simulation_time_s: 300

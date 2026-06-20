@@ -1,0 +1,116 @@
+name: epals_acidosis_septic_shock
+version: v1.22.1-alpha
+category: epals_5h_acidosis
+epals:
+  group: H
+  cause: hydrogen_ion_acidosis
+  reversible_cause: Hydrogen ion / metabolic acidosis
+  teaching_level: intermediate
+clinical_narrative: Seven-year-old child with septic/hypoperfusion metabolic acidosis. The scenario frames acidosis
+  as a sign of impaired perfusion and source control, not as an isolated number.
+patient:
+  profile: child_20kg
+  age_y: 7
+  weight_kg: 22
+  sex: M
+  diagnosis: epals_acidosis_septic_shock
+respiratory:
+  mode: PCV
+  PEEP: 7
+  Paw: 22
+  FiO2: 0.55
+  RR: 34
+  C_rs: 0.75
+  R_rs: 10.0
+  PaO2: 72.0
+  PaCO2: 32.0
+  SaO2: 0.92
+  non_recruitable_frac: 0.15
+ventilator:
+  mode: PCV
+  Pinsp: 15
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 40
+cardiovascular:
+  HR: 158
+  MAP: 48
+  CO: 4.0
+  CVP: 4
+  Hb: 9.5
+  preload_mod: 0.75
+metabolism:
+  T_core: 39.3
+  T_setpoint: 39.4
+  VO2: 190
+  lactate: 6.5
+  SIRS_factor: 1.45
+sepsis:
+  phenotype: warm
+  infection_load: 0.85
+  source_control: 0.0
+  antibiotic_effect: 0.0
+infection:
+  infection_load: 0.85
+  microbial_burden: 0.85
+  pathogen_virulence: 0.7
+  antibiotic_coverage: 0.0
+  source_control: 0.0
+  infection_focus: abdominal
+acidbase:
+  Na_mmol_L: 136
+  K_mmol_L: 4.9
+  Cl_mmol_L: 105
+  HCO3_mmol_L: 15
+  urea_mmol_L: 8
+drugs:
+  norad_mcg_kg_min: 0.0
+  piperacillin_mg_kg_h: 0.0
+perturbations:
+- t: 60
+  action: fluid_bolus_mL
+  value: 220
+  label: 10 mL/kg balanced resuscitation proxy
+- t: 90
+  action: set_norad
+  value: 0.15
+  label: start norepinephrine
+- t: 120
+  action: set_piptazo
+  value: 12.0
+  label: start broad-spectrum beta-lactam proxy
+- t: 180
+  action: set_antibiotic_effect
+  value: 0.35
+  label: early antimicrobial effect
+- t: 240
+  action: set_source_control
+  value: 0.35
+  label: partial source control
+- t: 300
+  action: set_bicarbonate
+  value: 12
+  label: cautious buffer proxy after perfusion work
+expected_response:
+- pH/HCO3 are lowest during shock and improve gradually when perfusion/source control improves.
+- Lactate stabilizes before full normalization.
+debrief_questions:
+- Was the acidosis respiratory, metabolic or mixed?
+- Which intervention addressed the cause rather than just the pH?
+outputs:
+- pH_a
+- HCO3_mmol_L
+- base_excess_mmol_L
+- anion_gap_mmol_L
+- lactate
+- PaCO2
+- RR
+- MAP
+- CO
+- infection_severity_score
+- antibiotic_effect
+- piperacillin_target_attainment
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+simulation_time_s: 420

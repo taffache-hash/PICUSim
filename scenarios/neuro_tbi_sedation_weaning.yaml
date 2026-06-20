@@ -1,0 +1,49 @@
+name: neuro_tbi_sedation_weaning
+simulation_time_s: 900
+description: TBI with ICP management, sedation/NMB effects on observable GCS/RASS and progressive weaning.
+patient:
+  profile: child_20kg
+  age_y: 8
+  weight_kg: 25
+respiratory:
+  mode: PCV
+  FiO2: 0.40
+  PEEP: 6
+  Paw: 18
+  RR: 24
+  C_rs: 0.90
+  R_rs: 8
+  SaO2: 0.96
+  PaO2: 88
+  PaCO2: 40
+cardiovascular:
+  HR: 92
+  MAP: 76
+  CO: 4.6
+  Hb: 11.0
+metabolism:
+  T_core: 37.8
+  lactate: 2.0
+neurology:
+  ICP: 24
+  V_edema: 18
+  autoregulation: 0.45
+neurofunctional:
+  GCS_proxy: 9
+acidbase:
+  Na_mmol_L: 140
+  HCO3_mmol_L: 23
+drugs:
+  norad_mcg_kg_min: 0.08
+  midazolam_mcg_kg_h: 45
+  fentanyl_mcg_kg_h: 2.0
+  rocuronium_mg_kg_h: 0.4
+  dexmedetomidine_mcg_kg_h: 0.2
+perturbations:
+  - {t: 60, action: osmo_therapy, value: true, label: osmotherapy}
+  - {t: 180, action: set_hypertonic_saline_3pct, value: 90, label: hypertonic saline bolus}
+  - {t: 300, action: set_rocuronium, value: 0.0, label: NMB off}
+  - {t: 420, action: set_midazolam, value: 20, label: sedation wean}
+  - {t: 540, action: csf_drain, value: 5.0, label: CSF drainage}
+  - {t: 660, action: set_norad, value: 0.14, label: CPP support}
+outputs: [GCS_proxy, AVPU_state, RASS_proxy, consciousness_index, encephalopathy_index, hypoxic_ischemic_neuro_index, neuro_severity_score, ICP_mmHg, CPP_mmHg, PbtO2_mmHg, Na_mmol_L]

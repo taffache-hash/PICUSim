@@ -1,0 +1,92 @@
+name: epals_hypothermia_rewarming
+version: v1.22.1-alpha
+category: epals_5h_hypothermia
+epals:
+  group: H
+  cause: hypothermia
+  reversible_cause: Hypothermia / rewarming physiology
+  teaching_level: basic
+clinical_narrative: Four-year-old child with accidental hypothermia physiology, bradycardia tendency and low metabolic
+  rate. The scenario emphasizes careful active rewarming and delayed interpretation of vital signs.
+patient:
+  profile: child_20kg
+  age_y: 4
+  weight_kg: 16
+  sex: F
+  diagnosis: epals_hypothermia_rewarming
+respiratory:
+  mode: PCV
+  PEEP: 5
+  Paw: 17
+  FiO2: 0.45
+  RR: 22
+  C_rs: 0.8
+  R_rs: 9.0
+  PaO2: 85.0
+  PaCO2: 42.0
+  SaO2: 0.96
+ventilator:
+  mode: PCV
+  Pinsp: 12
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 36
+cardiovascular:
+  HR: 78
+  MAP: 52
+  CO: 2.2
+  CVP: 5
+  Hb: 11.5
+metabolism:
+  T_core: 32.4
+  T_setpoint: 37.0
+  VO2: 78
+  lactate: 2.8
+  SIRS_factor: 0.75
+thermoregulation:
+  setpoint_T: 37.0
+endocrine:
+  catecholamine_tone: 0.35
+perturbations:
+- t: 60
+  action: set_warming
+  value: true
+  label: active external warming
+- t: 60
+  action: set_target_temperature
+  value: 36.5
+  label: rewarming target
+- t: 150
+  action: set_T_core
+  value: 33.8
+  label: early rewarming response proxy
+- t: 240
+  action: set_T_core
+  value: 35.0
+  label: continued controlled rewarming
+- t: 300
+  action: set_T_core
+  value: 35.8
+  label: near-stabilized temperature
+expected_response:
+- T_core rises gradually during warming.
+- HR and perfusion improve only gradually as temperature normalizes.
+debrief_questions:
+- Why should bradycardia be interpreted differently in hypothermia?
+- What endpoint shows controlled rewarming rather than abrupt normalization?
+outputs:
+- T_core
+- hypothermia_index
+- shivering_index
+- thermo_VO2_mod
+- thermo_HR_add
+- temperature_instability_score
+- HR
+- MAP
+- CO
+- lactate
+- pH_a
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified proxies for physiology reversal, not treatment protocols.
+simulation_time_s: 420

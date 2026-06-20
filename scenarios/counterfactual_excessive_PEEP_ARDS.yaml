@@ -1,0 +1,70 @@
+name: counterfactual_excessive_PEEP_ARDS
+description: 'Counterfactual ARDS: excessive PEEP/pressure strategy. Expected: higher
+  VILI/overdistension/RV afterload and possible hemodynamic penalty despite oxygenation
+  gain.'
+patient:
+  age_y: 5
+  weight_kg: 20
+  sex: M
+  diagnosis: ARDS_mild_Berlin
+respiratory:
+  PEEP: 8
+  Paw: 26
+  FiO2: 0.6
+  RR: 30
+  C_rs: 0.45
+  R_rs: 10.0
+  PaO2: 65.0
+  PaCO2: 42.0
+  SaO2: 0.9
+  recruited_frac: 0.55
+  non_recruitable_frac: 0.2
+cardiovascular:
+  HR: 130
+  MAP: 62
+  CVP: 6
+  Hb: 10.5
+metabolism:
+  T_core: 38.2
+  VO2: 145
+  lactate: 1.8
+perturbations:
+- t: 30
+  action: set_PEEP
+  value: 14
+  label: excessive PEEP step
+- t: 60
+  action: set_Paw
+  value: 34
+  label: higher inspiratory pressure
+- t: 120
+  action: set_PEEP
+  value: 18
+  label: very high PEEP
+- t: 180
+  action: set_Paw
+  value: 38
+  label: sustained high pressure
+outputs:
+- Paw
+- EELV
+- recruited_frac
+- SaO2
+- PaO2
+- PaCO2
+- pH_a
+- MAP
+- CO
+- HR
+- CVP
+- MP
+- Pdriving
+- VILI_risk
+- overdistension_index
+- RV_afterload_index
+- heart_lung_CO_mod
+- PVR
+- PAP_mean
+simulation_time_s: 360
+version: '0.42'
+counterfactual: true

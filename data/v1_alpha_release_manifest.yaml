@@ -1,0 +1,30 @@
+release: v1.0-alpha
+public_title: Pediatric Critical Care Physiology Simulation Framework
+internal_name: PDT / Pediatric Digital Twin
+status: alpha_pre_release
+clinical_use: prohibited
+patient_specific: false
+medical_device: false
+primary_purpose:
+  - education
+  - in_silico_model_development
+  - hypothesis_generation
+  - internal_validation_workflow
+core_release_checks:
+  - release_candidate_check
+  - release_candidate_full_test_pack
+  - dependency_deep_audit
+  - score_registry_report
+  - profile_usage_audit
+  - literature_source_matrix
+residual_risk_register: data/v1_alpha_residual_risk_register_v0.49.yaml
+license_status: pending_final_selection
+
+full_verified:
+  status: completed
+  hard_gate_command: "python tools/release_candidate_full_test_pack.py --dt 8.0 --skip-functional --fail-on-error"
+  hard_gate_result: "PASS; 18 pass; 0 review; 0 fail"
+  v1_alpha_check: "20 pass; 0 review; 0 fail"
+  release_candidate_check: "30 pass; 0 review; 0 fail"
+  not_clinical_validation: true
+

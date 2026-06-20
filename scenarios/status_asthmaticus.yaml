@@ -1,0 +1,88 @@
+name: status_asthmaticus
+version: 0.36
+description: >
+  Bambino 8 anni, 30 kg, status asmatico severo ma didatticamente stabile.
+  Scenario ostruttivo con broncospasmo reversibile, air trapping moderato e
+  ipercapnia permissiva. Ricalibrato in v0.36 e stabilizzato in v1.08.1 per preservare ipercapnia ostruttiva con la meccanica pubblica senza raggiungere fisiologia near-fatal
+  non dichiarata nel benchmark didattico.
+
+patient:
+  profile: adolescent_50kg
+  age_y: 8
+  weight_kg: 30
+  sex: M
+  diagnosis: severe_status_asthmaticus
+
+respiratory:
+  PEEP: 5
+  Paw: 22
+  FiO2: 0.50
+  RR: 20
+  C_rs: 0.85
+  R_rs: 10.0
+  PaO2: 82.0
+  PaCO2: 55.0
+  SaO2: 0.93
+  non_recruitable_frac: 0.03
+
+ventilator:
+  mode: PCV
+  IE_ratio: 0.28      # expiratory-time preserving strategy
+  Pinsp: 17
+  T_rise_s: 0.06
+  alarm_Ppeak_max: 42
+
+airway:
+  bronchospasm_index: 0.88
+  mucus_load: 0.34
+  small_airway_obstruction: 0.50
+
+cardiovascular:
+  HR: 140
+  MAP: 72
+  CVP: 6
+  Hb: 12.0
+
+metabolism:
+  T_core: 37.5
+  VO2: 145
+  lactate: 2.0
+
+drugs:
+  ketamine_mg_kg_h: 0.6
+
+perturbations:
+  - {t: 30, action: set_salbutamol, value: 0.24, label: "continuous salbutamol"}
+  - {t: 30, action: set_ipratropium, value: 10.0, label: "ipratropium"}
+  - {t: 60, action: set_magnesium, value: 40.0, label: "magnesium infusion"}
+  - {t: 90, action: set_ketamine, value: 1.2, label: "ketamine bronchodilation/sedation"}
+  - {t: 180, action: set_RR, value: 18, label: "reduce RR to allow expiration"}
+  - {t: 180, action: set_IE, value: 0.24, label: "longer expiratory time"}
+
+outputs:
+  - airway_obstruction_index
+  - bronchospasm_index
+  - bronchodilator_effect
+  - R_rs
+  - auto_PEEP
+  - auto_PEEP_obstructive
+  - air_trapping_index
+  - dynamic_hyperinflation
+  - airway_VdVt_add
+  - PaCO2
+  - PaO2
+  - SaO2
+  - pH_a
+  - Vt
+  - RR_total
+  - MAP
+  - CO
+  - RV_afterload_index
+
+limitations:
+  - Qualitative educational scenario, not a validated pediatric asthma model.
+  - Bronchodilator effects are heuristic and should not be interpreted as dosing guidance.
+  - Regional ventilation heterogeneity is represented only by lumped resistance/dead-space modifiers.
+  - This scenario represents severe but not near-fatal asthma; use near_fatal_status_asthmaticus for peri-arrest physiology.
+
+simulation_time_s: 360

@@ -1,0 +1,56 @@
+name: thermoregulation_cooling_shivering_tbi
+version: v0.24
+category: thermoregulation
+summary: >
+  TBI temperature control with cooling target, shivering suppression by analgosedation/NMB and ICP monitoring.
+patient:
+  profile: child_20kg
+  age_y: 8
+  weight_kg: 25
+  sex: M
+  diagnosis: TBI_temperature_control
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 6
+  FiO2: 0.40
+  RR: 24
+  C_rs: 0.9
+  R_rs: 8
+  SaO2: 0.96
+  PaO2: 88
+  PaCO2: 40
+cardiovascular:
+  HR: 100
+  MAP: 76
+  CO: 4.4
+  Hb: 11.5
+metabolism:
+  T_core: 38.7
+  T_setpoint: 38.5
+  SIRS_factor: 1.15
+  VO2: 145
+  lactate: 2.0
+thermoregulation:
+  setpoint_T: 38.5
+  target_temperature_C: 36.5
+  cooling_device_active: true
+neurology:
+  ICP: 20
+  V_edema: 12
+  autoregulation: 0.45
+drugs:
+  fentanyl_mcg_kg_h: 1.5
+  midazolam_mcg_kg_h: 80
+perturbations:
+  - {t: 0, action: set_cooling, value: true, label: cooling device active}
+  - {t: 180, action: set_rocuronium, value: 0.3, label: NMB for shivering control}
+  - {t: 360, action: set_target_temperature, value: 37.0, label: controlled rewarming target}
+outputs:
+  - T_core
+  - cooling_effect
+  - shivering_index
+  - thermo_VO2_mod
+  - ICP_mmHg
+  - CPP_mmHg
+simulation_time_s: 720

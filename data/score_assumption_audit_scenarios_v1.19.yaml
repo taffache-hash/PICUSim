@@ -1,0 +1,19 @@
+version: v1.19
+purpose: Default scenario subset for qualitative score/range audit.
+default_dt_s: 10.0
+scenarios:
+- healthy_child_20kg
+- ards_mild
+- status_asthmaticus
+- septic_shock
+- tbi_icp
+- neonatal_rds_3kg
+- picu_vancomycin_aki_crrt_v1_12
+- picu_furosemide_fluid_overload_v1_13
+- picu_morphine_analgesia_aki_v1_14
+- picu_clonidine_withdrawal_weaning_v1_15
+- picu_insulin_stress_hyperglycemia_v1_16
+- picu_piperacillin_tazobactam_sepsis_v1_17
+- infant_bronchiolitis
+- hepatic_hypoxic_hepatitis
+- endocrine_adrenal_shock

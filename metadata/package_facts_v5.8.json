@@ -1,0 +1,63 @@
+{
+  "version": "3.1-step5.8-archive-preflight-manifest",
+  "date": "2026-06-20",
+  "status": "archive_preflight_no_upload",
+  "source_of_truth": "filesystem_and_tests",
+  "manuscripts_are_source_of_truth": false,
+  "paper_deferred_until_after_deposit": true,
+  "public_upload_performed": false,
+  "package_counts": {
+    "included_file_count_after_step_5_8": 670,
+    "included_total_bytes_after_step_5_8": 3545066,
+    "scenario_yaml_count": 99,
+    "test_py_count": 117,
+    "module_py_non_init_count": 35,
+    "docs_markdown_count": 78,
+    "metadata_file_count": 6,
+    "output_dir_count": 13
+  },
+  "required_public_entrypoints": [
+    "README_FIRST_START_HERE.txt",
+    "README.md",
+    "VERSION",
+    "LICENSE",
+    "NOTICE",
+    "DISCLAIMER_NOT_FOR_CLINICAL_USE.md",
+    "CITATION.cff",
+    "CITATION.bib",
+    "CHANGELOG.md"
+  ],
+  "archive_preflight_artifacts": [
+    "docs/ARCHIVE_PREFLIGHT_v5.8.md",
+    "data/release_candidate_manifest_v5.8.yaml",
+    "metadata/package_facts_v5.8.json",
+    "tests/test_v580_archive_preflight_manifest.py"
+  ],
+  "superseded_archives": [
+    {
+      "path": "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip",
+      "status": "superseded_do_not_upload",
+      "reason": "Step 5.6A crystalloid controls and Step 5.7A paper-deferred/archive-preflight correction changed package content after archive creation.",
+      "sha256": "02456548893e05700baa9116f31bc1207adb1d8d54033d35aeae86d3c54a6ece",
+      "bytes": 1064836
+    }
+  ],
+  "excluded_from_public_archive": [
+    ".git/",
+    ".agents/",
+    ".codex/",
+    ".pytest_cache/",
+    "__pycache__/",
+    ".mypy_cache/",
+    ".venv/",
+    "venv/",
+    "env/",
+    "node_modules/",
+    "server_8765_stdout.log",
+    "server_8765_stderr.log",
+    "outputs/release_archives/*.zip",
+    "*.pyc",
+    "*.pyo"
+  ],
+  "next_step": "Step 5.9 final public release candidate rebuild"
+}

@@ -1,0 +1,10 @@
+services:
+  pdt-console:
+    build: .
+    container_name: pediatric-critical-care-sim
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./authored_scenarios:/app/authored_scenarios
+    restart: unless-stopped

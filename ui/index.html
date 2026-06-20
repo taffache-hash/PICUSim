@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDT Clinical Training Console</title>
+  <link rel="stylesheet" href="/ui/styles.css" />
+</head>
+<body>
+  <header class="topbar clean-topbar">
+    <div class="brand-block">
+      <h1>PDT Clinical Training Console</h1>
+      <p>Local educational simulator. Not for clinical use.</p>
+    </div>
+    <div class="top-actions">
+      <button class="ghost small" id="learnerViewBtn" type="button">Learner view</button>
+      <button class="ghost small" id="instructorViewBtn" type="button">Instructor view</button>
+      <div class="status-pill" id="connectionStatus">offline</div>
+    </div>
+  </header>
+
+  <main class="console-shell">
+    <section class="session-strip panel">
+      <div class="session-strip-main">
+        <label class="compact-label">Scenario
+          <select id="scenarioSelect"></select>
+        </label>
+        <div class="numeric-inline">
+          <label>dt
+            <input id="dtInput" type="number" min="0.05" max="5" step="0.05" value="0.2" />
+          </label>
+          <label>speed ×
+            <input id="speedInput" type="number" min="0.1" max="100" step="0.1" value="1" />
+          </label>
+        </div>
+      </div>
+      <div class="session-buttons">
+        <button id="loadBtn" class="primary">Load</button>
+        <button id="startBtn" disabled>Start</button>
+        <button id="pauseBtn" disabled>Pause</button>
+        <button id="stepBtn" disabled>Step 5 s</button>
+        <button id="resetBtn" disabled>Reset</button>
+      </div>
+      <div class="session-meta-row">
+        <span id="sessionMeta">No session loaded.</span>
+        <span id="sessionRunState" class="session-state-pill idle">not loaded</span>
+        <span id="timeTelemetry" class="time-telemetry">sim -- · wall -- · speed ×--</span>
+        <span id="saveMeta">No saved session yet.</span>
+      </div>
+    </section>
+
+    <section class="monitor panel focus-monitor">
+      <div class="monitor-header">
+        <div>
+          <h2>Bedside monitor</h2>
+          <span class="muted" id="currentScenarioLabel">No scenario selected</span>
+        </div>
+        <div class="monitor-header-actions">
+          <button id="quickEmogasBtn" class="ghost small" type="button">ABG</button>
+          <button id="quickBolusBtn" class="ghost small" type="button">Boli</button>
+          <button id="quickExtendedMonitorBtn" class="ghost small" type="button">Monitor+</button>
+          <button id="audioMonitorBtn" class="ghost small audio-monitor-off" type="button" aria-pressed="false">Audio OFF</button>
+          <button id="scenarioInfoBtn" class="ghost small" type="button" aria-expanded="false">Scenario info</button>
+          <span id="simClock">t = 0.0 s</span>
+        </div>
+      </div>
+      <div id="scenarioInfoCard" class="scenario-info-card" hidden>Carica uno scenario per visualizzare il brief.</div>
+      <div id="actionFeedbackBar" class="action-feedback-bar idle" aria-live="polite">Nessuna azione recente.</div>
+      <div id="fluidQuickPanel" class="fluid-quick-panel" aria-label="Fluid infusion control">
+        <div class="fluid-quick-head">
+          <span>Flebo</span>
+          <strong id="fluidQuickStatus">off</strong>
+        </div>
+        <div class="fluid-quick-controls">
+          <label>Tipo
+            <select id="quickCrystalloidType" data-crystalloid-type="1">
+              <option value="normal_saline">Soluzione fisiologica</option>
+              <option value="ringer_lactate">Ringer lattato</option>
+              <option value="sterofundin">Sterofundin</option>
+              <option value="dextrose_5">Glucosata 5%</option>
+            </select>
+          </label>
+          <label>Velocita <small>mL/h</small>
+            <input id="quickCrystalloidRate" data-drug="set_crystalloid_rate" type="number" min="0" max="2500" step="5" value="0" />
+          </label>
+        </div>
+        <div class="fluid-quick-metrics">
+          <span>Resp <strong id="fluidQuickResp">--</strong></span>
+          <span>MAP +<strong id="fluidQuickMap">--</strong></span>
+          <span>Urine <strong id="fluidQuickUrine">--</strong></span>
+          <span>Balance <strong id="fluidQuickBalance">--</strong></span>
+        </div>
+      </div>
+      <div id="cardiacStatusStrip" class="cardiac-status-strip" aria-live="polite">
+        <span>Rhythm <strong id="cardiacRhythm">sinus</strong></span>
+        <span>Pulse <strong id="cardiacPulse">present</strong></span>
+        <span>Class <strong id="cardiacRhythmClass">pulsed</strong></span>
+        <span>RCP <strong id="cardiacCprState">off</strong></span>
+      </div>
+      <div id="labsStrip" class="labs-strip" aria-live="polite"><span class="labs-strip-title">Labs</span><div id="labsStripItems" class="labs-strip-items"><span class="muted">Carica una sessione per vedere i parametri.</span></div></div>
+      <div class="monitor-display-split" aria-label="Compact bedside monitor layout">
+        <div class="vitals clean-vitals side-vitals" aria-label="Large numeric vital signs">
+          <div class="vital green"><div class="vital-main"><span>HR</span><strong id="vHR">--</strong><small>bpm</small></div><canvas class="vital-trend" id="trendHR" data-trend-color="--green" aria-label="HR trend"></canvas></div>
+          <div class="vital cyan"><div class="vital-main"><span>SpO₂</span><strong id="vSpO2">--</strong><small>%</small></div><canvas class="vital-trend" id="trendSpO2" data-trend-color="--cyan" aria-label="SpO2 trend"></canvas></div>
+          <div class="vital red"><div class="vital-main"><span>MAP</span><strong id="vMAP">--</strong><small><span id="vABP">--/--</span> mmHg</small></div><canvas class="vital-trend" id="trendMAP" data-trend-color="--red" aria-label="MAP trend"></canvas></div>
+          <div class="vital yellow"><div class="vital-main"><span>PaCO₂</span><strong id="vPaCO2">--</strong><small>EtCO₂ <span id="vEtCO2">--</span> mmHg</small></div><canvas class="vital-trend" id="trendCO2" data-trend-color="--yellow" data-secondary-color="--muted" aria-label="PaCO2 and EtCO2 trend"></canvas></div>
+          <div class="vital blue"><div class="vital-main"><span>Paw</span><strong id="vPaw">--</strong><small>cmH₂O</small></div><canvas class="vital-trend" id="trendPaw" data-trend-color="--blue" aria-label="Paw trend"></canvas></div>
+          <div class="vital white"><div class="vital-main"><span>FiO₂</span><strong id="vFiO2">--</strong><small>set</small></div><canvas class="vital-trend" id="trendFiO2" data-trend-color="--text" aria-label="FiO2 trend"></canvas></div>
+        </div>
+        <div class="waveform-grid clean-waveforms compact-waveforms" aria-label="Compressed bedside waveforms">
+          <div class="wave"><label>ECG</label><canvas id="ecgCanvas"></canvas></div>
+          <div class="wave"><label>Pleth</label><canvas id="plethCanvas"></canvas></div>
+          <div class="wave"><label>ABP</label><canvas id="abpCanvas"></canvas></div>
+          <div class="wave"><label>Paw / Capno</label><canvas id="respCanvas"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="control-dock panel" id="controlDock">
+      <h2>Control dock</h2>
+      <div class="dock-status">
+        <div class="kv"><span>Airway</span><strong id="airwayInterface">--</strong></div>
+        <div class="kv"><span>Mode</span><strong id="ventMode">--</strong></div>
+        <div class="kv"><span>Status</span><strong id="airwayStatus">--</strong></div>
+      </div>
+      <div class="dock-grid">
+        <button class="dock-card" data-open-panel="sessionPanel"><b>Session</b><small>load, save, export</small></button>
+        <button class="dock-card" data-open-panel="airwayPanel"><b>Airway</b><small>ventilation, events</small></button>
+        <button class="dock-card" data-open-panel="rcpPanel"><b>RCP</b><small>compressions, rhythm</small></button>
+        <button class="dock-card" data-open-panel="emogasPanel"><b>Emogas</b><small>pH, PaO2, CO2, lattato</small></button>
+        <button class="dock-card" data-open-panel="drugPanel"><b>Drugs</b><small>infusions</small></button>
+        <button class="dock-card" data-open-panel="drugPanel" data-scroll-target="bolusPanel"><b>Boli</b><small>rescue doses</small></button>
+        <button class="dock-card" data-open-panel="extendedMonitorPanel"><b>Monitor esteso</b><small>labs, perfusion, renal</small></button>
+        <button class="dock-card" data-open-panel="trainingPanel"><b>Training</b><small>EPALS / airway</small></button>
+        <button class="dock-card" data-open-panel="instructorPanel"><b>Instructor</b><small>presets, notes</small></button>
+        <button class="dock-card" data-open-panel="debriefPanel"><b>Debrief</b><small>flags, thresholds</small></button>
+        <button class="dock-card" data-open-panel="authoringPanel"><b>Author</b><small>create scenarios</small></button>
+      </div>
+      <div class="quick-actions">
+        <h3>Quick airway actions</h3>
+        <button data-action="airway_event" data-event="failed_intubation_attempt" data-severity="moderate">Failed attempt</button>
+        <button data-action="airway_event" data-event="start_bag_mask_ventilation" data-severity="adequate">Bag-mask rescue</button>
+        <button data-action="airway_event" data-event="perform_intubation" data-severity="emergency">Intubate</button>
+        <button data-action="airway_event" data-event="accidental_extubation" data-severity="moderate">Extubation</button>
+      </div>
+      <div class="mini-timeline">
+        <h3>Recent events</h3>
+        <div id="miniEventLog" class="mini-event-log muted">No events yet.</div>
+        <button class="ghost" data-open-panel="timelinePanel" type="button">Open timeline</button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="apparatusOverlay" class="apparatus-overlay" hidden>
+    <div class="apparatus-window" role="dialog" aria-modal="true" aria-label="Apparatus controls">
+      <header class="apparatus-header">
+        <div>
+          <h2 id="apparatusTitle">Apparatus</h2>
+          <p>Only the selected apparatus is shown. Close to return to the clean monitor.</p>
+        </div>
+        <button id="closeApparatusBtn" class="close-btn" type="button">×</button>
+      </header>
+      <nav class="apparatus-tabs" aria-label="Apparatus panels">
+        <button data-panel-tab="sessionPanel">Session</button>
+        <button data-panel-tab="airwayPanel">Airway</button>
+        <button data-panel-tab="rcpPanel">RCP</button>
+        <button data-panel-tab="emogasPanel">Emogas</button>
+        <button data-panel-tab="drugPanel">Drugs</button>
+        <button data-panel-tab="extendedMonitorPanel">Monitor esteso</button>
+        <button data-panel-tab="trainingPanel">Training</button>
+        <button data-panel-tab="instructorPanel">Instructor</button>
+        <button data-panel-tab="debriefPanel">Debrief</button>
+        <button data-panel-tab="timelinePanel">Timeline</button>
+        <button data-panel-tab="authoringPanel">Author</button>
+      </nav>
+
+      <div class="apparatus-body">
+        <section class="apparatus-panel" id="sessionPanel" data-panel-title="Session / files">
+          <h2>Session</h2>
+          <div class="grid2">
+            <label>Load saved JSON path
+              <input id="savedPathInput" type="text" placeholder="outputs/session_exports_v2.5/example.json" />
+            </label>
+            <label>Current scenario
+              <input id="scenarioMirror" type="text" readonly placeholder="loaded scenario" />
+            </label>
+          </div>
+          <div class="button-row wrap">
+            <button id="saveSessionBtn" disabled>Save session</button>
+            <button id="exportJsonBtn" disabled>Export JSON</button>
+            <button id="exportMdBtn" disabled>Export MD</button>
+            <button id="loadSavedBtn">Load saved</button>
+          </div>
+          <p class="muted">Save/load is kept in this panel to keep the bedside screen uncluttered.</p>
+        </section>
+
+        <section class="apparatus-panel" id="airwayPanel" data-panel-title="Airway / ventilation" hidden>
+          <h2>Airway / Ventilation</h2>
+          <div class="control-stack roomy-stack">
+            <label>FiO₂
+              <input id="fio2Range" type="range" min="0.21" max="1" step="0.01" value="0.40" />
+              <output id="fio2Out">0.40</output>
+            </label>
+            <label>PEEP
+              <input id="peepRange" type="range" min="0" max="18" step="1" value="5" />
+              <output id="peepOut">5</output>
+            </label>
+            <label>RR
+              <input id="rrRange" type="range" min="8" max="60" step="1" value="25" />
+              <output id="rrOut">25</output>
+            </label>
+          </div>
+          <h3>Airway events</h3>
+          <div class="button-row wrap big-buttons">
+            <button data-action="airway_event" data-event="failed_intubation_attempt" data-severity="moderate">Failed attempt</button>
+            <button data-action="airway_event" data-event="start_bag_mask_ventilation" data-severity="adequate">Bag-mask</button>
+            <button data-action="airway_event" data-event="perform_intubation" data-severity="emergency">Intubate</button>
+            <button data-action="airway_event" data-event="accidental_extubation" data-severity="moderate">Accidental extubation</button>
+          </div>
+        </section>
+
+        <section class="apparatus-panel" id="rcpPanel" data-panel-title="RCP / cardiac arrest" hidden>
+          <div class="panel-title-row">
+            <div>
+              <h2>RCP</h2>
+              <p class="muted">Controlli iniziali per compressioni e qualità RCP. Defibrillazione e farmaci saranno aggiunti nei prossimi step.</p>
+            </div>
+            <span id="rcpPanelBadge" class="rcp-badge">no arrest</span>
+          </div>
+          <div class="rcp-status-grid">
+            <div class="extended-param"><span>Rhythm</span><strong id="rcpRhythm">sinus</strong></div>
+            <div class="extended-param"><span>Pulse</span><strong id="rcpPulse">present</strong></div>
+            <div class="extended-param"><span>Class</span><strong id="rcpShockable">pulsed</strong></div>
+            <div class="extended-param"><span>EtCO₂</span><strong id="rcpEtco2">--</strong></div>
+            <div class="extended-param"><span>MAP</span><strong id="rcpMap">--</strong></div>
+            <div class="extended-param"><span>RCP</span><strong id="rcpActiveState">off</strong></div>
+            <div class="extended-param"><span>Last shock</span><strong id="rcpLastShock">none</strong></div>
+            <div class="extended-param"><span>Last drug</span><strong id="rcpLastDrug">none</strong></div>
+            <div class="extended-param"><span>Post ROSC</span><strong id="rcpPostRosc">none</strong></div>
+            <div class="extended-param"><span>Acidosis</span><strong id="rcpAcidosis">--</strong></div>
+            <div class="extended-param"><span>Kidney</span><strong id="rcpRenalRisk">--</strong></div>
+            <div class="extended-param"><span>Reperf.</span><strong id="rcpReperfusionRisk">--</strong></div>
+          </div>
+          <div class="rcp-controls">
+            <label>Qualità compressioni
+              <input id="cprQualityRange" type="range" min="0" max="1" step="0.05" value="0.75" />
+              <output id="cprQualityOut">0.75</output>
+            </label>
+            <div class="button-row wrap big-buttons">
+              <button id="startCprBtn" type="button">Start compressions</button>
+              <button id="stopCprBtn" type="button">Stop compressions</button>
+            </div>
+            <div class="rcp-shock-controls">
+              <label>Energia shock
+                <input id="shockEnergyInput" type="number" min="1" max="360" step="1" value="40" />
+              </label>
+              <div class="button-row wrap big-buttons">
+                <button id="defibAsyncBtn" type="button">Defib asincrona</button>
+                <button id="cardioversionSyncBtn" type="button">Cardioversione sincronizzata</button>
+              </div>
+            </div>
+            <div class="rcp-drug-controls">
+              <h3>Farmaci RCP</h3>
+              <div class="button-row wrap big-buttons">
+                <button id="rcpEpinephrineBtn" type="button">Adrenalina bolo</button>
+                <button id="rcpAmiodaroneBtn" type="button">Amiodarone bolo</button>
+                <button id="rcpAtropineBtn" type="button">Atropina bolo</button>
+              </div>
+            </div>
+            <div class="post-rosc-controls">
+              <h3>Post ROSC</h3>
+              <div class="button-row wrap big-buttons">
+                <button id="postRoscCareBtn" type="button">Stabilizza post-ROSC</button>
+              </div>
+            </div>
+          </div>
+          <div id="rcpFeedback" class="rcp-feedback muted">Nessuna azione RCP recente.</div>
+        </section>
+
+
+        <section class="apparatus-panel" id="emogasPanel" data-panel-title="Emogas / arterial blood gas" hidden>
+          <div class="panel-title-row">
+            <div>
+              <h2>Emogas</h2>
+              <p class="muted">Snapshot dei gas arteriosi e dei parametri metabolici principali.</p>
+            </div>
+            <button id="emogasRefreshBtn" class="ghost small" type="button">Aggiorna emogas</button>
+          </div>
+          <div id="emogasMeta" class="extended-monitor-meta muted">Carica una sessione e premi Aggiorna emogas.</div>
+          <div id="emogasGrid" class="emogas-grid">
+            <div class="muted">Nessuna sessione attiva.</div>
+          </div>
+        </section>
+        <section class="apparatus-panel" id="drugPanel" data-panel-title="Drugs / infusions" hidden>
+          <h2>Drugs</h2>
+          <div class="drug-mode-toolbar" aria-label="Drug panel sections">
+            <button class="ghost small" type="button" data-panel-scroll="fluidInfusionsPanel">Liquidi</button>
+            <button class="ghost small" type="button" data-panel-scroll="drugInfusionsPanel">Infusioni</button>
+            <button class="ghost small" type="button" data-panel-scroll="bolusPanel">Boli</button>
+            <button class="ghost small" type="button" data-panel-scroll="drugAuditPanel">Audit</button>
+          </div>
+          <div class="drug-section-block" id="fluidInfusionsPanel">
+            <h3>Fluids / crystalloids</h3>
+            <div class="fluid-control-grid">
+              <label>Tipo fluido
+                <select id="panelCrystalloidType" data-crystalloid-type="1">
+                  <option value="normal_saline">Soluzione fisiologica 0.9%</option>
+                  <option value="ringer_lactate">Ringer lattato</option>
+                  <option value="sterofundin">Sterofundin</option>
+                  <option value="dextrose_5">Glucosata 5%</option>
+                </select>
+              </label>
+              <label>Velocita flebo <small>mL/h</small>
+                <input id="panelCrystalloidRate" data-drug="set_crystalloid_rate" type="number" min="0" max="2500" step="5" value="0" />
+              </label>
+            </div>
+            <div class="fluid-audit-strip">
+              <span>Tipo <strong id="fluidAuditType">--</strong></span>
+              <span>Rate <strong id="fluidAuditRate">0 mL/h</strong></span>
+              <span>Responsiveness <strong id="fluidAuditResponse">--</strong></span>
+              <span>MAP support <strong id="fluidAuditMap">--</strong></span>
+              <span>Diuresi <strong id="fluidAuditUrine">--</strong></span>
+              <span>Bilancio <strong id="fluidAuditBalance">--</strong></span>
+            </div>
+          </div>
+          <div class="drug-section-block" id="drugInfusionsPanel">
+          <h3>Vasoactive / cardiac</h3>
+          <div class="drug-grid clean-drug-grid">
+            <label>Adrenaline <small>mcg/kg/min</small><input data-drug="set_adrenaline" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Noradrenaline <small>mcg/kg/min</small><input data-drug="set_norad" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Dopamine <small>mcg/kg/min</small><input data-drug="set_dopamine" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Vasopressin <small>mU/kg/min</small><input data-drug="set_vasopressin" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Milrinone <small>mcg/kg/min</small><input data-drug="set_milrinone" type="number" min="0" step="0.01" value="0" /></label>
+          </div>
+          <h3>Analgesia / sedation / paralysis</h3>
+          <div class="drug-grid clean-drug-grid">
+            <label>Ketamine <small>mg/kg/h</small><input data-drug="set_ketamine" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Fentanyl <small>mcg/kg/h</small><input data-drug="set_fentanyl" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Remifentanil <small>mcg/kg/min</small><input data-drug="set_remifentanil" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Morphine <small>mcg/kg/h</small><input data-drug="set_morphine" type="number" min="0" step="1" value="0" /></label>
+            <label>Midazolam <small>mcg/kg/h</small><input data-drug="set_midazolam" type="number" min="0" step="5" value="0" /></label>
+            <label>Propofol <small>mg/kg/h</small><input data-drug="set_propofol" type="number" min="0" step="0.5" value="0" /></label>
+            <label>Dexmedetomidine <small>mcg/kg/h</small><input data-drug="set_dexmedetomidine" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Clonidine <small>mcg/kg/h</small><input data-drug="set_clonidine" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Rocuronium <small>mg/kg/h</small><input data-drug="set_rocuronium" type="number" min="0" step="0.1" value="0" /></label>
+          </div>
+          <h3>Respiratory drugs</h3>
+          <div class="drug-grid clean-drug-grid">
+            <label>Salbutamol <small>mcg/kg/min</small><input data-drug="set_salbutamol" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Ipratropium <small>mcg/kg/h</small><input data-drug="set_ipratropium" type="number" min="0" step="1" value="0" /></label>
+            <label>Magnesium <small>mg/kg/h</small><input data-drug="set_magnesium" type="number" min="0" step="1" value="0" /></label>
+            <label>Nebulized epinephrine <small>mcg/kg/min</small><input data-drug="set_nebulized_epinephrine" type="number" min="0" step="0.01" value="0" /></label>
+            <label>iNO <small>ppm</small><input data-drug="set_ino_ppm" type="number" min="0" step="1" value="0" /></label>
+          </div>
+          <h3>Endocrine / renal / antimicrobials</h3>
+          <div class="drug-grid clean-drug-grid">
+            <label>Hydrocortisone <small>mg/kg/h</small><input data-drug="set_hydrocortisone" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Dexamethasone <small>mcg/kg/h</small><input data-drug="set_dexamethasone" type="number" min="0" step="10" value="0" /></label>
+            <label>Insulin <small>UI/h</small><input data-drug="set_insulin" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Furosemide bolus-equivalent <small>mg/kg</small><input data-drug="set_furosemide" type="number" min="0" step="0.1" value="0" /></label>
+            <label>Furosemide infusion <small>mg/kg/h</small><input data-drug="set_furosemide_infusion" type="number" min="0" step="0.01" value="0" /></label>
+            <label>Vancomycin <small>mg/kg/h</small><input data-drug="set_vancomycin" type="number" min="0" step="1" value="0" /></label>
+            <label>Piperacillin-tazobactam <small>mg/kg/h</small><input data-drug="set_piperacillin" type="number" min="0" step="1" value="0" /></label>
+          </div>
+          </div>
+          <div class="bolus-panel" id="bolusPanel">
+            <div class="panel-title-row">
+              <div>
+                <h3>Boli / rescue doses</h3>
+                <p class="muted">Somministrazioni rapide didattiche. Dove il motore non ha un bolo nativo, il comando viene trasformato in una breve infusione equivalente e poi azzerato.</p>
+              </div>
+              <button id="clearBolusStatusBtn" class="ghost small" type="button">Pulisci stato boli</button>
+            </div>
+            <div id="bolusDoseGrid" class="bolus-dose-grid"></div>
+            <div id="bolusStatus" class="bolus-status muted">Nessun bolo inviato.</div>
+          </div>
+          <div class="drug-audit-panel" id="drugAuditPanel">
+            <div class="panel-title-row">
+              <div>
+                <h3>Audit farmaci</h3>
+                <p class="muted">Snapshot manuale di dose, concentrazione, segnali PD e rischi esposti dal Bus.</p>
+              </div>
+              <button id="drugAuditRefreshBtn" type="button">Aggiorna audit</button>
+            </div>
+            <div id="drugAuditMeta" class="drug-audit-meta muted">Nessun audit eseguito.</div>
+            <div id="drugAuditGrid" class="drug-audit-grid"></div>
+          </div>
+        </section>
+
+
+        <section class="apparatus-panel" id="extendedMonitorPanel" data-panel-title="Monitor esteso / calculated parameters" hidden>
+          <div class="panel-title-row">
+            <div>
+              <h2>Monitor esteso</h2>
+              <p class="muted">Parametri secondari e calcolati dal Bus. Snapshot su richiesta: premi Aggiorna per rileggere lo stato completo, senza polling continuo.</p>
+            </div>
+            <div class="button-row wrap"><button id="extendedMonitorRefreshBtn" class="ghost small" type="button">Aggiorna snapshot</button><button id="extendedChartsBtn" class="ghost small" type="button">Grafici</button><button id="rawBusToggleBtn" class="ghost small" type="button">Raw Bus</button></div>
+          </div>
+          <div class="extended-monitor-meta muted" id="extendedMonitorMeta">Carica una sessione e premi Aggiorna snapshot per visualizzare il monitor esteso.</div>
+          <div class="extended-monitor-grid" id="extendedMonitorGrid">
+            <div class="muted">Nessuna sessione attiva.</div>
+          </div>
+          <section id="rawBusInspector" class="raw-bus-inspector" hidden>
+            <div class="raw-bus-toolbar">
+              <h3>Raw Bus inspector</h3>
+              <label>Filtro <input id="rawBusFilter" type="search" placeholder="MAP, lactate, drug_..." /></label>
+            </div>
+            <div id="rawBusMeta" class="raw-bus-meta muted">Nessuno snapshot full disponibile.</div>
+            <div id="rawBusTable" class="raw-bus-table"></div>
+          </section>
+        </section>
+
+        <section class="apparatus-panel" id="trainingPanel" data-panel-title="Emergency training" hidden>
+          <h2>Emergency training</h2>
+          <label>Emergency scenario
+            <select id="emergencyScenarioSelect"></select>
+          </label>
+          <div class="button-row wrap">
+            <button id="loadEmergencyBtn">Load emergency</button>
+            <button id="debriefBtn" disabled>Generate debrief</button>
+          </div>
+          <div class="kv"><span>Category</span><strong id="trainingCategory">--</strong></div>
+          <div class="kv"><span>Focus</span><strong id="trainingFocus">--</strong></div>
+          <div class="training-questions" id="trainingQuestions">No emergency scenario selected.</div>
+        </section>
+
+        <section class="apparatus-panel" id="instructorPanel" data-panel-title="Instructor mode" hidden>
+          <h2>Instructor mode</h2>
+          <div class="kv"><span>Diagnosis visibility</span><strong id="diagnosisVisibility">visible</strong></div>
+          <label class="checkbox-line"><input id="hideDiagnosisToggle" type="checkbox" /> Hide diagnosis from learner</label>
+          <h3>Presets</h3>
+          <div class="button-row wrap preset-wrap" id="instructorPresetButtons"></div>
+          <label>Instructor note
+            <textarea id="instructorNoteText" rows="4" placeholder="Add observation, learner action, or teaching point"></textarea>
+          </label>
+          <div class="button-row wrap">
+            <button id="addInstructorNoteBtn" disabled>Add note</button>
+            <button id="bookmarkBtn" disabled>Bookmark</button>
+            <button id="instructorReportBtn" disabled>Instructor report</button>
+          </div>
+          <div id="instructorNotes" class="instructor-notes muted">No instructor notes.</div>
+        </section>
+
+        <section class="apparatus-panel" id="debriefPanel" data-panel-title="Emergency debrief" hidden>
+          <h2>Emergency debrief</h2>
+          <div id="debriefSummary" class="debrief-summary">No debrief generated.</div>
+          <div id="debriefFlags" class="flag-list"></div>
+          <div id="debriefThresholds" class="threshold-list"></div>
+        </section>
+
+        <section class="apparatus-panel" id="timelinePanel" data-panel-title="Timeline" hidden>
+          <h2>Timeline</h2>
+          <div id="eventLog" class="event-log clean-event-log"></div>
+        </section>
+
+        <section class="apparatus-panel" id="authoringPanel" data-panel-title="Scenario authoring assistant" hidden>
+          <h2>Scenario authoring assistant</h2>
+          <p class="muted">Create a conservative YAML training scenario from curated templates. Save publishes it to the scenario selector.</p>
+          <div class="grid2 authoring-grid">
+            <label>Template
+              <select id="authorTemplateSelect"></select>
+            </label>
+            <label>Severity
+              <select id="authorSeveritySelect">
+                <option value="mild">mild</option>
+                <option value="moderate" selected>moderate</option>
+                <option value="severe">severe</option>
+              </select>
+            </label>
+            <label>Scenario title
+              <input id="authorTitleInput" type="text" value="Authored airway training scenario" />
+            </label>
+            <label>Diagnosis / learner label
+              <input id="authorDiagnosisInput" type="text" placeholder="airway_training" />
+            </label>
+            <label>Age years
+              <input id="authorAgeInput" type="number" min="0" max="18" step="0.1" placeholder="5" />
+            </label>
+            <label>Weight kg
+              <input id="authorWeightInput" type="number" min="1" max="120" step="0.1" placeholder="20" />
+            </label>
+            <label>Duration seconds
+              <input id="authorDurationInput" type="number" min="60" max="7200" step="30" placeholder="420" />
+            </label>
+            <label>Filename
+              <input id="authorFilenameInput" type="text" placeholder="user_my_scenario_v2_7.yaml" />
+            </label>
+          </div>
+          <label>Description
+            <textarea id="authorDescriptionInput" rows="3">Educational authored scenario. Not for clinical use.</textarea>
+          </label>
+          <label>Debrief questions, one per line
+            <textarea id="authorQuestionsInput" rows="4">What was the first sign of deterioration?
+Which intervention changed the physiology most clearly?
+Was escalation delayed or timely?</textarea>
+          </label>
+          <div class="button-row wrap">
+            <button id="draftScenarioBtn">Draft YAML</button>
+            <button id="validateScenarioBtn">Validate</button>
+            <button id="saveScenarioBtn">Save to scenarios</button>
+            <button id="loadAuthoredScenarioBtn">Load saved scenario</button>
+          </div>
+          <div id="authoringStatus" class="authoring-status muted">No draft yet.</div>
+          <label>Scenario YAML
+            <textarea id="authorYamlText" class="yaml-editor" rows="14" spellcheck="false"></textarea>
+          </label>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="/ui/canvas_waveforms.js?v=3.1-step4.32"></script>
+  <script src="/ui/app.js?v=3.1-step4.38"></script>
+
+  <div id="popupChartOverlay" class="chart-overlay" hidden>
+    <div class="chart-window" role="dialog" aria-modal="true" aria-label="Grafici a comparsa">
+      <header class="chart-header">
+        <div>
+          <h2>Grafico a comparsa</h2>
+          <p class="muted">Trend generati solo su richiesta. I parametri estesi usano gli snapshot salvati quando premi Aggiorna nel Monitor esteso.</p>
+        </div>
+        <button id="popupChartCloseBtn" class="close-btn" type="button">×</button>
+      </header>
+      <div class="chart-toolbar">
+        <label>Parametro
+          <select id="popupChartSelect"></select>
+        </label>
+        <button id="popupChartRedrawBtn" class="ghost small" type="button">Ridisegna</button>
+      </div>
+      <canvas id="popupChartCanvas" class="popup-chart-canvas" aria-label="Requested parameter chart"></canvas>
+      <div id="popupChartMeta" class="muted chart-meta">Nessun grafico ancora generato.</div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

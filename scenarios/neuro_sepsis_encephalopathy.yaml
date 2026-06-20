@@ -1,0 +1,56 @@
+name: neuro_sepsis_encephalopathy
+simulation_time_s: 900
+description: Sepsis-associated encephalopathy with fever, lactate, hepatic-ammonia signal and sedative sparing.
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+respiratory:
+  mode: PCV
+  FiO2: 0.45
+  PEEP: 7
+  Paw: 19
+  RR: 25
+  C_rs: 0.70
+  R_rs: 10
+  SaO2: 0.92
+  PaO2: 68
+  PaCO2: 45
+cardiovascular:
+  HR: 155
+  MAP: 53
+  CO: 4.7
+  CVP: 7
+  Hb: 9.0
+metabolism:
+  T_core: 39.0
+  lactate: 4.3
+sepsis:
+  infection_load: 0.78
+  phenotype: warm
+  source_control: 0.15
+  antibiotic_effect: 0.20
+hepatic:
+  ammonia_umol_L: 68
+  bilirubin_total_mg_dL: 1.0
+  bilirubin_direct_mg_dL: 0.5
+  albumin_g_dL: 3.0
+acidbase:
+  Na_mmol_L: 136
+  K_mmol_L: 4.5
+  HCO3_mmol_L: 21
+nutrition:
+  glucose_mmol_L: 9.0
+drugs:
+  norad_mcg_kg_min: 0.08
+  dexmedetomidine_mcg_kg_h: 0.2
+analgosedation:
+  baseline_pain: 4.0
+neurofunctional:
+  GCS_proxy: 13
+perturbations:
+  - {t: 120, action: set_norad, value: 0.14, label: MAP support}
+  - {t: 240, action: set_source_control, value: 0.45, label: source control partial}
+  - {t: 360, action: set_antibiotic_effect, value: 0.55, label: antibiotic effect}
+  - {t: 420, action: set_paracetamol, value: true, label: antipyretic}
+outputs: [GCS_proxy, AVPU_state, encephalopathy_index, septic_encephalopathy_index, delirium_state_index, seizure_risk_index, neuro_severity_score, MAP, HR, lactate, T_core, ammonia_umol_L]

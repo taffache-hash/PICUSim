@@ -1,0 +1,77 @@
+name: infection_antibiotic_delay
+version: v0.26
+category: infection_antimicrobial
+summary: >
+  Pediatric sepsis with delayed effective antibiotic coverage and late partial source control.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  weight_kg: 20
+  sex: F
+  diagnosis: delayed_antibiotic_sepsis
+
+respiratory:
+  mode: PCV
+  PEEP: 7
+  Paw: 21
+  FiO2: 0.50
+  RR: 28
+  C_rs: 0.65
+  R_rs: 10
+  PaO2: 70
+  PaCO2: 39
+  SaO2: 0.93
+  non_recruitable_frac: 0.15
+
+cardiovascular:
+  HR: 150
+  MAP: 54
+  CO: 4.3
+  CVP: 5
+  Hb: 9.5
+  preload_mod: 0.8
+
+metabolism:
+  T_core: 39.1
+  lactate: 3.8
+
+infection:
+  infection_focus: pneumonia
+  microbial_burden: 0.72
+  pathogen_virulence: 0.65
+  pathogen_resistance_index: 0.25
+  antibiotic_started: false
+  antibiotic_coverage: 0.0
+  source_control: 0.0
+  culture_drawn: false
+
+sepsis:
+  phenotype: warm
+  infection_load: 0.72
+  source_control: 0.0
+
+perturbations:
+  - {t: 60, action: set_culture_drawn, value: true, label: "Blood/respiratory cultures drawn"}
+  - {t: 180, action: set_antibiotic_started, value: true, label: "Empiric antibiotics started late"}
+  - {t: 180, action: set_antibiotic_coverage, value: 0.45, label: "Partial empiric coverage"}
+  - {t: 260, action: set_norad, value: 0.12, label: "Norepinephrine"}
+  - {t: 420, action: set_antibiotic_coverage, value: 0.78, label: "Broaden antibiotics after reassessment"}
+  - {t: 480, action: set_source_control, value: 0.35, label: "Partial source control"}
+
+outputs:
+  - microbial_burden
+  - infection_load
+  - antibiotic_coverage
+  - antibiotic_effect
+  - antibiotic_delay_harm_index
+  - culture_positivity_probability
+  - antimicrobial_escalation_score
+  - antimicrobial_deescalation_readiness
+  - inadequate_coverage_index
+  - infection_severity_score
+  - cytokine_drive
+  - MAP
+  - lactate
+
+simulation_time_s: 720

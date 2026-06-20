@@ -1,0 +1,82 @@
+name: picu_morphine_analgesia_aki_v1_14
+version: v1.14-alpha
+category: pharmacology / analgesia / renal-risk
+summary: >
+  Educational morphine PK/PD scaffold linking infusion rate, plasma concentration,
+  analgesia, respiratory-depression signal and qualitative M6G accumulation risk during AKI.
+  Not a dosing guide.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  age_group: child
+  weight_kg: 20
+  sex: M
+  diagnosis: postoperative_picu_analgesia_with_evolving_aki
+
+respiratory:
+  mode: PCV
+  Paw: 18
+  PEEP: 6
+  FiO2: 0.35
+  RR: 24
+  C_rs: 0.85
+  R_rs: 10
+  SaO2: 0.96
+  PaO2: 85
+  PaCO2: 42
+  non_recruitable_frac: 0.12
+
+cardiovascular:
+  HR: 118
+  MAP: 68
+  CO: 4.2
+  CVP: 7
+  Hb: 11.0
+
+metabolism:
+  T_core: 37.8
+  VO2: 115
+  lactate: 1.6
+
+renal:
+  GFR_baseline: 70
+  creatinine_baseline_mg_dL: 0.35
+  creatinine_mg_dL: 0.48
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+
+drugs:
+  morphine_mcg_kg_h: 0.0
+  fentanyl_mcg_kg_h: 0.0
+  midazolam_mcg_kg_h: 0.0
+
+perturbations:
+  - {t: 120, action: set_morphine, value: 20.0, label: "Start educational morphine infusion"}
+  - {t: 480, action: set_creatinine, value: 0.85, label: "Worsening renal function / AKI signal"}
+  - {t: 720, action: set_morphine, value: 35.0, label: "Analgesia escalation"}
+  - {t: 1020, action: set_morphine, value: 0.0, label: "Stop morphine infusion"}
+
+outputs:
+  - C_morphine_ng_mL
+  - morphine_analgesia_signal
+  - morphine_resp_depression_signal
+  - morphine_renal_accumulation_risk
+  - M6G_accumulation_proxy
+  - analgesia_score
+  - opioid_resp_depression
+  - sed_resp_mod
+  - drug_drive_mod
+  - PaCO2
+  - pH_a
+  - GFR
+  - AKI_stage
+  - creatinine_mg_dL
+  - pk_crrt_morphine_CL_L_min
+  - pk_supported_drug_count
+
+limitations:
+  - Educational morphine PK/PD scaffold only; not for prescribing or dose adjustment.
+  - M6G_accumulation_proxy is qualitative and does not represent measured metabolite concentration.
+  - Renal impairment effect is simplified and intended for scenario debriefing only.

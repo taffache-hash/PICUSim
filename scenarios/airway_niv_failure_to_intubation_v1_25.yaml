@@ -1,0 +1,130 @@
+name: airway_niv_failure_to_intubation_v1_25
+description: 'Educational v1.25 scenario: non-invasive ventilation failure in obstructive hypercapnic
+  respiratory failure requiring intubation.'
+version: v1.25-alpha
+patient:
+  profile: child_20kg
+  age_y: 6.0
+  weight_kg: 20.0
+  sex: F
+  diagnosis: obstructive hypercapnic respiratory failure on NIV
+simulation_time_s: 480
+airway_interface:
+  interface: NIV_BIPAP
+  intubated: false
+  ventilator_connected: true
+  airway_pressure_delivery_enabled: true
+  oxygen_interface: NIV
+  NIV_mode: BIPAP
+  NIV_EPAP_cmH2O: 6.0
+  NIV_IPAP_cmH2O: 16.0
+  NIV_pressure_support_cmH2O: 10.0
+  NIV_FiO2_set: 0.55
+  NIV_leak_fraction: 0.35
+  mask_leak_fraction: 0.35
+respiratory:
+  mode: PSV
+  FiO2: 0.55
+  PEEP: 6.0
+  RR: 36
+  Vt: 105
+  C_rs: 0.65
+  R_rs: 21.0
+  SaO2: 0.88
+  PaO2: 58.0
+  PaCO2: 70.0
+  non_recruitable_frac: 0.07
+ventilator:
+  mode: PSV
+  PS: 10.0
+  PEEP: 6.0
+  trigger_thresh: 1.5
+airway:
+  bronchospasm_index: 0.55
+  mucus_load: 0.4
+  small_airway_obstruction: 0.6
+cardiovascular:
+  HR: 140
+  MAP: 60
+  CO: 3.4
+metabolism:
+  VO2: 135
+  lactate: 1.8
+  T_core: 37.7
+perturbations:
+- t: 120
+  action: set_NIV_IPAP
+  value: 18.0
+  label: increase NIV IPAP
+- t: 120
+  action: set_NIV_PS
+  value: 12.0
+  label: increase NIV pressure support
+- t: 180
+  action: set_small_airway_obstruction
+  value: 0.72
+  label: worsening obstruction despite NIV
+- t: 180
+  action: set_NIV_leak
+  value: 0.45
+  label: mask leak increases
+airway_events:
+- t: 260
+  name: start_bag_mask_ventilation
+  severity: difficult
+  label: pre-intubation rescue from NIV failure
+- t: 340
+  name: perform_intubation
+  severity: emergency
+  label: intubation after NIV failure
+  tube_internal_diameter_mm: 5.0
+  tube_length_cm: 16.0
+  PEEP: 7.0
+  Pinsp_cmH2O: 20.0
+  FiO2: 0.9
+clinical_narrative: A child on BiPAP for obstructive hypercapnic respiratory failure worsens despite pressure
+  escalation and mask optimization. The scenario demonstrates escalation from NIV to invasive ventilation.
+decision_focus:
+- recognize NIV failure
+- track leak and hypercapnia burden
+- start rescue ventilation
+- intubate after failure markers persist
+debrief_questions:
+- Which variables show NIV was active before intubation?
+- Which markers suggest NIV failure?
+- What changed after invasive ventilation started?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP
+- NIV_failure_risk
+- NIV_delivered_PS_cmH2O
+- NIV_leak_fraction

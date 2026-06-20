@@ -1,0 +1,15 @@
+name: epals_v2_hyperkalemia_aki_instability
+description: EPALS scenario engine v2 AKI hyperkalemia with rhythm-risk surrogate.
+patient: {age_y: 5, weight_kg: 18, sex: M, diagnosis: aki_hyperkalemia}
+respiratory: {FiO2: 0.35, PEEP: 5, Paw: 15, RR: 28, PaO2: 88, PaCO2: 33, SaO2: 0.96}
+cardiovascular: {HR: 118, MAP: 58, CVP: 8, Hb: 10.8}
+acidbase: {K_mmol_L: 7.1, HCO3_mmol_L: 14, potassium_mmol: 0}
+renal: {creatinine_mg_dL: 2.1, creatinine_baseline_mg_dL: 0.4, CRRT_active: false}
+metabolism: {lactate: 2.5}
+perturbations:
+  - {t: 30, action: calcium_given, value: true, label: calcium membrane stabilization surrogate}
+  - {t: 60, action: set_insulin, value: 0.08, label: insulin-glucose potassium shift surrogate}
+  - {t: 120, action: set_K, value: 5.8, label: potassium begins falling}
+  - {t: 210, action: set_CRRT_active, value: true, label: renal replacement started}
+outputs: [K_mmol_L, MAP, HR, arrhythmia_risk, GFR, decision_priority]
+simulation_time_s: 360

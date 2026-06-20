@@ -1,0 +1,88 @@
+name: shockable_vf_arrest_child_v1_31
+description: "Educational v3.1 scenario: sudden shockable VF arrest with CPR, defibrillation, amiodarone context and post-ROSC stabilization."
+version: v3.1-step4.35
+patient:
+  profile: child_20kg
+  age_y: 7.0
+  weight_kg: 20.0
+  sex: M
+  diagnosis: sudden shockable ventricular fibrillation arrest
+simulation_time_s: 420
+airway_interface:
+  interface: SIMPLE_MASK
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: SIMPLE_MASK
+  oxygen_flow_L_min: 10.0
+  oxygen_FiO2_set: 0.60
+respiratory:
+  mode: SPONT
+  FiO2: 0.60
+  PEEP: 0.0
+  RR: 18
+  Vt: 150
+  C_rs: 0.95
+  R_rs: 7.0
+  SaO2: 0.95
+  PaO2: 82.0
+  PaCO2: 42.0
+cardiovascular:
+  HR: 128
+  MAP: 62
+  CO: 3.0
+metabolism:
+  VO2: 145
+  lactate: 2.0
+  pH_a: 7.34
+perturbations:
+  - t: 55
+    action: set_lactate
+    value: 4.2
+    label: early low-flow lactate rise
+  - t: 55
+    action: set_pH_a
+    value: 7.22
+    label: early arrest acidosis
+cardiac_events:
+  - t: 60
+    name: induce_vf
+    cause: primary arrhythmia
+    label: sudden VF arrest
+clinical_narrative: A child develops sudden VF arrest. Learners should recognize a shockable rhythm, start compressions, choose appropriate unsynchronized defibrillation energy, consider amiodarone in shockable arrest context and transition to post-ROSC stabilization after successful shock.
+decision_focus:
+  - identify VF as shockable cardiac arrest
+  - start high-quality compressions
+  - defibrillate asynchronously with adequate energy
+  - distinguish amiodarone context from non-shockable PEA
+  - begin post-ROSC stabilization after conversion
+debrief_questions:
+  - Was VF recognized as shockable?
+  - Were compressions started before shock?
+  - Was shock energy adequate for weight?
+  - Was amiodarone used in a shockable context?
+  - Was post-ROSC physiology reassessed after conversion?
+outputs:
+  - cardiac_rhythm
+  - rhythm_category
+  - has_pulse
+  - cardiac_arrest_active
+  - shockable_rhythm
+  - CPR_active
+  - CPR_quality
+  - compression_fraction
+  - defibrillation_attempt_count
+  - last_shock_result
+  - amiodarone_bolus_count
+  - last_rcp_drug
+  - ROSC
+  - post_rosc_care_status
+  - post_rosc_acidosis_burden
+  - reperfusion_injury_risk
+  - renal_hypoperfusion_index
+  - SaO2
+  - PaCO2
+  - EtCO2
+  - pH_a
+  - lactate
+  - MAP

@@ -1,0 +1,60 @@
+# v0.27 quantitative benchmark fixtures.
+# These are internal plausibility/regression envelopes, not clinical validation.
+# Simulations are evaluated at the final snapshot using dt=1.0 unless specified.
+healthy_child_20kg:
+  max_time_s: 300
+  ranges:
+    MAP: [55, 85]
+    HR: [70, 140]
+    PaO2: [60, 110]
+    PaCO2: [30, 48]
+    pH_a: [7.30, 7.50]
+    CO: [2.5, 6.0]
+    Vt: [80, 220]
+    SaO2: [0.90, 1.00]
+    T_core: [36.5, 37.5]
+ards_mild:
+  max_time_s: 300
+  ranges:
+    MAP: [35, 90]
+    HR: [90, 180]
+    PaO2: [45, 120]
+    PaCO2: [30, 75]
+    pH_a: [7.15, 7.48]
+    CO: [2.5, 7.0]
+    Vt: [70, 220]
+    SaO2: [0.82, 1.00]
+    T_core: [36.5, 39.5]
+septic_shock:
+  max_time_s: 300
+  ranges:
+    MAP: [35, 110]
+    HR: [110, 190]
+    PaO2: [35, 130]
+    PaCO2: [30, 120]
+    pH_a: [6.90, 7.42]
+    CO: [3.0, 9.0]
+    lactate: [2.0, 8.0]
+    Hb: [6.5, 12.5]
+    T_core: [37.0, 40.5]
+tbi_icp:
+  max_time_s: 300
+  ranges:
+    MAP: [50, 130]
+    HR: [45, 160]
+    PaO2: [50, 130]
+    PaCO2: [25, 60]
+    pH_a: [7.25, 7.55]
+    ICP_mmHg: [3, 35]
+    GCS_proxy: [6, 15.5]
+    T_core: [36.0, 38.5]
+status_asthmaticus:
+  max_time_s: 300
+  ranges:
+    MAP: [45, 110]
+    HR: [110, 190]
+    PaO2: [45, 150]
+    PaCO2: [45, 120]
+    pH_a: [6.90, 7.35]
+    Vt: [100, 500]
+    SaO2: [0.80, 1.00]

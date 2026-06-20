@@ -1,0 +1,96 @@
+metadata:
+  version: v1.09-alpha
+  purpose: >-
+    Preliminary literature-parameter benchmark specification for the PDT pharmacology module.
+    This file is a transparent scaffold for external PK alignment. It uses broad source-derived
+    parameter envelopes and is not a clinical dosing model.
+  caveat: >-
+    These checks compare model parameters and simulated educational regimens against broad
+    literature anchors. They do not validate patient-specific dosing, do not include active
+    metabolites unless explicitly modeled, and do not replace formal NONMEM/Bayesian PK validation.
+
+sources:
+  de_wildt_2003_midazolam_picu:
+    drug: midazolam
+    title: Population pharmacokinetics and metabolism of midazolam in pediatric intensive care patients
+    journal: Critical Care Medicine
+    year: 2003
+    pmid: '12847388'
+    doi: 10.1097/01.CCM.0000084806.15352.DA
+    extracted_anchor: >-
+      Pediatric ICU continuous infusion cohort; reported total body clearance 5.0 +/- 3.9 mL/kg/min,
+      apparent terminal volume 1.7 +/- 1.1 L/kg, and elimination half-life 5.5 +/- 3.5 h.
+    limitation: >-
+      PDT currently benchmarks parent midazolam only. 1-OH-midazolam and glucuronide are not modeled.
+  herd_2007_ketamine_norketamine:
+    drug: ketamine
+    title: Modeling the norketamine metabolite in children and the implications for analgesia
+    journal: Pediatric Anesthesia
+    year: 2007
+    pmid: '17683400'
+    doi: 10.1111/j.1460-9592.2007.02257.x
+    extracted_anchor: >-
+      Pediatric/adult pooled NONMEM model; parent ketamine two-compartment model standardized to 70 kg:
+      V1 22 L/70 kg, V2 129 L/70 kg, CLother 47.8 L/h/70 kg, Q 216 L/h/70 kg.
+    limitation: >-
+      PDT currently benchmarks parent ketamine only. Norketamine formation and effect-site kinetics are not yet modeled.
+
+benchmarks:
+  midazolam_parent_de_wildt_2003:
+    drug: midazolam
+    source_id: de_wildt_2003_midazolam_picu
+    output_key: C_midazolam_ng_mL
+    supported_profiles: [neonate_3kg, infant_8kg, toddler_12kg, child_20kg, adolescent_50kg]
+    parameter_targets:
+      CL_mL_kg_min:
+        range: [0.5, 12.8]
+        target_type: broad_mean_plus_minus_2sd_floor
+        note: Source mean +/- 2 SD, floored above zero because clearance cannot be negative.
+      V_total_L_kg:
+        range: [0.1, 3.9]
+        target_type: broad_apparent_volume_proxy
+        note: PDT V1+V2 is only a rough proxy for the source apparent terminal volume.
+    regimen_checks:
+      midazolam_low_continuous:
+        dose_key: midazolam_mcg_kg_h
+        dose_value: 50.0
+        dose_unit: mcg/kg/h
+        duration_s: 3600
+        washout_s: 3600
+      midazolam_high_continuous:
+        dose_key: midazolam_mcg_kg_h
+        dose_value: 400.0
+        dose_unit: mcg/kg/h
+        duration_s: 3600
+        washout_s: 3600
+  ketamine_parent_herd_2007:
+    drug: ketamine
+    source_id: herd_2007_ketamine_norketamine
+    output_key: C_ketamine_mg_L
+    supported_profiles: [toddler_12kg, child_20kg, adolescent_50kg]
+    parameter_targets:
+      CL_mL_kg_min:
+        range: [8.0, 28.0]
+        target_type: broad_allometric_parent_clearance
+        note: Broad parent-ketamine clearance envelope derived from the standardized 70 kg parameter and pediatric variability.
+      V1_L_kg:
+        range: [0.18, 0.75]
+        target_type: broad_central_volume
+        note: Source V1 22 L/70 kg equals about 0.31 L/kg at 70 kg; envelope widened for model simplification.
+      V2_L_kg:
+        range: [1.0, 4.0]
+        target_type: broad_peripheral_volume
+        note: Source V2 129 L/70 kg equals about 1.84 L/kg at 70 kg; envelope widened for model simplification.
+    regimen_checks:
+      ketamine_analgesic_infusion:
+        dose_key: ketamine_mg_kg_h
+        dose_value: 0.2
+        dose_unit: mg/kg/h
+        duration_s: 14400
+        washout_s: 7200
+      ketamine_sedation_infusion:
+        dose_key: ketamine_mg_kg_h
+        dose_value: 1.0
+        dose_unit: mg/kg/h
+        duration_s: 3600
+        washout_s: 3600

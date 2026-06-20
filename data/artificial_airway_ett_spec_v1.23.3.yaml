@@ -1,0 +1,34 @@
+release: v1.23.3-alpha
+purpose: Artificial airway ETT/tracheostomy educational proxy for tube resistance,
+  dead space, cuff leak and obstruction.
+interfaces:
+  ETT:
+    intubated: true
+    ventilator_connected: true
+    uses_tube_resistance: true
+  TRACHEOSTOMY:
+    intubated: true
+    ventilator_connected: true
+    uses_tube_resistance: true
+bus_fields:
+- tube_internal_diameter_mm
+- tube_length_cm
+- tube_resistance_cmH2O_L_s
+- tube_resistance_factor
+- tube_dead_space_mL
+- tube_VdVt_add
+- tube_obstruction_score
+- cuff_leak_fraction
+- cuff_pressure_cmH2O
+- ETT_position_score
+- ETT_pressure_delivery_efficiency
+- ETT_FiO2_delivery_efficiency
+- ETT_failure_risk
+- artificial_airway_revision
+scenarios:
+- airway_ett_tube_resistance_v1_23_3
+- airway_ett_partial_obstruction_v1_23_3
+limitations:
+- No clinical tube-size recommendation.
+- No CFD or measured pressure-drop model.
+- No automatic intubation/extubation events yet.

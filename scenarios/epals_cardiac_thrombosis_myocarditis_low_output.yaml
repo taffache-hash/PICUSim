@@ -1,0 +1,125 @@
+name: epals_cardiac_thrombosis_myocarditis_low_output
+version: v1.22.2-alpha
+category: epals_5t_cardiac_thrombosis_low_output
+epals:
+  group: T
+  cause: cardiac_thrombosis_or_myocarditis_low_output
+  reversible_cause: Cardiac thrombosis / myocarditis low-output analogue
+  teaching_level: advanced
+clinical_narrative: School-age child with myocarditis-like low-output physiology used as a pediatric analogue for
+  the cardiac-thrombosis T category. The scenario emphasizes pump failure, low cardiac output, rising lactate and
+  response to inotropy/afterload support.
+patient:
+  profile: child_20kg
+  age_y: 9
+  weight_kg: 28
+  sex: F
+  diagnosis: epals_cardiac_thrombosis_myocarditis_low_output
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 20
+  FiO2: 0.5
+  RR: 24
+  C_rs: 0.85
+  R_rs: 8.0
+  PaO2: 82.0
+  PaCO2: 36.0
+  SaO2: 0.95
+  non_recruitable_frac: 0.1
+ventilator:
+  mode: PCV
+  Pinsp: 14
+  IE_ratio: 0.35
+  alarm_Ppeak_max: 38
+cardiovascular:
+  HR: 155
+  MAP: 46
+  CO: 2.0
+  SV: 13
+  CVP: 9
+  PAWP: 14
+  PAP_mean: 26
+  Hb: 11.0
+  preload_mod: 0.75
+sepsis:
+  phenotype: myocardial
+  infection_load: 0.25
+  source_control: 0.0
+  antibiotic_effect: 0.0
+metabolism:
+  T_core: 38.2
+  VO2: 145
+  lactate: 5.2
+drugs:
+  adrenaline_mcg_kg_min: 0.0
+  milrinone_mcg_kg_min: 0.0
+  norad_mcg_kg_min: 0.02
+perturbations:
+- t: 60
+  action: myocardial_depression_index
+  value: 0.75
+  label: worsening myocardial dysfunction proxy
+- t: 60
+  action: CO
+  value: 1.6
+  label: low-output nadir proxy
+- t: 60
+  action: MAP
+  value: 38
+  label: hypotension nadir proxy
+- t: 60
+  action: lactate
+  value: 6.4
+  label: hypoperfusion marker
+- t: 130
+  action: set_adrenaline
+  value: 0.1
+  label: start adrenaline inotropy
+- t: 190
+  action: set_adrenaline
+  value: 0.18
+  label: escalate adrenaline
+- t: 240
+  action: set_milrinone
+  value: 0.25
+  label: add inodilator proxy
+- t: 300
+  action: CO
+  value: 3.1
+  label: partial CO recovery proxy
+- t: 300
+  action: MAP
+  value: 58
+  label: perfusion pressure recovery proxy
+- t: 360
+  action: lactate
+  value: 4.2
+  label: lactate begins to clear
+expected_response:
+- Low CO/MAP with lactate rise suggests pump failure physiology.
+- Inotropy/afterload strategy improves CO/MAP before complete lactate recovery.
+debrief_questions:
+- Why is this not primarily hypovolaemic shock?
+- Which endpoints should improve first after inotropy?
+outputs:
+- MAP
+- HR
+- CO
+- SV
+- CVP
+- PAWP
+- lactate
+- DO2
+- ERO2
+- SvO2
+- myocardial_depression_index
+- drug_inotropy_mod
+- C_adrenaline_ng_mL
+- sepsis_CO_mod
+limitations:
+- Educational scenario for emergency physiology training only.
+- Not calibrated for patient-specific prediction or clinical decision support.
+- Intervention events are simplified physiology proxies for reversible-cause teaching, not treatment protocols.
+- This is a pediatric low-output analogue for the T category, not a coronary-thrombosis model.
+simulation_time_s: 430

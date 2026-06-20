@@ -1,0 +1,90 @@
+version: v3.1-step4.44
+revision: 444
+name: scenario_engine_v2_epals_pack
+safety_status: educational/research alpha only; not for clinical use; not a medical device
+purpose: >
+  Curated scenario-engine v2 manifest for EPALS-oriented simulation and debriefing.
+  The pack standardizes scenario metadata, expected action focus, key physiologic
+  outputs and debrief prompts for the next UI/Codex handoff.
+scenario_count: 8
+scenarios:
+  - id: epals_v2_septic_shock_warm
+    path: scenarios/epals_v2_septic_shock_warm.yaml
+    phenotype: distributive/septic shock
+    epals_focus: C-first shock recognition with source control and vasopressor escalation
+    complexity: intermediate
+    expected_actions: [fluid_bolus_mL, set_antibiotic_started, set_norad]
+    key_outputs: [MAP, HR, CO, SVR, lactate, urine_rate_mL_h, decision_priority]
+    debrief_questions:
+      - Was hypotension primarily distributive, preload-dependent or pump-driven?
+      - Was antibiotic/source-control timing visible in the trend?
+  - id: epals_v2_anaphylactic_shock
+    path: scenarios/epals_v2_anaphylactic_shock.yaml
+    phenotype: distributive/anaphylactic shock
+    epals_focus: A/B/C recognition, adrenaline response and airway edema burden
+    complexity: advanced
+    expected_actions: [set_adrenaline, fluid_bolus_mL, set_FiO2]
+    key_outputs: [SaO2, Paw, MAP, HR, SVR, lactate, decision_priority]
+    debrief_questions:
+      - Which signs separated anaphylaxis from isolated bronchospasm?
+      - Did adrenaline improve both airway and circulation proxies?
+  - id: epals_v2_tamponade_obstructive_shock
+    path: scenarios/epals_v2_tamponade_obstructive_shock.yaml
+    phenotype: obstructive shock/tamponade
+    epals_focus: obstructive shock recognition and warning against fluid-only fixation
+    complexity: advanced
+    expected_actions: [tamponade_drainage, set_norad, fluid_bolus_mL]
+    key_outputs: [MAP, CVP, CO, SV, lactate, decision_pattern]
+    debrief_questions:
+      - What suggested obstructive rather than hypovolemic shock?
+      - Which variables should lag until decompression occurs?
+  - id: epals_v2_hyperkalemia_aki_instability
+    path: scenarios/epals_v2_hyperkalemia_aki_instability.yaml
+    phenotype: electrolyte emergency/AKI
+    epals_focus: C/D hyperkalemia stabilization and potassium shift/removal
+    complexity: intermediate
+    expected_actions: [set_insulin, set_K, set_CRRT_active]
+    key_outputs: [K_mmol_L, MAP, HR, arrhythmia_risk, GFR, decision_priority]
+    debrief_questions:
+      - What made the potassium problem immediately dangerous?
+      - Which intervention changed the potassium proxy fastest?
+  - id: epals_v2_status_epilepticus_hypoxia
+    path: scenarios/epals_v2_status_epilepticus_hypoxia.yaml
+    phenotype: neurologic emergency/status epilepticus
+    epals_focus: D-first seizure control with airway and hypoxia reassessment
+    complexity: intermediate
+    expected_actions: [set_midazolam, set_seizure_treatment, set_bag_mask_ventilation]
+    key_outputs: [SaO2, PaCO2, GCS_proxy, seizure_risk_index, lactate, decision_priority]
+    debrief_questions:
+      - Did seizure control worsen ventilation or improve metabolic stress?
+      - When did airway support become the dominant priority?
+  - id: epals_v2_tbi_icp_crisis
+    path: scenarios/epals_v2_tbi_icp_crisis.yaml
+    phenotype: traumatic brain injury/raised ICP
+    epals_focus: D/C neuroprotection with oxygenation, MAP and osmotherapy balance
+    complexity: advanced
+    expected_actions: [osmo_therapy, set_PaCO2, set_norad]
+    key_outputs: [ICP_mmHg, CPP_mmHg, MAP, PaCO2, SaO2, decision_priority]
+    debrief_questions:
+      - Was perfusion or ventilation the limiting neuroprotective variable?
+      - Did the intervention improve CPP without severe hyperventilation?
+  - id: epals_v2_dka_dehydration_shock
+    path: scenarios/epals_v2_dka_dehydration_shock.yaml
+    phenotype: metabolic shock/DKA surrogate
+    epals_focus: C/D dehydration, acidosis and potassium/glucose trend interpretation
+    complexity: intermediate
+    expected_actions: [fluid_bolus_mL, set_insulin, set_K]
+    key_outputs: [MAP, pH_a, HCO3_mmol_L, glucose_mg_dL, K_mmol_L, lactate]
+    debrief_questions:
+      - Which variables show shock versus metabolic compensation?
+      - What is the simulated potassium risk after insulin starts?
+  - id: epals_v2_bronchiolitis_respiratory_failure
+    path: scenarios/epals_v2_bronchiolitis_respiratory_failure.yaml
+    phenotype: respiratory failure/bronchiolitis
+    epals_focus: A/B escalation from HFNC/NIV to intubation if deterioration persists
+    complexity: intermediate
+    expected_actions: [set_HFNC_flow, set_NIV_CPAP, perform_intubation]
+    key_outputs: [SaO2, PaCO2, RR, Pmus_cmH2O, airway_interface, decision_priority]
+    debrief_questions:
+      - Was oxygenation or ventilation the limiting failure mode?
+      - Which trend justified escalation beyond non-invasive support?

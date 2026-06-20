@@ -1,0 +1,100 @@
+name: picu_crrt_drug_clearance_v1_10
+version: v1.10-alpha
+category: pharmacology / renal
+summary: >
+  Educational CRRT-lite pharmacology scenario showing how extracorporeal clearance
+  modifies selected drug concentrations during pediatric CRRT. Not a dosing guide.
+
+patient:
+  profile: child_20kg
+  age_y: 6
+  age_group: child
+  weight_kg: 20
+  sex: M
+  diagnosis: septic_shock_aki_crrt_sedoanalgesia
+
+respiratory:
+  mode: PCV
+  PEEP: 6
+  Paw: 19
+  FiO2: 0.40
+  RR: 26
+  C_rs: 0.75
+  R_rs: 9
+  PaO2: 78
+  PaCO2: 43
+  SaO2: 0.94
+  non_recruitable_frac: 0.18
+
+cardiovascular:
+  HR: 145
+  MAP: 52
+  CO: 3.7
+  CVP: 8
+  Hb: 10.5
+
+metabolism:
+  T_core: 38.5
+  VO2: 150
+  lactate: 4.5
+
+sepsis:
+  phenotype: mixed
+  infection_load: 0.70
+  source_control: 0.1
+  antibiotic_effect: 0.2
+
+acidbase:
+  Na_mmol_L: 136
+  K_mmol_L: 6.0
+  Cl_mmol_L: 108
+  HCO3_mmol_L: 15
+  urea_mmol_L: 25
+
+renal:
+  GFR_baseline: 70
+  creatinine_baseline_mg_dL: 0.36
+  creatinine_mg_dL: 0.80
+  urea_baseline_mmol_L: 5.0
+  CRRT_active: false
+  CRRT_effluent_mL_kg_h: 0
+  CRRT_net_UF_mL_h: 0
+  CRRT_dialysate_K_mmol_L: 4.0
+  CRRT_bicarbonate_mmol_L: 32
+
+drugs:
+  norad_mcg_kg_min: 0.15
+  midazolam_mcg_kg_h: 120
+  rocuronium_mg_kg_h: 0.6
+  fentanyl_mcg_kg_h: 2.0
+  dexmedetomidine_mcg_kg_h: 0.5
+
+perturbations:
+  - {t: 300, action: set_CRRT_active, value: true, label: "Start CRRT"}
+  - {t: 300, action: set_CRRT_effluent, value: 35, label: "CRRT effluent 35 mL/kg/h"}
+  - {t: 300, action: set_CRRT_net_UF, value: 80, label: "Net UF 80 mL/h"}
+
+outputs:
+  - C_midazolam_ng_mL
+  - C_rocuronium_ng_mL
+  - C_fentanyl_ng_mL
+  - C_dexmedetomidine_ng_mL
+  - drug_NMB_frac
+  - drug_drive_mod
+  - CRRT_active
+  - CRRT_active_effective
+  - CRRT_effluent_mL_kg_h
+  - pk_crrt_active
+  - pk_crrt_effluent_L_min
+  - pk_crrt_total_extra_clearance_L_min
+  - pk_crrt_midazolam_CL_L_min
+  - pk_crrt_rocuronium_CL_L_min
+  - K_mmol_L
+  - HCO3_mmol_L
+
+limitations:
+  - Educational CRRT-lite PK scaffold only; not for clinical dosing.
+  - CRRT removal is based on effluent rate and conservative drug-specific sieving placeholders.
+  - Does not model membrane adsorption, filter age, downtime, albumin changes, unbound concentrations, hepatic failure or TDM.
+
+simulation_time_s: 900

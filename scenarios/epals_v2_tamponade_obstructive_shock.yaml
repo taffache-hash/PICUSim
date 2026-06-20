@@ -1,0 +1,14 @@
+name: epals_v2_tamponade_obstructive_shock
+description: EPALS scenario engine v2 obstructive shock with tamponade physiology surrogate.
+patient: {age_y: 11, weight_kg: 38, sex: F, diagnosis: cardiac_tamponade}
+respiratory: {FiO2: 0.60, PEEP: 5, Paw: 16, RR: 30, PaO2: 74, PaCO2: 39, SaO2: 0.94}
+cardiovascular: {HR: 158, MAP: 48, CVP: 16, PAWP: 15, CO: 2.0, Hb: 11.0, preload_mod: 0.70}
+metabolism: {lactate: 4.8}
+shock: {type: obstructive, severity: 0.82, stage: decompensated, tamponade_index: 0.80}
+perturbations:
+  - {t: 40, action: fluid_bolus_mL, value: 200, label: cautious preload challenge}
+  - {t: 100, action: set_norad, value: 0.08, label: temporary vasoactive bridge}
+  - {t: 180, action: tamponade_index, value: 0.20, label: pericardial decompression surrogate}
+  - {t: 185, action: set_MAP, value: 62, label: MAP improves after decompression}
+outputs: [MAP, CVP, CO, SV, lactate, decision_pattern, decision_warning]
+simulation_time_s: 360

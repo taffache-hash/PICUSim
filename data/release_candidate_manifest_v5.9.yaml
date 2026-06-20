@@ -1,0 +1,59 @@
+version: "3.1-step5.9-final-public-release-candidate"
+date: "2026-06-20"
+status: "final_public_release_candidate_no_upload"
+source_of_truth: "filesystem_tests_and_step_5_8_preflight"
+public_upload_performed: false
+archive:
+  filename: "pediatric_critical_care_sim_v3.1_step5.9_public_release_candidate.zip"
+  checksum_algorithm: "sha256"
+  checksum_file: "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.9_public_release_candidate.zip.sha256"
+  checksum_scope: "external file; checksum is not embedded in the zip"
+paper_policy:
+  manuscripts_are_source_of_truth: false
+  deferred_until_after_deposit: true
+  note: "Deposit first, paper last. Manuscript data/code availability statements are updated after public identifiers exist."
+package_counts:
+  scenario_yaml_count: 99
+  test_py_count: 118
+  module_py_non_init_count: 35
+  docs_markdown_count: 79
+  metadata_file_count: 6
+  output_dir_count: 13
+required_entrypoints:
+  - "README_FIRST_START_HERE.txt"
+  - "README.md"
+  - "VERSION"
+  - "LICENSE"
+  - "NOTICE"
+  - "DISCLAIMER_NOT_FOR_CLINICAL_USE.md"
+  - "CITATION.cff"
+  - "CITATION.bib"
+  - "CHANGELOG.md"
+  - ".zenodo.json"
+release_artifacts:
+  - "docs/FINAL_RELEASE_NOTES_v5.9.md"
+  - "data/release_candidate_manifest_v5.9.yaml"
+  - "metadata/package_facts_v5.8.json"
+  - "docs/ARCHIVE_PREFLIGHT_v5.8.md"
+  - "tests/test_v590_final_release_archive.py"
+superseded_archives:
+  - path: "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip"
+    status: "superseded_do_not_upload"
+excluded_from_archive:
+  - ".git/"
+  - ".agents/"
+  - ".codex/"
+  - ".pytest_cache/"
+  - "__pycache__/"
+  - ".mypy_cache/"
+  - ".venv/"
+  - "venv/"
+  - "env/"
+  - "node_modules/"
+  - "server_8765_stdout.log"
+  - "server_8765_stderr.log"
+  - "outputs/release_archives/*.zip"
+  - "outputs/release_archives/*.sha256"
+  - "*.pyc"
+  - "*.pyo"
+next_step: "Step 6.0 public archive release by the project owner"

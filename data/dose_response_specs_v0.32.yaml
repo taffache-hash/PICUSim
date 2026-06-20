@@ -1,0 +1,217 @@
+# PDT v0.32 systematic dose-response specifications
+# Purpose: qualitative sanity checks, not pharmacodynamic calibration.
+# Each case uses a 0x/0.5x/1x/2x/4x-like dose ladder when clinically sensible.
+# A case passes only if it is monotonic in the expected direction AND the response is not flat.
+
+cases:
+  iNO_PVR:
+    scenario: pulmonary_hypertension_ino
+    mode: config
+    set_path: drugs.ino_ppm
+    doses: [0, 5, 10, 20, 40]
+    metric: PVR
+    aggregate: final
+    direction: down
+    min_abs_delta: 5.0
+    min_rel_delta: 0.08
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: iNO should reduce pulmonary vascular resistance.
+
+  salbutamol_Rrs:
+    scenario: status_asthmaticus
+    mode: config
+    set_path: drugs.salbutamol_mcg_kg_min
+    doses: [0, 0.04, 0.08, 0.16, 0.32]
+    metric: R_rs
+    aggregate: final
+    direction: down
+    min_abs_delta: 3.0
+    min_rel_delta: 0.10
+    simulation_time_s: 120
+    dt: 5
+    clear_perturbations: true
+    interpretation: Salbutamol should reduce effective airway resistance in bronchospasm.
+
+  noradrenaline_MAP:
+    scenario: septic_shock_refractory
+    mode: config
+    set_path: drugs.norad_mcg_kg_min
+    doses: [0, 0.1, 0.2, 0.4, 0.8]
+    metric: MAP
+    aggregate: final
+    direction: up
+    min_abs_delta: 5.0
+    min_rel_delta: 0.10
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Norepinephrine should increase MAP/SVR in vasoplegic shock.
+
+  vasopressin_MAP:
+    scenario: septic_shock_refractory
+    mode: config
+    set_path: drugs.vasopressin_mU_kg_min
+    doses: [0, 0.02, 0.04, 0.08, 0.16]
+    metric: MAP
+    aggregate: final
+    direction: up
+    min_abs_delta: 2.0
+    min_rel_delta: 0.05
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Vasopressin should support MAP in vasoplegia; weak/flat response should be reviewed.
+
+  hydrocortisone_adrenal_insufficiency:
+    scenario: endocrine_adrenal_shock
+    mode: config
+    set_path: drugs.hydrocortisone_mg_kg_h
+    doses: [0, 0.05, 0.1, 0.2, 0.4]
+    metric: adrenal_insufficiency_index
+    aggregate: final
+    direction: down
+    min_abs_delta: 0.05
+    min_rel_delta: 0.10
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Hydrocortisone should reduce relative adrenal insufficiency signal.
+
+  midazolam_sedation:
+    scenario: picu_analgosedation_stress
+    mode: config
+    set_path: drugs.midazolam_mcg_kg_h
+    doses: [0, 15, 30, 60, 120]
+    metric: sedation_score
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.005
+    min_rel_delta: 0.50
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Midazolam should increase sedation_score.
+
+  propofol_sedation:
+    scenario: picu_analgosedation_stress
+    mode: config
+    set_path: drugs.propofol_mg_kg_h
+    doses: [0, 1, 2, 4, 8]
+    metric: sedation_score
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.005
+    min_rel_delta: 0.50
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Propofol should increase sedation_score.
+
+  remifentanil_analgesia:
+    scenario: picu_analgosedation_stress
+    mode: config
+    set_path: drugs.remifentanil_mcg_kg_min
+    doses: [0, 0.03, 0.06, 0.12, 0.24]
+    metric: analgesia_score
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.05
+    min_rel_delta: 0.50
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Remifentanil should increase analgesia_score.
+
+  fentanyl_analgesia:
+    scenario: picu_analgosedation_stress
+    mode: config
+    set_path: drugs.fentanyl_mcg_kg_h
+    doses: [0, 1, 2, 4, 8]
+    metric: analgesia_score
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.01
+    min_rel_delta: 0.20
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Fentanyl should increase analgesia_score; small response may indicate tuning needed.
+
+  rocuronium_NMB:
+    scenario: picu_sedation_pkpd
+    mode: action
+    action: set_rocuronium
+    doses: [0, 0.1, 0.2, 0.4, 0.8]
+    metric: drug_NMB_frac
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.005
+    min_rel_delta: 0.20
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Rocuronium should increase neuromuscular blockade fraction.
+
+  insulin_glucose:
+    scenario: stress_hyperglycemia_insulin
+    mode: action
+    action: set_insulin
+    doses: [0, 0.25, 0.5, 1, 2]
+    metric: glucose_mmol_L
+    aggregate: final
+    direction: down
+    min_abs_delta: 0.005
+    min_rel_delta: 0.0003
+    simulation_time_s: 1200
+    dt: 10
+    clear_perturbations: true
+    interpretation: Insulin should lower glucose; current effect is expected to be modest and flagged if flat.
+
+  hypertonic_Na:
+    scenario: tbi_hypertonic_electrolytes
+    mode: action
+    action: set_hypertonic_saline_3pct
+    doses: [0, 25, 50, 100, 200]
+    metric: Na_mmol_L
+    aggregate: final
+    direction: up
+    min_abs_delta: 1.0
+    min_rel_delta: 0.005
+    simulation_time_s: 240
+    dt: 5
+    clear_perturbations: true
+    interpretation: Hypertonic saline should increase serum sodium/osmolarity.
+
+  GRC_Hb:
+    scenario: hematology_anemia_transfusion
+    mode: action
+    action: transfuse_GRC
+    doses: [0, 5, 10, 15, 20]
+    metric: Hb
+    aggregate: final
+    direction: up
+    min_abs_delta: 0.05
+    min_rel_delta: 0.005
+    simulation_time_s: 180
+    dt: 5
+    clear_perturbations: true
+    interpretation: Packed red cell transfusion should increase Hb/DO2.
+
+  antibiotic_burden:
+    scenario: infection_antibiotic_delay
+    mode: config
+    set_path: infection.antibiotic_coverage
+    extra_set:
+      infection.antibiotic_started: true
+    doses: [0, 0.25, 0.5, 0.75, 1.0]
+    metric: microbial_burden
+    aggregate: final
+    direction: down
+    min_abs_delta: 0.02
+    min_rel_delta: 0.02
+    simulation_time_s: 1200
+    dt: 10
+    clear_perturbations: true
+    interpretation: Adequate antimicrobial coverage should reduce microbial burden over time.

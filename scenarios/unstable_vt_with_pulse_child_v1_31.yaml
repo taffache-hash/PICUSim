@@ -1,0 +1,86 @@
+name: unstable_vt_with_pulse_child_v1_31
+description: "Educational v3.1 scenario: unstable ventricular tachycardia with pulse, emphasizing synchronized cardioversion rather than asynchronous defibrillation."
+version: v3.1-step4.36
+patient:
+  profile: child_20kg
+  age_y: 8.0
+  weight_kg: 20.0
+  sex: F
+  diagnosis: unstable ventricular tachycardia with pulse
+simulation_time_s: 360
+airway_interface:
+  interface: SIMPLE_MASK
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: SIMPLE_MASK
+  oxygen_flow_L_min: 8.0
+  oxygen_FiO2_set: 0.50
+respiratory:
+  mode: SPONT
+  FiO2: 0.50
+  PEEP: 0.0
+  RR: 24
+  Vt: 145
+  C_rs: 0.90
+  R_rs: 7.5
+  SaO2: 0.93
+  PaO2: 76.0
+  PaCO2: 38.0
+cardiovascular:
+  HR: 168
+  MAP: 56
+  CO: 2.3
+metabolism:
+  VO2: 150
+  lactate: 2.4
+  pH_a: 7.32
+perturbations:
+  - t: 45
+    action: set_HR
+    value: 210
+    label: very rapid ventricular rhythm
+  - t: 45
+    action: set_MAP
+    value: 44
+    label: hypotension from unstable tachycardia
+  - t: 45
+    action: set_lactate
+    value: 3.8
+    label: low-output lactate rise
+cardiac_events:
+  - t: 45
+    name: induce_vt_with_pulse
+    cause: unstable tachyarrhythmia
+    label: unstable VT with pulse
+clinical_narrative: A child develops unstable wide-complex tachycardia with a pulse. Learners should recognize that this is not pulseless arrest, avoid asynchronous defibrillation as the primary action, and use synchronized cardioversion with adequate energy.
+decision_focus:
+  - identify pulse presence despite unstable rhythm
+  - distinguish pulsed unstable VT from pulseless VT/VF
+  - choose synchronized cardioversion
+  - recognize inadequate cardioversion energy
+  - reassess perfusion after conversion
+debrief_questions:
+  - Was a pulse checked before shock choice?
+  - Was the rhythm treated as pulsed unstable tachycardia?
+  - Was synchronized cardioversion selected?
+  - Was shock energy adequate for weight?
+  - Did perfusion improve after conversion?
+outputs:
+  - cardiac_rhythm
+  - rhythm_category
+  - has_pulse
+  - cardiac_arrest_active
+  - shockable_rhythm
+  - last_shock_energy_J
+  - last_shock_mode
+  - last_shock_result
+  - last_shock_appropriate
+  - last_shock_effective
+  - synchronized_cardioversion_count
+  - defibrillation_attempt_count
+  - ROSC
+  - post_rosc_care_status
+  - MAP
+  - HR
+  - lactate

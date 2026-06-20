@@ -1,0 +1,118 @@
+name: airway_opioid_sedation_apnea_v1_25
+description: 'Educational v1.25 scenario: excessive opioid/sedative burden with apnea/hypoventilation,
+  bag-mask rescue and intubation.'
+version: v1.25-alpha
+patient:
+  profile: child_20kg
+  age_y: 6.0
+  weight_kg: 20.0
+  sex: M
+  diagnosis: sedation-related respiratory depression
+simulation_time_s: 420
+airway_interface:
+  interface: LOW_FLOW_OXYGEN
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: LOW_FLOW_OXYGEN
+  oxygen_flow_L_min: 2.0
+  oxygen_FiO2_set: 1.0
+  mouth_leak_fraction: 0.35
+respiratory:
+  mode: NONE
+  FiO2: 0.3
+  PEEP: 0.0
+  RR: 22
+  Vt: 120
+  C_rs: 0.82
+  R_rs: 8.0
+  SaO2: 0.96
+  PaO2: 80.0
+  PaCO2: 42.0
+  non_recruitable_frac: 0.03
+ventilator:
+  mode: NONE
+cardiovascular:
+  HR: 105
+  MAP: 68
+  CO: 3.6
+metabolism:
+  VO2: 115
+  lactate: 1.0
+  T_core: 37.0
+drugs:
+  morphine_mcg_kg_h: 0.0
+  midazolam_mcg_kg_h: 0.0
+perturbations:
+- t: 60
+  action: set_morphine
+  value: 80
+  label: opioid infusion escalation proxy
+- t: 60
+  action: set_midazolam
+  value: 180
+  label: sedative infusion escalation proxy
+- t: 90
+  action: sed_resp_mod
+  value: 0.18
+  label: apnea/hypoventilation proxy from sedation
+airway_events:
+- t: 150
+  name: start_bag_mask_ventilation
+  severity: adequate
+  label: bag-mask rescue for sedation apnea
+- t: 260
+  name: perform_intubation
+  severity: routine
+  label: controlled intubation after apnea
+  tube_internal_diameter_mm: 5.0
+  tube_length_cm: 16.0
+  PEEP: 5.0
+  Pinsp_cmH2O: 16.0
+  FiO2: 0.6
+clinical_narrative: A spontaneously breathing child develops sedation-related hypoventilation/apnea. The
+  scenario emphasizes recognition of drug-related ventilatory failure and rescue ventilation before controlled
+  intubation.
+decision_focus:
+- recognize sedative respiratory depression
+- start rescue ventilation
+- secure airway if ventilation remains inadequate
+debrief_questions:
+- Which variables suggest respiratory drive suppression rather than primary lung disease?
+- Did bag-mask ventilation occur before intubation?
+- Why is this scenario not a medication dosing model?
+outputs:
+- airway_interface
+- oxygen_interface
+- intubated
+- ventilator_connected
+- airway_pressure_delivery_enabled
+- airway_event_type
+- airway_event_status
+- airway_rescue_state
+- intubation_attempt_count
+- failed_intubation_count
+- intubation_success_time_s
+- extubation_time_s
+- manual_ventilation_active
+- bag_mask_ventilation_active
+- bag_mask_quality
+- airway_protection_score
+- aspiration_risk
+- laryngospasm_score
+- upper_airway_obstruction_score
+- airway_event_hypoxia_burden
+- FiO2_delivered
+- Paw
+- PEEP
+- Pmus
+- RR_total
+- Vt
+- SaO2
+- PaO2
+- PaCO2
+- HR
+- MAP
+- C_morphine_ng_mL
+- morphine_resp_depression_signal
+- sed_resp_mod

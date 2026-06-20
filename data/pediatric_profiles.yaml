@@ -1,0 +1,78 @@
+# Pediatric reference profiles for v0.11.
+# Values are pragmatic simulation anchors, not clinical decision thresholds.
+profiles:
+  neonate_3kg:
+    age_y: 0.05
+    weight_kg: 3.0
+    age_group: neonate
+    HR: 145
+    RR: 40
+    MAP: 45
+    Vt_ml_kg: 6.0
+    FRC_ml_kg: 28
+    blood_volume_ml_kg: 85
+    Hb: 15.0
+    VO2_ml_kg_min: 7.0
+    GFR_ml_min_1_73m2: 35
+    C_rs_ml_cmH2O_kg: 1.0
+    Vd_Vt: 0.35
+  infant_8kg:
+    age_y: 0.7
+    weight_kg: 8.0
+    age_group: infant
+    HR: 130
+    RR: 32
+    MAP: 55
+    Vt_ml_kg: 6.0
+    FRC_ml_kg: 30
+    blood_volume_ml_kg: 80
+    Hb: 11.5
+    VO2_ml_kg_min: 7.0
+    GFR_ml_min_1_73m2: 70
+    C_rs_ml_cmH2O_kg: 0.9
+    Vd_Vt: 0.33
+  toddler_12kg:
+    age_y: 2.0
+    weight_kg: 12.0
+    age_group: toddler
+    HR: 115
+    RR: 28
+    MAP: 60
+    Vt_ml_kg: 6.0
+    FRC_ml_kg: 30
+    blood_volume_ml_kg: 75
+    Hb: 11.5
+    VO2_ml_kg_min: 6.5
+    GFR_ml_min_1_73m2: 90
+    C_rs_ml_cmH2O_kg: 0.85
+    Vd_Vt: 0.30
+  child_20kg:
+    age_y: 6.0
+    weight_kg: 20.0
+    age_group: child
+    HR: 100
+    RR: 24
+    MAP: 65
+    Vt_ml_kg: 6.5
+    FRC_ml_kg: 30
+    blood_volume_ml_kg: 75
+    Hb: 11.5
+    VO2_ml_kg_min: 6.0
+    GFR_ml_min_1_73m2: 100
+    C_rs_ml_cmH2O_kg: 0.8
+    Vd_Vt: 0.30
+  adolescent_50kg:
+    age_y: 14.0
+    weight_kg: 50.0
+    age_group: adolescent
+    HR: 80
+    RR: 16
+    MAP: 75
+    Vt_ml_kg: 6.5
+    FRC_ml_kg: 30
+    blood_volume_ml_kg: 70
+    Hb: 13.0
+    VO2_ml_kg_min: 4.5
+    GFR_ml_min_1_73m2: 110
+    C_rs_ml_cmH2O_kg: 0.75
+    Vd_Vt: 0.28

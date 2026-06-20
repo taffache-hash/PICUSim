@@ -1,0 +1,84 @@
+name: unstable_bradycardia_with_pulse_child_v1_31
+description: "Educational v3.1 scenario: unstable bradycardia with pulse, emphasizing pulse-aware management and atropine context."
+version: v3.1-step4.37
+patient:
+  profile: child_20kg
+  age_y: 4.0
+  weight_kg: 20.0
+  sex: M
+  diagnosis: unstable bradycardia with pulse
+simulation_time_s: 360
+airway_interface:
+  interface: SIMPLE_MASK
+  intubated: false
+  ventilator_connected: false
+  airway_pressure_delivery_enabled: false
+  oxygen_interface: SIMPLE_MASK
+  oxygen_flow_L_min: 8.0
+  oxygen_FiO2_set: 0.60
+respiratory:
+  mode: SPONT
+  FiO2: 0.60
+  PEEP: 0.0
+  RR: 16
+  Vt: 120
+  C_rs: 0.88
+  R_rs: 8.0
+  SaO2: 0.92
+  PaO2: 72.0
+  PaCO2: 45.0
+cardiovascular:
+  HR: 78
+  MAP: 54
+  CO: 2.0
+metabolism:
+  VO2: 130
+  lactate: 2.2
+  pH_a: 7.31
+perturbations:
+  - t: 50
+    action: set_HR
+    value: 48
+    label: marked bradycardia
+  - t: 50
+    action: set_MAP
+    value: 42
+    label: hypotension with bradycardia
+  - t: 50
+    action: set_lactate
+    value: 3.6
+    label: low-output lactate rise
+cardiac_events:
+  - t: 50
+    name: induce_bradycardia_unstable
+    cause: vagal or conduction instability
+    label: unstable bradycardia with pulse
+clinical_narrative: A child develops unstable bradycardia with a pulse. Learners should confirm pulse, avoid treating it as shockable arrest, support oxygenation and perfusion, and use atropine in the correct bradycardia context.
+decision_focus:
+  - confirm pulse before arrest treatment
+  - recognize unstable bradycardia as pulsed rhythm
+  - avoid asynchronous defibrillation
+  - avoid arrest-only epinephrine framing
+  - use atropine in the bradycardia context
+debrief_questions:
+  - Was a pulse checked before choosing RCP or shock?
+  - Was the rhythm classified as pulsed unstable bradycardia?
+  - Was atropine used in the appropriate context?
+  - Were shock and arrest-only drug choices avoided?
+  - Did HR and perfusion improve after atropine?
+outputs:
+  - cardiac_rhythm
+  - rhythm_category
+  - has_pulse
+  - cardiac_arrest_active
+  - shockable_rhythm
+  - atropine_bolus_count
+  - epinephrine_bolus_count
+  - last_rcp_drug
+  - last_rcp_drug_result
+  - last_rcp_drug_appropriate
+  - last_shock_result
+  - last_shock_appropriate
+  - HR
+  - MAP
+  - lactate
