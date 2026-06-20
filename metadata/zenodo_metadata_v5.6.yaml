@@ -1,4 +1,4 @@
-# Zenodo deposition metadata draft for PICUSim Step 5.6
+# Zenodo deposition metadata draft for PICUSim Step 5.9
 # DOI and record identifiers are intentionally absent until deposition.
 
 title: "PICUSim / Pediatric Critical Care Sim: modular pediatric critical-care physiology simulation framework"
@@ -6,9 +6,9 @@ upload_type: software
 publication_date: "2026-06-20"
 version: "3.1-step5.9-final-public-release-candidate"
 creators:
-  - name: "Taffache, Paolo, MD"
+  - name: "Taffache, Paolo"
+    name_suffix: "MD"
     affiliation: "IRCCS Azienda Ospedaliero-Universitaria Bologna"
-    orcid: ""
 description: >-
   PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework
   for education, scenario design, in-silico research prototyping, software testing and hypothesis generation.
@@ -27,20 +27,14 @@ keywords:
   - in-silico research
   - scenario-based training
   - FastAPI
-  - digital twin disclaimer
+  - not for clinical use
 language: eng
-related_identifiers:
-  - identifier: "OSF project URL pending Step 5.7"
-    relation: isSupplementTo
-    resource_type: project
-  - identifier: "Cureus/JMIR manuscript DOI pending Step 5.8/publication"
-    relation: isDocumentedBy
-    resource_type: publication
 notes: >-
-  Prepared as a release-candidate archival software upload. Final DOI, ORCID, affiliation, related identifiers,
-  and public record URLs must be completed during actual Zenodo deposition. Safety disclaimer must remain visible.
+  Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna.
+  DOI, OSF URL and manuscript identifiers will be added only after public deposit identifiers exist.
+  Safety disclaimer must remain visible.
 archive:
-  candidate_name: "GitHub release archive for tag v3.1-step5.9-zenodo2"
+  candidate_name: "GitHub release archive for tag v3.1-step5.9-zenodo3"
   checksum_algorithm: sha256
   checksum_file: "GitHub/Zenodo generated archive; local Step 5.9 checksum documented separately"
   includes_reproducibility_outputs: true

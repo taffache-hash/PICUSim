@@ -5,12 +5,11 @@
   "version": "3.1-step5.9-final-public-release-candidate",
   "creators": [
     {
-      "name": "Taffache, Paolo, MD",
-      "affiliation": "IRCCS Azienda Ospedaliero-Universitaria Bologna",
-      "orcid": ""
+      "name": "Taffache, Paolo",
+      "affiliation": "IRCCS Azienda Ospedaliero-Universitaria Bologna"
     }
   ],
-  "description": "final-public-release-candidate Apache-2.0 release candidate for educational/research pediatric critical-care physiology simulation. Not for clinical use and not a medical device.",
+  "description": "PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing and hypothesis generation. The release-candidate package includes physiological and pharmacological modules, YAML clinical scenarios, a local FastAPI backend, a browser-based training console, validation-support artifacts, regression reports, reproducibility outputs and publication-readiness documentation. This software is not a medical device and is not for clinical use, diagnosis, treatment, prescribing, triage, bedside monitoring, prognostication, device control, patient-specific modelling or patient-care decisions.",
   "license": "Apache-2.0",
   "access_right": "open",
   "keywords": [
@@ -19,19 +18,9 @@
     "physiology simulation",
     "medical education",
     "in-silico research",
-    "scenario-based training"
+    "scenario-based training",
+    "FastAPI",
+    "not for clinical use"
   ],
-  "related_identifiers": [
-    {
-      "identifier": "OSF project URL pending Step 5.7",
-      "relation": "isSupplementTo",
-      "resource_type": "project"
-    },
-    {
-      "identifier": "Manuscript DOI pending after software deposit",
-      "relation": "isDocumentedBy",
-      "resource_type": "publication"
-    }
-  ],
-  "notes": "DOI, ORCID, affiliation and final related identifiers must be completed during actual deposition. Safety disclaimer must remain visible."
+  "notes": "Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna. DOI, OSF URL and manuscript identifiers will be added only after public deposit identifiers exist. Safety disclaimer must remain visible."
 }
