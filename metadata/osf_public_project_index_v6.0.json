@@ -1,0 +1,30 @@
+{
+  "osf_project_url": "https://osf.io/etj8w/",
+  "software_doi": "10.5281/zenodo.20777589",
+  "software_doi_url": "https://doi.org/10.5281/zenodo.20777589",
+  "github_repository": "https://github.com/taffache-hash/PICUSim",
+  "software_version": "3.1-step5.9-final-public-release-candidate",
+  "archived_release_tag": "v3.1-step5.9-zenodo3",
+  "recommended_upload_files": [
+    "metadata/OSF_README_v6.0.md",
+    "README_FIRST_START_HERE.txt",
+    "DISCLAIMER_NOT_FOR_CLINICAL_USE.md",
+    "LICENSE",
+    "NOTICE",
+    "CITATION.cff",
+    "CITATION.bib",
+    "docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md",
+    "docs/FINAL_RELEASE_NOTES_v5.9.md",
+    "docs/REGRESSION_SWEEP_v5.3.md",
+    "outputs/regression_sweep_v5.3/regression_summary_v53.json",
+    "metadata/package_facts_v5.8.json",
+    "data/release_candidate_manifest_v5.9.yaml"
+  ],
+  "deferred": [
+    "OSF registration freeze",
+    "manuscript uploads",
+    "paper data/code availability statements",
+    "final manuscript numeric claims"
+  ],
+  "clinical_status": "not for clinical use; not a medical device; not a validated patient-specific digital twin"
+}
