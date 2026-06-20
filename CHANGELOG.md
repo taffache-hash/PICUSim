@@ -1,3 +1,9 @@
+## v3.1 Step 6.0 - Public archive release metadata
+
+- Recorded Zenodo DOI `10.5281/zenodo.20777589` after successful GitHub-Zenodo archival release.
+- Added `docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md`.
+- Updated README, first-start notes, CFF/BibTeX citation metadata and Zenodo metadata with the DOI.
+- OSF assembly and manuscript data/code availability updates remain deferred.
 ## v3.1 Step 5.9 - Final public release candidate rebuild
 
 - Rebuilt the clean final public-release candidate archive locally after Step 5.8 preflight.

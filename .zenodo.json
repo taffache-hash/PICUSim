@@ -22,5 +22,5 @@
     "FastAPI",
     "not for clinical use"
   ],
-  "notes": "Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna. DOI, OSF URL and manuscript identifiers will be added only after public deposit identifiers exist. Safety disclaimer must remain visible."
+  "notes": "Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna. Zenodo DOI: 10.5281/zenodo.20777589. OSF URL and manuscript identifiers will be added only after public deposit identifiers exist. Safety disclaimer must remain visible."
 }

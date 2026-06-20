@@ -1,6 +1,6 @@
 PICUSim / Pediatric Critical Care Sim v3.1 - Apache-2.0 release candidate with final public release candidate
 
-Status: release candidate for education/research publication preparation.
+Status: release candidate for education/research publication preparation with Zenodo DOI 10.5281/zenodo.20777589.
 Clinical status: NOT FOR CLINICAL USE. Not a medical device. Do not use for diagnosis, treatment, triage, prescribing, monitoring, prognostication, device control, or bedside decision support.
 
 Recommended first checks
@@ -15,6 +15,7 @@ Recommended first checks
 9. Read docs/OSF_PROJECT_PLAN_v5.7.md before OSF assembly.
 10. Read docs/ARCHIVE_PREFLIGHT_v5.8.md and metadata/package_facts_v5.8.json before rebuilding a public archive.
 11. Read docs/FINAL_RELEASE_NOTES_v5.9.md and data/release_candidate_manifest_v5.9.yaml before upload.
+12. Read docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md for public DOI and archive status.
 
 Local Python quick smoke
   python run_simulation.py --scenario scenarios/healthy_child_20kg.yaml --dt 2 --no-plot

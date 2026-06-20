@@ -1,8 +1,11 @@
 # PICUSim / Pediatric Critical Care Sim
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20777589.svg)](https://doi.org/10.5281/zenodo.20777589)
+
 **Distribution:** v3.1 regression-swept release candidate  
 **Current package version:** `3.1-step5.9-final-public-release-candidate`  
-**Release status:** Apache-2.0 publication-preparation release candidate with final public release candidate  
+**Release status:** Apache-2.0 public archive release candidate with Zenodo DOI  
+**Zenodo DOI:** `10.5281/zenodo.20777589`  
 **Clinical status:** not for clinical use; not a medical device; not a validated patient-specific digital twin.
 
 PICUSim is a modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing, and hypothesis generation. It is designed around structured YAML scenarios, a shared physiological state bus, coupled organ-system modules, a local FastAPI backend, and a browser-based training console.
@@ -28,6 +31,7 @@ Key release artifacts:
 - `docs/PAPER_DEFERRED_ARCHIVE_FIRST_v5.7A.md`
 - `docs/ARCHIVE_PREFLIGHT_v5.8.md`
 - `docs/FINAL_RELEASE_NOTES_v5.9.md`
+- `docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md`
 - `data/release_candidate_manifest_v5.9.yaml`
 - `data/release_candidate_manifest_v5.8.yaml`
 - `metadata/package_facts_v5.8.json`
