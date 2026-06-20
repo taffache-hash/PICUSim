@@ -6,8 +6,8 @@ upload_type: software
 publication_date: "2026-06-20"
 version: "3.1-step5.9-final-public-release-candidate"
 creators:
-  - name: "Taffache, Paolo"
-    affiliation: "Independent / to be confirmed before deposition"
+  - name: "Taffache, Paolo, MD"
+    affiliation: "IRCCS Azienda Ospedaliero-Universitaria Bologna"
     orcid: ""
 description: >-
   PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework
@@ -40,8 +40,8 @@ notes: >-
   Prepared as a release-candidate archival software upload. Final DOI, ORCID, affiliation, related identifiers,
   and public record URLs must be completed during actual Zenodo deposition. Safety disclaimer must remain visible.
 archive:
-  candidate_name: "pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip"
+  candidate_name: "GitHub release archive for tag v3.1-step5.9-zenodo2"
   checksum_algorithm: sha256
-  checksum_file: "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip.sha256"
+  checksum_file: "GitHub/Zenodo generated archive; local Step 5.9 checksum documented separately"
   includes_reproducibility_outputs: true
   excludes_transient_caches: true

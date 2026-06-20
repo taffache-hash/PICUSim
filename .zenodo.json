@@ -5,8 +5,8 @@
   "version": "3.1-step5.9-final-public-release-candidate",
   "creators": [
     {
-      "name": "Taffache, Paolo",
-      "affiliation": "Independent / to be confirmed before deposition",
+      "name": "Taffache, Paolo, MD",
+      "affiliation": "IRCCS Azienda Ospedaliero-Universitaria Bologna",
       "orcid": ""
     }
   ],
@@ -28,7 +28,7 @@
       "resource_type": "project"
     },
     {
-      "identifier": "Cureus/JMIR manuscript DOI pending Step 5.8/publication",
+      "identifier": "Manuscript DOI pending after software deposit",
       "relation": "isDocumentedBy",
       "resource_type": "publication"
     }
