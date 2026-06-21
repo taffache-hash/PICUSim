@@ -10,6 +10,7 @@
 **Clinical status:** not for clinical use; not a medical device; not a validated patient-specific digital twin.
 
 **GitHub release:** `v3.2.0-public` at `https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public`.
+**OSF project:** `https://osf.io/etj8w/`.
 
 Incorporates RC3 UI branding/cache-busting, BEDSIDE_FAST live fluid/RCP fields, pause race-condition guard, RC2 DKA/pneumothorax fixes, FiO2 persistence fixes, and v3.2 validation/limitations documentation.
 
@@ -205,6 +206,8 @@ The clinical-use restriction remains in force as a safety disclaimer: this softw
 
 Citation metadata is provided in `CITATION.cff` and `CITATION.bib`. Cite the v3.2.0 public archive with DOI `10.5281/zenodo.20782468`. The earlier v3.1-step5.9 archive DOI is `10.5281/zenodo.20777589`.
 
+Project-support materials and manuscript-facing cross-links are organized on OSF at `https://osf.io/etj8w/`.
+
 ## Paper/manuscript policy
 
 Manuscripts and paper drafts are deferred until after public deposit. Package counts and archive metadata must come from the regenerated release manifest, tests and filesystem-derived package facts, not from paper text.
@@ -219,9 +222,10 @@ Planned sequence:
 - Step 5.5 Apache-2.0 licensing conversion - completed;
 - Step 5.6 Zenodo deposition preparation - completed, upload pending but archive stale after Step 5.6A;
 - Step 5.6A crystalloid infusion controls - completed;
-- Step 5.7 OSF project preparation - completed locally, upload pending;
+- Step 5.7 OSF project preparation - completed with public OSF project cross-link;
 - Step 5.8 archive preflight / manifest rebuild - completed for v3.1;
 - Step 5.9 final public release candidate rebuild - completed for v3.1;
 - Step 6.0 public archive release - completed for v3.1 on GitHub/Zenodo;
 - v3.2.0 public-polish branch - completed;
 - v3.2.0 GitHub release and Zenodo new-version deposition - completed.
+- v3.2.0 OSF project cross-linking - completed.

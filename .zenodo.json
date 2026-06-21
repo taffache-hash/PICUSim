@@ -32,7 +32,12 @@
       "identifier": "https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public",
       "relation": "isSupplementedBy",
       "resource_type": "software"
+    },
+    {
+      "identifier": "https://osf.io/etj8w/",
+      "relation": "isSupplementedBy",
+      "resource_type": "other"
     }
   ],
-  "notes": "Final metadata for the v3.2.0 public Zenodo new-version deposition. DOI: 10.5281/zenodo.20782468. Safety disclaimer must remain visible."
+  "notes": "Final metadata for the v3.2.0 public Zenodo new-version deposition. DOI: 10.5281/zenodo.20782468. OSF project: https://osf.io/etj8w/. Safety disclaimer must remain visible."
 }

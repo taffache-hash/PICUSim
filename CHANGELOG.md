@@ -4,6 +4,11 @@
 - Updated README DOI badge, CITATION.cff, CITATION.bib, `.zenodo.json`, package facts and public-polish checklist after GitHub release and Zenodo deposition.
 - Kept previous v3.1-step5.9 DOI `10.5281/zenodo.20777589` as the prior archive reference.
 
+## v3.2.0 public OSF cross-link sync
+
+- Recorded OSF project URL: `https://osf.io/etj8w/`.
+- Updated README, `.zenodo.json`, package facts and public-polish checklist with OSF as the project workspace for supplementary materials and public cross-links.
+
 ## v3.2.0 public polish Step 9 - Final local package cleanup
 
 - Promoted local package metadata from `3.2.0-public-rc3` to `3.2.0-public`.

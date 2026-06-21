@@ -15,6 +15,10 @@
     "version": "3.2.0-public",
     "doi": "10.5281/zenodo.20782468"
   },
+  "osf_project": {
+    "url": "https://osf.io/etj8w/",
+    "role": "project workspace for supplementary materials, validation orientation, manuscript-support files and public cross-links"
+  },
   "package_counts": {
     "included_file_count": 655,
     "included_total_bytes": 3120448,
@@ -71,5 +75,5 @@
     "outputs/release_archives/*.sha256"
   ],
   "archive_filename": "PICUSim_v3.2.0_public_local_archive.zip",
-  "next_step": "post-deposition citation metadata synchronized"
+  "next_step": "Cureus manuscript synchronization with Zenodo, GitHub and OSF identifiers"
 }

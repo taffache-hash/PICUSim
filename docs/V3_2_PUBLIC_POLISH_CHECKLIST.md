@@ -60,3 +60,4 @@ Full monolithic `pytest` remains too slow for the sandbox timeout because severa
 - Archive filename target: `PICUSim_v3.2.0_public_local_archive.zip`
 - GitHub release: `https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public`
 - Zenodo DOI: `10.5281/zenodo.20782468`
+- OSF project: `https://osf.io/etj8w/`
