@@ -17,28 +17,29 @@ def test_v320_public_polish_version_and_readme_are_current():
     assert VERSION in readme
     assert "v3.2.0 public" in readme
     assert "Current published Zenodo DOI" in readme
-    assert "10.5281/zenodo.20777589" in readme
-    assert "not yet been pushed to GitHub or deposited as a new Zenodo version" in readme
+    assert "10.5281/zenodo.20782468" in readme
+    assert "Previous v3.1-step5.9 Zenodo DOI" in readme
+    assert "https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public" in readme
     assert "not for clinical use" in readme.lower()
     assert "docs/VALIDATION.md" in readme
     assert "docs/LIMITATIONS.md" in readme
     assert "docs/V3_2_PUBLIC_POLISH_STEP7_RC2_EXTERNAL_REVIEW_FIXES.md" in readme
 
 
-def test_v320_public_polish_citation_avoids_false_new_doi_claim():
+def test_v320_public_polish_citation_records_final_doi_after_deposition():
     cff = read("CITATION.cff")
     assert VERSION in cff
     assert 'license: "Apache-2.0"' in cff
     assert 'repository-code: "https://github.com/taffache-hash/PICUSim"' in cff
-    assert "Current published v3.1-step5.9 DOI" in cff
-    # The local candidate must not claim the old v3.1 DOI as the v3.2 DOI.
-    assert '\ndoi:' not in cff
+    assert 'doi: "10.5281/zenodo.20782468"' in cff
+    assert "Previous published v3.1-step5.9 DOI" in cff
 
     bib = read("CITATION.bib")
     assert "picusim2026v320public" in bib
     assert "picusim2026v31archive" in bib
+    assert "10.5281/zenodo.20782468" in bib
     assert "10.5281/zenodo.20777589" in bib
-    assert "cite the final Zenodo v3.2.0 version DOI after release" in bib
+    assert "not for clinical use" in bib
 
 
 def test_v320_public_polish_pyproject_and_docs_are_coherent():

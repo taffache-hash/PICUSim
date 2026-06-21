@@ -1,11 +1,20 @@
 {
   "version": "3.2.0-public",
   "date": "2026-06-21",
-  "status": "v3_2_0_public_final_local_no_upload",
+  "status": "v3_2_0_public_published_github_zenodo",
   "source_of_truth": "filesystem_tests_and_step9_final_local_package_rebuild",
   "manuscripts_are_source_of_truth": false,
   "paper_deferred_until_after_deposit": true,
-  "public_upload_performed": false,
+  "public_upload_performed": true,
+  "github_release": {
+    "tag": "v3.2.0-public",
+    "url": "https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public",
+    "commit": "80193e289a968011ed2aa3900e080b0c9e50d6e6"
+  },
+  "published_archive": {
+    "version": "3.2.0-public",
+    "doi": "10.5281/zenodo.20782468"
+  },
   "package_counts": {
     "included_file_count": 655,
     "included_total_bytes": 3120448,
@@ -62,5 +71,5 @@
     "outputs/release_archives/*.sha256"
   ],
   "archive_filename": "PICUSim_v3.2.0_public_local_archive.zip",
-  "next_step": "owner review, GitHub release, then Zenodo new-version deposition"
+  "next_step": "post-deposition citation metadata synchronized"
 }

@@ -1,3 +1,9 @@
+## v3.2.0 public post-deposition metadata sync
+
+- Recorded final Zenodo v3.2.0 public DOI: `10.5281/zenodo.20782468`.
+- Updated README DOI badge, CITATION.cff, CITATION.bib, `.zenodo.json`, package facts and public-polish checklist after GitHub release and Zenodo deposition.
+- Kept previous v3.1-step5.9 DOI `10.5281/zenodo.20777589` as the prior archive reference.
+
 ## v3.2.0 public polish Step 9 - Final local package cleanup
 
 - Promoted local package metadata from `3.2.0-public-rc3` to `3.2.0-public`.
@@ -827,4 +833,3 @@ Validation: targeted Step 5.1D tests passed; cumulative validation line extended
 - Added `docs/CODEX_HANDOFF_v5.2_to_next.md`.
 - Added release-candidate freeze tests.
 - Declared current package a release candidate, not a clinical validation or medical device certification.
-

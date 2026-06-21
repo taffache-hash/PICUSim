@@ -1,13 +1,14 @@
 # PICUSim v3.2.0 public polish checklist
 
-Status after local Step 5. This is a working checklist for the v3.2.0-public preparation branch. GitHub was not modified in this step.
+Status after publication. This checklist tracks the v3.2.0-public preparation branch through GitHub release and Zenodo new-version deposition.
 
 ## Documentation policy
 
 - [x] README and CITATION were preserved during early public-polish steps.
 - [x] README, CITATION.cff and CITATION.bib were updated in Step 5 after the user authorized metadata updates.
 - [x] CHANGELOG.md is updated after each local step.
-- [x] The v3.1 published DOI is retained as the previous archive DOI; no false v3.2 DOI is claimed before Zenodo new-version deposition.
+- [x] The v3.1 published DOI is retained as the previous archive DOI.
+- [x] The final v3.2.0 Zenodo DOI is recorded after deposition: `10.5281/zenodo.20782468`.
 
 ## Completed in Steps 1-3
 
@@ -41,10 +42,10 @@ Status after local Step 5. This is a working checklist for the v3.2.0-public pre
 
 - [x] Regenerate final filesystem package facts and v3.2.0 release manifest after all source changes are frozen.
 - [x] Decide final release label/tag: `v3.2.0-public`.
-- [ ] Update `.zenodo.json` only after the final release metadata and new Zenodo version DOI are known.
+- [x] Update `.zenodo.json` only after the final release metadata and new Zenodo version DOI are known.
 - [x] Generate final public archive/checksum once the source tree is stable.
 - [x] Run final release package tests against the generated final archive.
-- [ ] Create new GitHub release/tag and new Zenodo version only after final validation.
+- [x] Create new GitHub release/tag and new Zenodo version only after final validation.
 
 ## Current testing note
 
@@ -57,4 +58,5 @@ Full monolithic `pytest` remains too slow for the sandbox timeout because severa
 - Manifest: `data/release_candidate_manifest_v3.2.0.yaml`
 - Package facts: `metadata/package_facts_v3.2.0.json`
 - Archive filename target: `PICUSim_v3.2.0_public_local_archive.zip`
-- GitHub/Zenodo upload: not performed in this local step.
+- GitHub release: `https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public`
+- Zenodo DOI: `10.5281/zenodo.20782468`

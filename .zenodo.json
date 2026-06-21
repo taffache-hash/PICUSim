@@ -3,6 +3,7 @@
   "upload_type": "software",
   "publication_date": "2026-06-21",
   "version": "3.2.0-public",
+  "doi": "10.5281/zenodo.20782468",
   "creators": [
     {
       "name": "Taffache, Paolo",
@@ -28,10 +29,10 @@
       "resource_type": "software"
     },
     {
-      "identifier": "https://github.com/taffache-hash/PICUSim",
-      "relation": "isSupplementTo",
+      "identifier": "https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public",
+      "relation": "isSupplementedBy",
       "resource_type": "software"
     }
   ],
-  "notes": "This local file prepares metadata for the v3.2.0 new-version Zenodo deposition. Do not add a v3.2 DOI until Zenodo assigns it. Safety disclaimer must remain visible."
+  "notes": "Final metadata for the v3.2.0 public Zenodo new-version deposition. DOI: 10.5281/zenodo.20782468. Safety disclaimer must remain visible."
 }

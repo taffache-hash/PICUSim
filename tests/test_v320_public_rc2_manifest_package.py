@@ -19,6 +19,7 @@ def test_v320_public_rc3_version_and_metadata_are_aligned():
     assert VERSION in read(".zenodo.json")
     assert VERSION in read("data/release_candidate_manifest_v3.2.0.yaml")
     assert VERSION in read("metadata/package_facts_v3.2.0.json")
+    assert "10.5281/zenodo.20782468" in read("README.md")
     assert "10.5281/zenodo.20777589" in read("README.md")
     assert "isNewVersionOf" in read(".zenodo.json")
 
@@ -40,12 +41,12 @@ def test_v320_public_rc3_required_entrypoints_exist():
         assert (ROOT / rel).exists(), rel
 
 
-def test_v320_public_rc3_does_not_claim_new_v32_doi_yet():
+def test_v320_public_metadata_records_final_v32_doi_after_deposition():
     cff = read("CITATION.cff")
-    assert "Add the new v3.2.0 Zenodo version DOI here only after final deposition" in cff
-    assert "doi:" not in "\n".join([line for line in cff.splitlines() if not line.strip().startswith("#")])
+    assert 'doi: "10.5281/zenodo.20782468"' in cff
     zenodo = json.loads(read(".zenodo.json"))
     assert zenodo["version"] == VERSION
+    assert zenodo["doi"] == "10.5281/zenodo.20782468"
     assert all(item["identifier"] != "NEW_DOI_PENDING" for item in zenodo.get("related_identifiers", []))
 
 

@@ -1,6 +1,6 @@
 # V3.2 public polish Step 9 — final local package cleanup
 
-Status: local `3.2.0-public` package prepared for owner review, GitHub release, and Zenodo new-version deposition. No GitHub or Zenodo upload was performed in this step.
+Status: local `3.2.0-public` package prepared for owner review, GitHub release, and Zenodo new-version deposition. GitHub and Zenodo publication were completed after this local package step.
 
 ## Changes
 
@@ -17,4 +17,4 @@ Status: local `3.2.0-public` package prepared for owner review, GitHub release, 
 2. Commit source to GitHub.
 3. Create GitHub tag/release `v3.2.0-public`.
 4. Use Zenodo **New version** from the previous record.
-5. Insert the newly assigned v3.2 DOI in README/CITATION/.zenodo.json if desired after deposition.
+5. Insert the newly assigned v3.2 DOI in README/CITATION/.zenodo.json after deposition: completed with DOI `10.5281/zenodo.20782468`.

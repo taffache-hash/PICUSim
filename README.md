@@ -1,14 +1,15 @@
 # PICUSim / Pediatric Critical Care Sim
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20777589.svg)](https://doi.org/10.5281/zenodo.20777589)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20782468.svg)](https://doi.org/10.5281/zenodo.20782468)
 
 **Distribution:** v3.2.0 public release package  
 **Current package version:** `3.2.0-public`  
-**Release status:** final local pre-upload package prepared for GitHub release and Zenodo new-version deposition  
-**Current published Zenodo DOI:** `10.5281/zenodo.20777589` for the earlier v3.1-step5.9 public archive  
+**Release status:** published on GitHub and deposited as a Zenodo new-version archive
+**Current published Zenodo DOI:** `10.5281/zenodo.20782468`
+**Previous v3.1-step5.9 Zenodo DOI:** `10.5281/zenodo.20777589`
 **Clinical status:** not for clinical use; not a medical device; not a validated patient-specific digital twin.
 
-**Final local package note:** This v3.2.0-public package has not yet been pushed to GitHub or deposited as a new Zenodo version. The new v3.2 DOI must be added only after Zenodo assigns it.
+**GitHub release:** `v3.2.0-public` at `https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public`.
 
 Incorporates RC3 UI branding/cache-busting, BEDSIDE_FAST live fluid/RCP fields, pause race-condition guard, RC2 DKA/pneumothorax fixes, FiO2 persistence fixes, and v3.2 validation/limitations documentation.
 
@@ -71,7 +72,7 @@ The current public package includes:
 - a browser-based training console in `ui/`;
 - validation, benchmark, Monte Carlo, guardrail, solvability, human-factors, reproducibility, methods and sensitivity-map tooling under `tools/`, `data/`, `docs/` and `outputs/`.
 
-The v3.2.0 public release-candidate counts are filesystem-derived from this package and recorded in `data/release_candidate_manifest_v3.2.0.yaml` and `metadata/package_facts_v3.2.0.json`. They supersede the frozen v3.1-step5.9 package-count snapshot for v3.2 development and should be regenerated only if files are added or removed before the final GitHub/Zenodo release.
+The v3.2.0 public package counts are filesystem-derived from this package and recorded in `data/release_candidate_manifest_v3.2.0.yaml` and `metadata/package_facts_v3.2.0.json`. They supersede the frozen v3.1-step5.9 package-count snapshot for v3.2 development.
 
 ## Recommended first read
 
@@ -202,7 +203,7 @@ The clinical-use restriction remains in force as a safety disclaimer: this softw
 
 ## Citation
 
-Citation metadata is provided in `CITATION.cff` and `CITATION.bib`. The current published v3.1-step5.9 archive DOI is `10.5281/zenodo.20777589`. This v3.2.0 release-candidate should receive a new Zenodo version DOI before being cited as the final software version in a manuscript.
+Citation metadata is provided in `CITATION.cff` and `CITATION.bib`. Cite the v3.2.0 public archive with DOI `10.5281/zenodo.20782468`. The earlier v3.1-step5.9 archive DOI is `10.5281/zenodo.20777589`.
 
 ## Paper/manuscript policy
 
@@ -222,7 +223,5 @@ Planned sequence:
 - Step 5.8 archive preflight / manifest rebuild - completed for v3.1;
 - Step 5.9 final public release candidate rebuild - completed for v3.1;
 - Step 6.0 public archive release - completed for v3.1 on GitHub/Zenodo;
-- v3.2.0 public-polish branch - final local release-candidate built;
-- v3.2.0 GitHub release and Zenodo new-version deposition - pending.
-
-
+- v3.2.0 public-polish branch - completed;
+- v3.2.0 GitHub release and Zenodo new-version deposition - completed.

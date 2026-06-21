@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "PICUSim / Pediatric Critical Care Sim"
-message: "If you use this v3.2.0 public package, cite the final Zenodo v3.2.0 version DOI once released. Not for clinical use."
+message: "If you use this v3.2.0 public package, cite the Zenodo v3.2.0 public archive DOI. Not for clinical use."
 type: software
 authors:
   - family-names: "Taffache"
@@ -18,5 +18,6 @@ keywords:
   - in-silico research
 license: "Apache-2.0"
 repository-code: "https://github.com/taffache-hash/PICUSim"
-# Current published v3.1-step5.9 DOI: 10.5281/zenodo.20777589.
-# Add the new v3.2.0 Zenodo version DOI here only after final deposition.
+doi: "10.5281/zenodo.20782468"
+url: "https://github.com/taffache-hash/PICUSim/releases/tag/v3.2.0-public"
+# Previous published v3.1-step5.9 DOI: 10.5281/zenodo.20777589.
