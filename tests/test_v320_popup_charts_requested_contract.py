@@ -29,7 +29,9 @@ def test_v320_js_defines_popup_chart_sources_without_new_streams():
     ]:
         assert needle in js
     assert '/ws/session/${sessionId}/monitor' not in js
-    assert 'setInterval(() =>' not in js
+    assert 'function openPopupChart' in js
+    assert 'function shouldRefreshFullProfilePanels()' in js
+    assert 'setInterval(() =>' in js  # panel-gated full-profile refresh added by Step 4.15, not popup-chart polling
 
 
 def test_v320_popup_chart_css_present():

@@ -155,7 +155,17 @@ class InfectionAntimicrobialModule(BaseModule):
         deescalation = self._clip01((1.0 - self._microbial_burden) * effective_coverage * source_control * (1.0 - lact_drive) * (1.0 - fever_drive))
         severity = self._clip01(0.40 * self._microbial_burden + 0.20 * inadequate_coverage + 0.15 * source_need + 0.15 * lact_drive + 0.10 * delay_harm)
 
-        antibiotic_effect = float(np.clip(effective_coverage * (0.25 + 0.75 * source_control) * (1.0 - 0.35 * delay_harm), 0.0, 1.0))
+        antibiotic_effect_model = float(np.clip(effective_coverage * (0.25 + 0.75 * source_control) * (1.0 - 0.35 * delay_harm), 0.0, 1.0))
+        # v3.2 public-polish deviation fix:
+        # Timeline scenarios sometimes use `set_antibiotic_effect` as an
+        # instructor-level proxy for early antimicrobial effect.  The infection
+        # module used to overwrite that direct perturbation on the next step
+        # when antibiotic coverage was not also encoded, making the therapeutic
+        # event invisible to AdvancedSepsisModule.  Preserve a direct timeline
+        # value as a floor, while still allowing the model-derived coverage/
+        # source-control effect to exceed it.
+        antibiotic_effect_floor = float(np.clip(getattr(bus.state, "antibiotic_effect", 0.0), 0.0, 1.0))
+        antibiotic_effect = float(np.clip(max(antibiotic_effect_model, antibiotic_effect_floor), 0.0, 1.0))
         infection_fever_drive = self._clip01(0.55 * self._microbial_burden + 0.25 * procal + 0.20 * crp)
         infection_lactate_mod = float(np.clip(1.0 + 0.45 * severity + 0.30 * delay_harm, 1.0, 2.2))
 

@@ -117,7 +117,11 @@ class SimulationSession:
             try:
                 self.step(max(self.dt, wall_tick_s * self.speed))
                 with self._lock:
-                    if self.status == "paused":
+                    # Fix #4: only reset paused→running if pause() has NOT already
+                    # armed the stop_event.  Without this guard, a pause() call that
+                    # arrives while step() is executing gets silently overwritten,
+                    # leaving status="running" while the thread has already exited.
+                    if self.status == "paused" and not self._stop_event.is_set():
                         self.status = "running"
                     if self.status in ("completed", "error"):
                         break

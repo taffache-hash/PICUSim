@@ -1,6 +1,0 @@
-case,infusion_U_h,weight_kg,start_glucose_mmol_L,end_glucose_mmol_L,C_insulin_mU_L,glucose_clearance_signal,potassium_shift_signal,hypoglycemia_risk,effective_clearance_mmol_L_h,K_mmol_L,pk_supported_drug_count,pk_extension_revision
-no_insulin,0.0,20.0,12.0,14.254,0.0,0.0,0.0,0.0,0.0,4.845,15,117
-low_insulin,0.5,20.0,12.0,13.8886,26.3483,0.51772,0.41563,0.0,2.07088,4.7981,15,117
-standard_insulin,1.0,20.0,12.0,13.6854,52.6965,0.73237,0.62035,0.0,2.92946,4.7697,15,117
-higher_insulin,2.0,20.0,12.0,13.5112,105.3931,0.87462,0.78965,0.0,3.49847,4.7412,15,117
-infant,0.3,8.0,10.0,11.3532,39.5224,0.64983,0.53639,0.0,2.59932,4.7819,15,117

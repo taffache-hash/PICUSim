@@ -1,9 +1,67 @@
-## v3.1 Step 6.0 - Public archive release metadata
+## v3.2.0 public polish Step 9 - Final local package cleanup
 
-- Recorded Zenodo DOI `10.5281/zenodo.20777589` after successful GitHub-Zenodo archival release.
-- Added `docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md`.
-- Updated README, first-start notes, CFF/BibTeX citation metadata and Zenodo metadata with the DOI.
-- OSF assembly and manuscript data/code availability updates remain deferred.
+- Promoted local package metadata from `3.2.0-public-rc3` to `3.2.0-public`.
+- Updated UI cache-busting query strings to `v=3.2.0-public`.
+- Regenerated README, README_FIRST_START_HERE, CITATION.cff, CITATION.bib, `.zenodo.json`, `pyproject.toml`, manifest and package facts for the final local package label.
+- Added `docs/V3_2_PUBLIC_POLISH_STEP9_FINAL_LOCAL_PACKAGE_REPORT.md`.
+- Kept `10.5281/zenodo.20777589` only as the previous v3.1 archive DOI / `isNewVersionOf` reference; no v3.2 DOI is claimed before Zenodo assigns it.
+
+## v3.2.0 public polish Step 7 - RC2 external-review regression fixes
+
+## v3.2.0 public polish Step 8 - RC3 UI/WebSocket/pause hotfix
+
+- Fixed residual PDT branding in `ui/index.html` browser title and main header.
+- Updated UI script cache-busting query strings to `v=3.2.0-rc3`.
+- Added fluid quick-panel live fields to `BEDSIDE_FAST_KEYS`: `crystalloid_preload_response` and `crystalloid_MAP_support_mmHg`.
+- Added RCP live-panel fields to `BEDSIDE_FAST_KEYS`, including CPR quality, rhythm category, compression fraction, shock/drug results, and post-ROSC risk indices.
+- Guarded `api/session.py` run-loop status restoration so a concurrent `pause()` call cannot be overwritten after `step()`.
+- Added RC3 regression tests for branding/cache-busting, WebSocket bedside-fast field coverage, and pause race-condition guard.
+- Updated package version metadata to `3.2.0-public-rc3`.
+
+
+- Promoted the local v3.2.0 release-candidate from `3.2.0-public-rc1` to `3.2.0-public-rc2`.
+- Fixed the DKA educational scenario oxygen/Fick death spiral by configuring `epals_v2_dka_dehydration_shock` as spontaneous/unassisted Kussmaul-style physiology and allowing scenario-specific chemoreflex parameters in `run_simulation.py`.
+- Added explicit deterioration-before-decompression physiology to `epals_tension_pneumothorax.yaml` and preserved external `airway_shunt_add` commands in `AirwayObstructionModule`.
+- Kept integrated hyperkalemia and short-horizon norepinephrine/MAP behavior under explicit RC2 regression tests.
+- Reconciled historical audit tests so REVIEW rows with zero hard FAIL rows are tracked but not treated as public-release failures.
+- Kept the legacy source-level `Pmean` alias formula visible in `api/state_profiles.py` while still preferring `Paw_mean` when available.
+- Added `docs/V3_2_PUBLIC_POLISH_STEP7_RC2_EXTERNAL_REVIEW_FIXES.md` and `tests/test_v320_public_rc2_external_review_regressions.py`.
+- GitHub release and Zenodo new-version deposition were not performed in this local step.
+
+## v3.2.0 public polish Step 6 - Final local manifest and archive preflight
+
+- Promoted the local v3.2.0 line from `3.2.0-public-polish-step5-local` to `3.2.0-public-rc2`.
+- Regenerated v3.2 package facts in `metadata/package_facts_v3.2.0.json` and v3.2 release-candidate manifest in `data/release_candidate_manifest_v3.2.0.yaml`.
+- Updated `README.md`, `README_FIRST_START_HERE.txt`, `CITATION.cff`, `CITATION.bib`, `pyproject.toml`, and `.zenodo.json` for v3.2.0 RC2 metadata without claiming a new DOI.
+- Added `docs/V3_2_PUBLIC_POLISH_STEP6_FINAL_MANIFEST_REPORT.md`.
+- Added `tests/test_v320_public_rc2_manifest_package.py` to lock version, manifest, package facts, Zenodo metadata, and public-entrypoint coherence.
+- GitHub release and Zenodo new-version deposition were not performed in this local step.
+
+## v3.2.0 public polish Step 5 - Soft physiological caps and documentation metadata
+
+- Continued the local v3.2.0 public-polish branch after the Step 4 public-package test cleanup and Step 3 FiO2 control fix.
+- Added a soft PaCO2 upper transition in `modules/respiratory/gas_exchange.py` so severe public-demo scenarios no longer converge to the old repeated PaCO2=105 mmHg wall.
+- Added a visible HR reserve below age-group absolute safety ceilings in `modules/cardiovascular/baroreflex.py` so summaries no longer repeatedly print exact 180/210/220 bpm ceilings.
+- Added `tests/test_v320_public_polish_soft_caps_contract.py` to lock PaCO2/HR public-display behavior while preserving healthy-child stability.
+- Added `tests/test_v320_public_polish_metadata_docs.py` to lock v3.2 README/CITATION/VERSION/documentation coherence and explicitly retire historical v3.1 metadata contracts under the v3.2 local candidate.
+- Updated `README.md`, `CITATION.cff`, `CITATION.bib`, `VERSION`, and `pyproject.toml` for the local `3.2.0-public-polish-step5-local` candidate.
+- Added `docs/VALIDATION.md`, `docs/LIMITATIONS.md`, and `docs/V3_2_PUBLIC_POLISH_STEP5_PHYSIOLOGY_DOCS_REPORT.md`.
+- Kept the current published v3.1-step5.9 DOI (`10.5281/zenodo.20777589`) documented as the previous archive DOI; no new v3.2 DOI is claimed until Zenodo new-version deposition.
+- Targeted Step 5 checks: public smoke 2 passed; v3.2 physiology 4 passed; deviation contracts 5 passed; FiO2 persistence 5 passed; public package cleanup 5 passed; soft caps 4 passed; metadata/docs 4 passed with 21 historical v3.1 metadata checks skipped; ETCO2/RR/shock/ScvO2/plausibility block 17 passed and 1 skipped; API/UI/emogas/monitor block 11 passed.
+
+## v3.2.0 public polish Step 4 - Public package test policy and regression cleanup
+
+- Continued the local v3.2.0 public-polish branch without changing `README.md` or `CITATION.cff`.
+- Updated repository-only release archive tests so distributed public source packages skip missing nested archive/checksum payloads instead of failing.
+- Relaxed frozen Step 5.8 package-facts checks so later public-polish modules/tests/docs can be added while preserving the frozen preflight snapshot.
+- Reconciled stale UI snapshot contracts with the later panel-gated full-profile auto-refresh used by the emogas/extended monitor panels.
+- Made generated Monte Carlo output artifacts optional in source-package guardrail tests; they remain checked when present.
+- Removed stale hard-coded historical version assertion from the native ScvO2 contract.
+- Added `tests/test_v320_public_package_regression_cleanup.py` to lock this public-package test policy.
+- Added `docs/V3_2_PUBLIC_POLISH_CHECKLIST.md` and `docs/V3_2_PUBLIC_POLISH_STEP4_TEST_REPORT.md` with current pass/skip status and remaining checklist items.
+- Targeted regression result for this step: 57 passed, 4 skipped in the consolidated public-polish/package-policy suite; additional UI/RCP contract block: 53 passed; Step 4.39-4.51 physiology/engine block: 35 passed; Step 5 documentation/audit block: 35 passed, 1 skipped.
+- README.md and CITATION.cff were intentionally left unchanged.
+
 ## v3.1 Step 5.9 - Final public release candidate rebuild
 
 - Rebuilt the clean final public-release candidate archive locally after Step 5.8 preflight.

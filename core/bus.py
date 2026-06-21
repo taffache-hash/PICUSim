@@ -514,6 +514,8 @@ class BusState:
     MAP_hfov:           float = 18.0
     # Monitoraggio ventilatore
     Paw_current:        float = 5.0       # [cmH2O] Paw istantanea
+    Paw_mean:           float = 5.0       # [cmH2O] pressione media stimata su ciclo respiratorio
+    Paw_display:        float = 5.0       # [cmH2O] valore stabile per monitor numerico/CLI
     Flow_current_mL_s:  float = 0.0       # [mL/s] flow istantaneo
     Ppeak:              float = 0.0        # [cmH2O] picco pressione ciclo
     Pplat:              float = 0.0        # [cmH2O] pressione plateau

@@ -254,6 +254,8 @@ class VentilatorModule(BaseModule):
         bus.update({
             "Paw":               init_paw,
             "Paw_current":       init_paw,
+            "Paw_mean":          init_paw,
+            "Paw_display":       init_paw,
             "Flow_current_mL_s": 0.0,
             "Ppeak":             0.0,
             "Pplat":             0.0,
@@ -653,6 +655,20 @@ class VentilatorModule(BaseModule):
         RR_tot = 60.0 / (T_tot + 1e-3)
         MV_L = self._Vt_measured * RR_tot / 1000.0   # L/min
 
+        # v3.2 public-polish deviation fix:
+        # `Paw` remains the instantaneous waveform pressure used by mechanics.
+        # For numeric monitor/CLI display, expose a cycle-level mean estimate so
+        # sampled snapshots do not appear to oscillate between inspiratory and
+        # expiratory values.
+        if mode == "HFOV":
+            paw_mean = float(self.params.get("MAP_hfov", Paw_out))
+        elif mode in ("CPAP", "NONE", "UNASSISTED"):
+            paw_mean = float(Paw_out)
+        else:
+            duty = float(np.clip(self._T_insp / max(T_tot, 1e-6), 0.10, 0.90))
+            paw_mean = float(PEEP_set + max(self._Ppeak - PEEP_set, 0.0) * duty)
+        paw_display = paw_mean
+
         # Allarmi
         alarm_any = self._check_alarms(
             self._Ppeak, self._Vt_measured, RR_tot, self._t_abs
@@ -661,6 +677,8 @@ class VentilatorModule(BaseModule):
         bus.update({
             "Paw":               float(Paw_out),
             "Paw_current":       float(Paw_out),
+            "Paw_mean":          float(paw_mean),
+            "Paw_display":       float(paw_display),
             "Flow_current_mL_s": float(flow),
             "Ppeak":             float(self._Ppeak),
             "Pplat":             float(self._Pplat),

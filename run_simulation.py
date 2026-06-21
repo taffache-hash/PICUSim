@@ -36,7 +36,7 @@ from modules.respiratory import (
 from modules.ventilator import VentilatorModule
 from modules.cardiovascular import (
     HeartModule, HeartBTBModule,
-    CirculationModule, BaroreflexModule,
+    CirculationModule, BaroreflexModule, ShockLabelModule,
 )
 from modules.pharmacology import PharmacologyModule, INOModule, TransfusionModule, SteroidsModule
 from modules.metabolism import MetabolismModule
@@ -180,7 +180,14 @@ def build_twin(bus, scenario_config: dict,
         "baseline_small_airway_obstruction": float(airway_cfg.get("small_airway_obstruction", 0.0)),
     }))
 
-    engine.register(ChemoreflexModule({"phi": 0.5, "Pmus_baseline": 5.0}))
+    
+    chemo_cfg = scenario_config.get("chemoreflex", {})
+    engine.register(ChemoreflexModule({
+        "phi": float(chemo_cfg.get("phi", 0.5)),
+        "Pmus_baseline": float(chemo_cfg.get("Pmus_baseline", 5.0)),
+        "Pmus_max": float(chemo_cfg.get("Pmus_max", 20.0)),
+        "RR_max": float(chemo_cfg.get("RR_max", 60.0)),
+    }))
 
     airway_interface_cfg = scenario_config.get("airway_interface", {}) or {}
     engine.register(AirwayInterfaceModule({
@@ -230,8 +237,12 @@ def build_twin(bus, scenario_config: dict,
         "weight_kg": weight_kg,
         "non_recruitable_frac": non_rec_frac,
     }))
+    # v3.2 public-polish: keep a normal-lung shunt baseline physiologic in
+    # healthy scenarios, while still allowing initially hypoxemic scenarios to
+    # carry an educational shunt burden. The previous formula used 1-SaO2 and
+    # made even the healthy child start with an excessive Qs/Qt.
     engine.register(GasExchangeModule({
-        "Qs_Qt": 0.10 + (1.0 - float(resp_cfg.get("SaO2", 0.97))) * 1.5,
+        "Qs_Qt": 0.035 + max(0.0, 0.97 - float(resp_cfg.get("SaO2", 0.97))) * 1.2,
     }))
 
     acid_cfg = scenario_config.get("acidbase", {})
@@ -268,6 +279,9 @@ def build_twin(bus, scenario_config: dict,
     engine.register(HeartBTBModule(heart_btb_params_from_scaling(cv_scaling)))
     engine.register(CirculationModule(circulation_params_from_scaling(cv_scaling)))
     engine.register(BaroreflexModule(baroreflex_params_from_scaling(cv_scaling, auto_setpoint=False)))
+    # v3.2 public-polish: expose educational shock labels without activating
+    # extra hemodynamic modifiers in legacy public scenarios.
+    engine.register(ShockLabelModule())
 
     engine.register(CoagulationModule({
         "INR_baseline":        float(coag_cfg.get("INR", 1.0)),

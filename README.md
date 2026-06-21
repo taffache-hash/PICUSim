@@ -2,19 +2,23 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20777589.svg)](https://doi.org/10.5281/zenodo.20777589)
 
-**Distribution:** v3.1 regression-swept release candidate  
-**Current package version:** `3.1-step5.9-final-public-release-candidate`  
-**Release status:** Apache-2.0 public archive release candidate with Zenodo DOI  
-**Zenodo DOI:** `10.5281/zenodo.20777589`  
+**Distribution:** v3.2.0 public release package  
+**Current package version:** `3.2.0-public`  
+**Release status:** final local pre-upload package prepared for GitHub release and Zenodo new-version deposition  
+**Current published Zenodo DOI:** `10.5281/zenodo.20777589` for the earlier v3.1-step5.9 public archive  
 **Clinical status:** not for clinical use; not a medical device; not a validated patient-specific digital twin.
+
+**Final local package note:** This v3.2.0-public package has not yet been pushed to GitHub or deposited as a new Zenodo version. The new v3.2 DOI must be added only after Zenodo assigns it.
+
+Incorporates RC3 UI branding/cache-busting, BEDSIDE_FAST live fluid/RCP fields, pause race-condition guard, RC2 DKA/pneumothorax fixes, FiO2 persistence fixes, and v3.2 validation/limitations documentation.
 
 PICUSim is a modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing, and hypothesis generation. It is designed around structured YAML scenarios, a shared physiological state bus, coupled organ-system modules, a local FastAPI backend, and a browser-based training console.
 
 The framework is not intended for diagnosis, treatment, prescribing, triage, bedside monitoring, prognostication, device control, or any patient-care decision.
 
-## Current release-candidate state
+## Current v3.2.0 public state
 
-This package follows the v5.2 publication freeze, the v5.3 targeted regression sweep, the v5.4 documentation coherence pass, the v5.5 Apache-2.0 licensing conversion, the v5.6 Zenodo preparation pass, the Step 5.6A crystalloid infusion-controls deviation, the Step 5.7 OSF preparation pass, the Step 5.7A paper-deferred correction, and the Step 5.8 final public release candidate rebuild.
+This v3.2.0 public package starts from the published v3.1-step5.9 public archive line and adds targeted public-use corrections: healthy-child gas-exchange recalibration, short-scenario sepsis/pressor response repair, robust electrolyte-baseline initialization, persistent FiO2 controls across ETT/HFNC/NIV/low-flow interfaces, public-package test cleanup, and softened PaCO2/HR public-display ceilings.
 
 Key release artifacts:
 
@@ -33,6 +37,17 @@ Key release artifacts:
 - `docs/FINAL_RELEASE_NOTES_v5.9.md`
 - `docs/PUBLIC_ARCHIVE_RELEASE_v6.0.md`
 - `data/release_candidate_manifest_v5.9.yaml`
+- `data/release_candidate_manifest_v3.2.0.yaml`
+- `metadata/package_facts_v3.2.0.json`
+- `docs/V3_2_PUBLIC_POLISH_CHECKLIST.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP7_RC2_EXTERNAL_REVIEW_FIXES.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP9_FINAL_LOCAL_PACKAGE_REPORT.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP8_RC3_UI_WS_PAUSE_HOTFIX.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP5_PHYSIOLOGY_DOCS_REPORT.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP6_FINAL_MANIFEST_REPORT.md`
+- `docs/V3_2_PUBLIC_POLISH_STEP7_RC3_EXTERNAL_REVIEW_FIXES.md`
+- `docs/VALIDATION.md`
+- `docs/LIMITATIONS.md`
 - `data/release_candidate_manifest_v5.8.yaml`
 - `metadata/package_facts_v5.8.json`
 - `metadata/osf_project_structure_v5.7.md`
@@ -46,17 +61,17 @@ The v5.3 targeted regression sweep executed 126 contract checks after a Windows 
 
 ## Package contents
 
-The current release-candidate package includes:
+The current public package includes:
 
-- 35 physiological/pharmacological module files under `modules/`;
+- 36 non-`__init__` physiological/pharmacological Python module files under `modules/`;
 - 99 YAML clinical scenarios under `scenarios/`;
-- 118 Python test files under `tests/`;
-- 79 markdown technical documents under `docs/`;
+- 126 Python test files under `tests/`;
+- 89 markdown technical documents under `docs/`;
 - a local FastAPI backend in `api/`;
 - a browser-based training console in `ui/`;
 - validation, benchmark, Monte Carlo, guardrail, solvability, human-factors, reproducibility, methods and sensitivity-map tooling under `tools/`, `data/`, `docs/` and `outputs/`.
 
-These counts are package facts generated from the current extracted release-candidate folder in `data/release_candidate_manifest_v5.9.yaml` and `metadata/package_facts_v5.8.json`, not from manuscript text. They should be regenerated if files are added or removed.
+The v3.2.0 public release-candidate counts are filesystem-derived from this package and recorded in `data/release_candidate_manifest_v3.2.0.yaml` and `metadata/package_facts_v3.2.0.json`. They supersede the frozen v3.1-step5.9 package-count snapshot for v3.2 development and should be regenerated only if files are added or removed before the final GitHub/Zenodo release.
 
 ## Recommended first read
 
@@ -66,6 +81,8 @@ These counts are package facts generated from the current extracted release-cand
 4. `docs/REGRESSION_SWEEP_v5.3.md`
 5. `docs/PUBLICATION_RELEASE_ROADMAP_v5.3_to_v6.0.md`
 6. `DISCLAIMER_NOT_FOR_CLINICAL_USE.md`
+7. `docs/VALIDATION.md`
+8. `docs/LIMITATIONS.md`
 
 ## Quick smoke test
 
@@ -128,7 +145,9 @@ Run tests with pytest when installed:
 
 ```bash
 python -m pytest -q tests/test_public_smoke.py
-python -m pytest -q tests/test_v520_release_candidate_freeze.py
+python -m pytest -q tests/test_v320_public_polish_contracts.py
+python -m pytest -q tests/test_v320_fio2_control_persistence.py
+python -m pytest -q tests/test_v320_public_polish_soft_caps_contract.py
 ```
 
 The Step 5.3 sweep was run with manual contract runners because pytest was not installed in the inspected Python environment. See `docs/REGRESSION_SWEEP_v5.3.md` for details.
@@ -146,7 +165,8 @@ Important validation-support layers include:
 - Step 5.1B methods appendix generator;
 - Step 5.1D sensitivity maps;
 - Step 5.2 release-candidate freeze manifest;
-- Step 5.3 regression sweep.
+- Step 5.3 regression sweep;
+- v3.2.0 public-polish physiology and UI-control regression contracts.
 
 Publication or training runs should preserve session JSON, physiological timeline CSV, intervention log CSV, manifest hashes, methods appendix, and relevant figures/sensitivity summaries.
 
@@ -182,7 +202,7 @@ The clinical-use restriction remains in force as a safety disclaimer: this softw
 
 ## Citation
 
-Citation metadata is provided in `CITATION.cff` and `CITATION.bib`. Apache-2.0 metadata is now active. Zenodo deposition metadata is prepared, but DOI and public archive identifiers remain pending until actual deposition.
+Citation metadata is provided in `CITATION.cff` and `CITATION.bib`. The current published v3.1-step5.9 archive DOI is `10.5281/zenodo.20777589`. This v3.2.0 release-candidate should receive a new Zenodo version DOI before being cited as the final software version in a manuscript.
 
 ## Paper/manuscript policy
 
@@ -199,8 +219,10 @@ Planned sequence:
 - Step 5.6 Zenodo deposition preparation - completed, upload pending but archive stale after Step 5.6A;
 - Step 5.6A crystalloid infusion controls - completed;
 - Step 5.7 OSF project preparation - completed locally, upload pending;
-- Step 5.8 archive preflight / manifest rebuild;
-- Step 5.9 final public release candidate rebuild;
-- Step 6.0 public archive release.
+- Step 5.8 archive preflight / manifest rebuild - completed for v3.1;
+- Step 5.9 final public release candidate rebuild - completed for v3.1;
+- Step 6.0 public archive release - completed for v3.1 on GitHub/Zenodo;
+- v3.2.0 public-polish branch - final local release-candidate built;
+- v3.2.0 GitHub release and Zenodo new-version deposition - pending.
 
 

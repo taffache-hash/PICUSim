@@ -45,6 +45,15 @@ class AirwayObstructionModule(BaseModule):
         self._bronchospasm = float(merged["baseline_bronchospasm"])
         self._mucus = float(merged["baseline_mucus_load"])
         self._small = float(merged["baseline_small_airway_obstruction"])
+        # v3.2 RC2: keep commanded obstruction/shunt targets separate from
+        # displayed module state. Earlier builds wrote bronchospasm/mucus/small
+        # airway and airway_shunt_add back to the bus every step, so one-shot
+        # scenario perturbations were immediately overwritten on the next cycle.
+        self._target_bronchospasm = self._bronchospasm
+        self._target_mucus = self._mucus
+        self._target_small = self._small
+        self._external_shunt_target = 0.0
+        self._last_written_shunt = 0.0
 
     @property
     def input_keys(self) -> List[str]:
@@ -70,6 +79,11 @@ class AirwayObstructionModule(BaseModule):
         self._bronchospasm = float(np.clip(bus.get("bronchospasm_index"), 0.0, 1.0))
         self._mucus = float(np.clip(bus.get("mucus_load"), 0.0, 1.0))
         self._small = float(np.clip(bus.get("small_airway_obstruction"), 0.0, 1.0))
+        self._target_bronchospasm = self._bronchospasm
+        self._target_mucus = self._mucus
+        self._target_small = self._small
+        self._external_shunt_target = float(np.clip(bus.get("airway_shunt_add") if hasattr(bus.state, "airway_shunt_add") else 0.0, 0.0, 0.80))
+        self._last_written_shunt = self._external_shunt_target
         self._write(bus)
 
     def _bronchodilator_components(self, bus: PhysiologicalBus) -> dict[str, float]:
@@ -135,7 +149,12 @@ class AirwayObstructionModule(BaseModule):
 
         # Dead-space da air trapping; shunt da mucus plugging/atelettasia.
         vd_add = float(np.clip(0.04*obstruction + 0.18*air_trap, 0.0, 0.30))
-        shunt_add = float(np.clip(0.03*mucus_eff + 0.05*small_eff, 0.0, 0.18))
+        intrinsic_shunt = float(np.clip(0.03*mucus_eff + 0.05*small_eff, 0.0, 0.18))
+        # Direct scenario/event shunt targets, such as tension pneumothorax V/Q
+        # proxies, are educationally distinct from bronchiolitis/asthma mucus.
+        # Keep them persistent until a later perturbation lowers them.
+        shunt_add = float(np.clip(max(intrinsic_shunt, self._external_shunt_target), 0.0, 0.80))
+        self._last_written_shunt = shunt_add
 
         bus.update({
             "airway_obstruction_index": obstruction,
@@ -164,11 +183,26 @@ class AirwayObstructionModule(BaseModule):
     def step(self, bus: PhysiologicalBus, dt: float) -> None:
         tau = max(float(self.params["tau_obstruction_s"]), dt)
         # Target scenario/modifiche sul bus: permette perturbazioni dirette.
-        target_b = float(np.clip(bus.get("bronchospasm_index"), 0.0, 1.0))
-        target_m = float(np.clip(bus.get("mucus_load"), 0.0, 1.0))
-        target_s = float(np.clip(bus.get("small_airway_obstruction"), 0.0, 1.0))
+        # The same bus variables are also displayed outputs, so we only treat a
+        # bus value as a new command when it differs from the module's last
+        # written state. This preserves timeline commands across subsequent
+        # smoothing steps instead of losing them immediately.
+        incoming_b = float(np.clip(bus.get("bronchospasm_index"), 0.0, 1.0))
+        incoming_m = float(np.clip(bus.get("mucus_load"), 0.0, 1.0))
+        incoming_s = float(np.clip(bus.get("small_airway_obstruction"), 0.0, 1.0))
+        incoming_shunt = float(np.clip(bus.get("airway_shunt_add") if hasattr(bus.state, "airway_shunt_add") else 0.0, 0.0, 0.80))
+
+        if abs(incoming_b - self._bronchospasm) > 1e-6:
+            self._target_bronchospasm = incoming_b
+        if abs(incoming_m - self._mucus) > 1e-6:
+            self._target_mucus = incoming_m
+        if abs(incoming_s - self._small) > 1e-6:
+            self._target_small = incoming_s
+        if abs(incoming_shunt - self._last_written_shunt) > 1e-6:
+            self._external_shunt_target = incoming_shunt
+
         a = 1.0 - np.exp(-dt/tau)
-        self._bronchospasm += a * (target_b - self._bronchospasm)
-        self._mucus += a * (target_m - self._mucus)
-        self._small += a * (target_s - self._small)
+        self._bronchospasm += a * (self._target_bronchospasm - self._bronchospasm)
+        self._mucus += a * (self._target_mucus - self._mucus)
+        self._small += a * (self._target_small - self._small)
         self._write(bus)

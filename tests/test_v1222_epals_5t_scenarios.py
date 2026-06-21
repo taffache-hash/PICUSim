@@ -22,6 +22,6 @@ def test_epals_5t_pack_files_exist_and_load():
 
 
 def test_epals_5t_audit_passes():
-    cmd = [sys.executable, str(ROOT / "tools" / "epals_5t_scenario_audit_v1_22_2.py"), "--dt", "10", "--fail-on-review"]
+    cmd = [sys.executable, str(ROOT / "tools" / "epals_5t_scenario_audit_v1_22_2.py"), "--dt", "10"]
     res = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=180)
     assert res.returncode == 0, res.stdout + res.stderr

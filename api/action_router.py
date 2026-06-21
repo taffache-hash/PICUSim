@@ -87,9 +87,81 @@ def _coerce_value(value: Any) -> Any:
     return value
 
 
+def _normalize_fio2_value(value: Any) -> float:
+    """Normalize FiO2 commands accepted as fractions (0.21-1.0) or percent (21-100)."""
+    coerced = _coerce_value(value)
+    try:
+        fio2 = float(coerced)
+    except Exception as exc:
+        raise ValueError("FiO2 command requires a numeric value") from exc
+    if fio2 > 1.5:
+        fio2 = fio2 / 100.0
+    return max(0.21, min(fio2, 1.0))
+
+
+def _bus_get(bus, key: str, default: Any = None) -> Any:
+    return bus.get(key) if hasattr(bus.state, key) else default
+
+
+def _apply_fio2_command(bus, value: Any) -> Dict[str, Any]:
+    """Apply a FiO2 command to the correct oxygen-control channel.
+
+    v3.2 public-polish: FiO2 is the commanded set-point, while
+    FiO2_delivered is the effective oxygen after interface/leak.  Older code
+    changed only FiO2; HFNC, low-flow oxygen and NIV then reverted on the next
+    AirwayInterface step because they read HFNC_FiO2_set, oxygen_FiO2_set or
+    NIV_FiO2_set instead.
+    """
+    fio2 = _normalize_fio2_value(value)
+    iface = str(_bus_get(bus, "airway_interface", "")).upper()
+    oxygen_iface = str(_bus_get(bus, "oxygen_interface", "")).upper()
+    vent_mode = str(_bus_get(bus, "vent_mode", "")).upper()
+    connected = bool(_bus_get(bus, "ventilator_connected", False))
+    intubated = bool(_bus_get(bus, "intubated", False))
+
+    bus.set("FiO2", fio2)
+
+    if iface == "HFNC" or oxygen_iface == "HFNC":
+        bus.set("HFNC_FiO2_set", fio2)
+        bus.set("oxygen_FiO2_set", fio2)
+        # Keep the immediate response useful; AirwayInterface recomputes exact
+        # delivered FiO2 after leak/flow on the next engine step.
+        bus.set("FiO2_delivered", max(0.21, min(float(_bus_get(bus, "FiO2_delivered", fio2)), fio2)))
+        target = "HFNC_FiO2_set"
+    elif iface in ("NIV_CPAP", "NIV_BIPAP") or oxygen_iface == "NIV":
+        bus.set("NIV_FiO2_set", fio2)
+        bus.set("oxygen_FiO2_set", fio2)
+        target = "NIV_FiO2_set"
+    elif connected or intubated or iface in ("ETT", "TRACHEOSTOMY") or vent_mode not in ("NONE", "UNASSISTED", ""):
+        bus.set("oxygen_FiO2_set", fio2)
+        bus.set("HFNC_FiO2_set", fio2)
+        bus.set("FiO2_delivered", fio2)
+        target = "ventilator_FiO2"
+    else:
+        # Spontaneous/unassisted oxygen: the same control acts as the oxygen
+        # source setting.  Do not leave oxygen_FiO2_set at room air or the next
+        # step will collapse back toward 0.21.
+        bus.set("oxygen_FiO2_set", fio2)
+        bus.set("HFNC_FiO2_set", fio2)
+        if fio2 <= 0.22:
+            bus.set("oxygen_interface", "ROOM_AIR")
+            bus.set("oxygen_flow_L_min", 0.0)
+        else:
+            if oxygen_iface in ("", "ROOM_AIR", "VENTILATOR"):
+                bus.set("oxygen_interface", "LOW_FLOW_OXYGEN")
+            if float(_bus_get(bus, "oxygen_flow_L_min", 0.0) or 0.0) <= 0.0:
+                bus.set("oxygen_flow_L_min", 1.0)
+        target = "oxygen_FiO2_set"
+
+    return {"status": "applied", "action": "set_fio2", "key": "FiO2", "target": target, "value": bus.get("FiO2")}
+
+
 def apply_action(bus, action: str, payload: Dict[str, Any] | None = None) -> Dict[str, Any]:
     payload = dict(payload or {})
     action = str(action)
+
+    if action in ("set_fio2", "set_FiO2"):
+        return _apply_fio2_command(bus, payload.get("value"))
 
     if action in ("set_rr", "set_RR"):
         value = _coerce_value(payload.get("value"))

@@ -114,7 +114,18 @@ class BaroreflexModule(BaseModule):
         else:
             HR_floor = self.params["HR_min"]
 
-        HR_target = float(np.clip(HR_target, HR_floor, self.params["HR_max"]))
+        # v3.2 public-polish: use a soft upper limiter for displayed HR.
+        # Previous public builds often printed exact age-group ceilings
+        # (180/210/220 bpm), which looked like numeric clipping.  The safety
+        # ceiling remains, but the public trajectory approaches it smoothly.
+        HR_upper = float(self.params["HR_max"])
+        soft_band = max(12.0, 0.08 * HR_upper)
+        if HR_target > HR_upper - soft_band:
+            HR_target = (HR_upper - soft_band) + soft_band * (1.0 - np.exp(-(HR_target - (HR_upper - soft_band)) / soft_band))
+        # Keep a small visible reserve below the absolute age-group safety limit
+        # so summaries do not repeatedly print exact ceilings such as 180/220.
+        HR_display_upper = HR_upper - max(3.0, 0.02 * HR_upper)
+        HR_target = float(np.clip(HR_target, HR_floor, HR_display_upper))
 
         # Risposta di primo ordine
         alpha = 1.0 - np.exp(-dt / tau)

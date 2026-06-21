@@ -345,6 +345,32 @@ class ScenarioLoader:
                 elif short in shock:
                     setattr(state, key, float(shock[short]))
 
+        # v3.2 public-polish: infer educational shock metadata from common
+        # scenario-level disease blocks when explicit `shock:` metadata is absent.
+        # This keeps clinical teaching labels aligned with the physiology without
+        # requiring all legacy YAML scenarios to be hand-edited at once.
+        if str(getattr(state, "shock_type", "none")).lower() in ("", "none", "normal"):
+            scenario_name = str(self.config.get("name", "")).lower()
+            diagnosis = str(patient.get("diagnosis", "")).lower()
+            description = str(self.config.get("description", "")).lower()
+            lactate = float(getattr(state, "lactate", 1.0))
+            map_value = float(getattr(state, "MAP", MAP_baseline(age_y)))
+            if sepsis or "sepsis" in scenario_name or "septic" in scenario_name or "septic" in diagnosis or "sepsi" in description:
+                state.shock_type = "distributive"
+                state.shock_severity = float(max(getattr(state, "shock_severity", 0.0), min(max(state.infection_load, 0.45), 0.95)))
+            elif "pneumothorax" in scenario_name or "tamponade" in scenario_name or "obstructive" in diagnosis:
+                state.shock_type = "obstructive"
+                state.shock_severity = float(max(getattr(state, "shock_severity", 0.0), 0.20))
+            elif "excessive_peep" in scenario_name or "high_peep" in scenario_name:
+                state.shock_type = "obstructive"
+                state.shock_severity = float(max(getattr(state, "shock_severity", 0.0), 0.25))
+            elif "hypovole" in scenario_name or "hemorrhag" in scenario_name or "haemorrhag" in scenario_name:
+                state.shock_type = "hypovolemic"
+                state.shock_severity = float(max(getattr(state, "shock_severity", 0.0), 0.60))
+            elif map_value < 50.0 and lactate >= 2.5:
+                state.shock_type = "mixed"
+                state.shock_severity = float(max(getattr(state, "shock_severity", 0.0), 0.45))
+
         # Override neuro / ICP v3.1 step4.44 scenario hooks
         neuro = self.config.get("neuro", {})
         for key in ["ICP_mmHg", "CPP_mmHg", "cerebral_edema_index", "cerebral_perfusion_index",

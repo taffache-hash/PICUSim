@@ -6,9 +6,10 @@ epals:
   cause: tension_pneumothorax
   reversible_cause: Tension pneumothorax
   teaching_level: intermediate
-clinical_narrative: 'Four-year-old mechanically ventilated child with sudden unilateral ventilation failure physiology:
-  rising airway pressure/resistance, V/Q mismatch, increasing RV afterload, hypotension and hypoxaemia. Decompression
-  is represented by simplified physiology reversal.'
+clinical_narrative: 'Four-year-old mechanically ventilated child with sudden unilateral
+  ventilation failure physiology: rising airway pressure/resistance, V/Q mismatch,
+  increasing RV afterload, hypotension and hypoxaemia. Decompression is represented
+  by simplified physiology reversal.'
 patient:
   profile: child_20kg
   age_y: 4
@@ -51,6 +52,38 @@ events:
   severity: tension
   label: tension pneumothorax deterioration
 perturbations:
+- t: 40
+  action: shock_preload_mod
+  value: 0.85
+  label: tension deterioration - venous return restriction proxy
+- t: 40
+  action: airway_shunt_add
+  value: 0.08
+  label: tension deterioration - abrupt VQ shunt burden
+- t: 40
+  action: RV_afterload_index
+  value: 0.72
+  label: tension deterioration - RV afterload rises
+- t: 40
+  action: CVP
+  value: 14.0
+  label: tension deterioration - obstructive venous congestion
+- t: 40
+  action: MAP
+  value: 36.0
+  label: tension deterioration - obstructive shock hypotension
+- t: 40
+  action: CO
+  value: 2.0
+  label: tension deterioration - venous return failure
+- t: 40
+  action: set_PaO2
+  value: 46.0
+  label: tension deterioration - acute hypoxaemia proxy
+- t: 40
+  action: set_SaO2
+  value: 0.8
+  label: tension deterioration - acute desaturation proxy
 - t: 140
   action: set_FiO2
   value: 0.95
@@ -58,23 +91,23 @@ perturbations:
 - t: 170
   action: airway_shunt_add
   value: 0.03
-  label: 'needle decompression proxy: shunt reduced'
+  label: needle decompression proxy - VQ shunt burden relieved
 - t: 170
   action: RV_afterload_index
-  value: 0.18
-  label: 'needle decompression proxy: RV afterload improves'
+  value: 0.16
+  label: needle decompression proxy - RV afterload improves
 - t: 170
   action: CVP
   value: 8.0
-  label: 'needle decompression proxy: CVP improves'
+  label: needle decompression proxy - CVP improves
 - t: 170
   action: MAP
-  value: 60.0
-  label: 'needle decompression proxy: MAP recovers'
+  value: 62.0
+  label: needle decompression proxy - MAP recovers
 - t: 170
   action: CO
   value: 3.2
-  label: 'needle decompression proxy: venous return improves'
+  label: needle decompression proxy - venous return improves
 - t: 210
   action: set_FiO2
   value: 0.7
@@ -83,9 +116,14 @@ perturbations:
   action: set_PEEP
   value: 6.0
   label: return to baseline PEEP
+- t: 170
+  action: shock_preload_mod
+  value: 0.95
+  label: needle decompression proxy - venous return restriction relieved
 expected_response:
-- Acute fall in oxygenation and haemodynamics after tension physiology.
-- Improvement in MAP/CO and V/Q indices after decompression proxy.
+- 'Deterioration phase: falling SaO2/MAP/CO and rising CVP/RV-afterload after tension
+  physiology is introduced.'
+- 'Rescue phase: improvement in MAP/CO and V/Q indices after decompression proxy.'
 debrief_questions:
 - Which variables suggest obstructive shock rather than isolated lung disease?
 - Why do CVP/RV afterload and oxygenation move together here?
@@ -107,5 +145,6 @@ outputs:
 limitations:
 - Educational scenario for emergency physiology training only.
 - Not calibrated for patient-specific prediction or clinical decision support.
-- Intervention events are simplified physiology proxies for reversible-cause teaching, not treatment protocols.
+- Intervention events are simplified physiology proxies for reversible-cause teaching,
+  not treatment protocols.
 simulation_time_s: 360

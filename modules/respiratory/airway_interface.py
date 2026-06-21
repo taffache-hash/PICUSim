@@ -456,7 +456,10 @@ class AirwayInterfaceModule(BaseModule):
                 "PEEP": effective_peep,
                 "Paw": ambient + effective_peep,
                 "Paw_current": ambient + effective_peep,
-                "FiO2": float(oxygen["FiO2_delivered"]),
+                # v3.2 public-polish: preserve FiO2 as the commanded oxygen
+                # set-point; FiO2_delivered carries the effective value after
+                # interface efficiency/leak.
+                "FiO2": float(oxygen.get("oxygen_FiO2_set", bus.get("FiO2"))),
                 "oxygen_delivery_revision": 1231,
                 **oxygen,
             })
@@ -487,7 +490,11 @@ class AirwayInterfaceModule(BaseModule):
             "PEEP": float(peep),
             "PS_cmH2O": float(oxygen.get("NIV_delivered_PS_cmH2O", bus.get("PS_cmH2O") if hasattr(bus.state, "PS_cmH2O") else 0.0)),
             "Pinsp_cmH2O": float(oxygen.get("NIV_delivered_PS_cmH2O", bus.get("Pinsp_cmH2O") if hasattr(bus.state, "Pinsp_cmH2O") else 0.0)),
-            "FiO2": delivered_fio2,
+            # v3.2 public-polish: keep the command and delivered oxygen
+            # separate.  This prevents UI controls from snapping back toward
+            # 0.21 on NIV/oxygen interfaces where delivered FiO2 is lower than
+            # the set-point.
+            "FiO2": float(oxygen.get("oxygen_FiO2_set", bus.get("FiO2"))),
             "FiO2_delivered": delivered_fio2,
             "oxygen_delivery_revision": 1233 if intubated else (1232 if interface in ("NIV_CPAP", "NIV_BIPAP") else 1231),
             **oxygen,

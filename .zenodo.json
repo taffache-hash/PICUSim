@@ -1,15 +1,16 @@
 {
-  "title": "PICUSim / Pediatric Critical Care Sim: modular pediatric critical-care physiology simulation framework",
+  "title": "PICUSim / Pediatric Critical Care Sim v3.2.0-public",
   "upload_type": "software",
-  "publication_date": "2026-06-20",
-  "version": "3.1-step5.9-final-public-release-candidate",
+  "publication_date": "2026-06-21",
+  "version": "3.2.0-public",
   "creators": [
     {
       "name": "Taffache, Paolo",
-      "affiliation": "IRCCS Azienda Ospedaliero-Universitaria Bologna"
+      "affiliation": "IRCCS Azienda Ospedaliero-Universitaria Bologna",
+      "orcid": ""
     }
   ],
-  "description": "PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing and hypothesis generation. The release-candidate package includes physiological and pharmacological modules, YAML clinical scenarios, a local FastAPI backend, a browser-based training console, validation-support artifacts, regression reports, reproducibility outputs and publication-readiness documentation. This software is not a medical device and is not for clinical use, diagnosis, treatment, prescribing, triage, bedside monitoring, prognostication, device control, patient-specific modelling or patient-care decisions.",
+  "description": "v3.2.0 public package of PICUSim, an Apache-2.0 educational/research pediatric critical-care physiology simulation framework. Includes public-polish corrections for gas exchange, FiO2 persistence, short sepsis/pressor behavior, DKA and tension pneumothorax scenario fixes, public-package tests, validation documentation and safety limitations. Not for clinical use and not a medical device.",
   "license": "Apache-2.0",
   "access_right": "open",
   "keywords": [
@@ -18,9 +19,19 @@
     "physiology simulation",
     "medical education",
     "in-silico research",
-    "scenario-based training",
-    "FastAPI",
-    "not for clinical use"
+    "scenario-based training"
   ],
-  "notes": "Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna. Zenodo DOI: 10.5281/zenodo.20777589. OSF URL and manuscript identifiers will be added only after public deposit identifiers exist. Safety disclaimer must remain visible."
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.20777589",
+      "relation": "isNewVersionOf",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/taffache-hash/PICUSim",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ],
+  "notes": "This local file prepares metadata for the v3.2.0 new-version Zenodo deposition. Do not add a v3.2 DOI until Zenodo assigns it. Safety disclaimer must remain visible."
 }

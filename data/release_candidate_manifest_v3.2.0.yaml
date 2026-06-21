@@ -1,0 +1,64 @@
+version: "3.2.0-public"
+date: "2026-06-21"
+status: "v3_2_0_public_final_local_no_upload"
+source_of_truth: "filesystem_tests_and_step9_final_local_package_rebuild"
+public_upload_performed: false
+previous_published_archive:
+  version: "3.1-step5.9-final-public-release-candidate"
+  doi: "10.5281/zenodo.20777589"
+archive:
+  filename: "PICUSim_v3.2.0_public_local_archive.zip"
+  checksum_algorithm: "sha256"
+  checksum_scope: "external sidecar file; checksum is not embedded in the zip"
+paper_policy:
+  manuscripts_are_source_of_truth: false
+  deferred_until_after_deposit: true
+  note: "Deposit first, paper last. Manuscript data/code availability statements are updated after public identifiers exist."
+package_counts:
+  included_file_count: 655
+  included_total_bytes: 3120448
+  scenario_yaml_count: 99
+  test_py_count: 127
+  module_py_non_init_count: 36
+  docs_markdown_count: 91
+  metadata_file_count: 7
+  output_dir_count: 0
+  file_count: 655
+required_entrypoints:
+  - "README_FIRST_START_HERE.txt"
+  - "README.md"
+  - "VERSION"
+  - "LICENSE"
+  - "NOTICE"
+  - "DISCLAIMER_NOT_FOR_CLINICAL_USE.md"
+  - "CITATION.cff"
+  - "CITATION.bib"
+  - "CHANGELOG.md"
+  - ".zenodo.json"
+v3_2_release_artifacts:
+  - "docs/VALIDATION.md"
+  - "docs/LIMITATIONS.md"
+  - "docs/V3_2_PUBLIC_POLISH_CHECKLIST.md"
+  - "docs/V3_2_PUBLIC_POLISH_STEP6_FINAL_MANIFEST_REPORT.md"
+  - "docs/V3_2_PUBLIC_POLISH_STEP7_RC2_EXTERNAL_REVIEW_FIXES.md"
+  - "docs/V3_2_PUBLIC_POLISH_STEP8_RC3_UI_WS_PAUSE_HOTFIX.md"
+  - "docs/V3_2_PUBLIC_POLISH_STEP9_FINAL_LOCAL_PACKAGE_REPORT.md"
+  - "data/release_candidate_manifest_v3.2.0.yaml"
+  - "metadata/package_facts_v3.2.0.json"
+excluded_from_archive:
+  - ".agents"
+  - ".codex"
+  - ".git"
+  - ".mypy_cache"
+  - ".pytest_cache"
+  - ".venv"
+  - "__pycache__"
+  - "env"
+  - "node_modules"
+  - "outputs"
+  - "venv"
+  - "*.pyc"
+  - "*.pyo"
+  - "outputs/release_archives/*.zip"
+  - "outputs/release_archives/*.sha256"
+next_step: "owner review, GitHub release, then Zenodo new-version deposition"

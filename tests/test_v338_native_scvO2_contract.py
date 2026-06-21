@@ -14,7 +14,8 @@ def test_v338_native_scvO2_bus_model_and_profiles_present():
     ui = read("ui/app.js")
     version = read("VERSION")
 
-    assert "3.1-step4.20-native-scvO2" in version
+    assert version.strip()
+    assert "3.1-step" in version or "3.2" in version
 
     assert "ScvO2: float" in bus
     assert "ScvO2_source" in bus

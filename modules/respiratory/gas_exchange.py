@@ -102,15 +102,15 @@ class GasExchangeModule(BaseModule):
     """
 
     DEFAULT_PARAMS = {
-        "Qs_Qt": 0.10,
-        "Vd_Vt": 0.30,
+        "Qs_Qt": 0.035,
+        "Vd_Vt": 0.22,
         "RQ": 0.85,
         "pK_H": 6.10,
         "alpha_CO2": 0.0307,      # mmol/L/mmHg
         "HCO3_baseline": 24.0,    # mmol/L
         "tau_gas_s": 15.0,        # gas equilibration time constant [s]
-        "vq_sigma_base": 0.35,    # log-normal dispersion in the exchange zone
-        "vq_sigma_recruitment_gain": 0.85,
+        "vq_sigma_base": 0.28,    # log-normal dispersion in the exchange zone
+        "vq_sigma_recruitment_gain": 0.60,
         "vq_adaptive_enabled": True,
         "vq_ards_sigma_gain": 0.35,
         "vq_obstruction_sigma_gain": 0.40,
@@ -173,7 +173,7 @@ class GasExchangeModule(BaseModule):
             * self._PaCO2
             * 10 ** (self._pH - self.params["pK_H"])
         )
-        bus.update({"gas_exchange_revision": "v1.20_adaptive_three_zone_vq_etco2_v316", "vq_adaptive_revision": 120})
+        bus.update({"gas_exchange_revision": "v1.20_adaptive_three_zone_vq_etco2_v316_v3.2_public_polish_v320", "vq_adaptive_revision": 320})
 
     def _alveolar_PO2(self, FiO2: float, local_PCO2: float, RQ: float) -> float:
         """Alveolar gas equation: PAO2 = FiO2*(Patm-PH2O) - PACO2/RQ."""
@@ -270,7 +270,7 @@ class GasExchangeModule(BaseModule):
 
         shunt = (
             float(self.params["Qs_Qt"])
-            + 0.34 * derecruitment
+            + 0.18 * derecruitment
             + airway_shunt_add
             + float(self.params["vq_ards_shunt_gain"]) * ards_w
             + float(self.params["vq_shock_shunt_gain"]) * shock_w
@@ -280,7 +280,7 @@ class GasExchangeModule(BaseModule):
 
         deadspace = (
             base_vdvt
-            + 0.16 * derecruitment
+            + 0.07 * derecruitment
             + 0.10 * air_trap
             + airway_vd_add
             + float(self.params["vq_obstruction_deadspace_gain"]) * obstruction_w
@@ -448,9 +448,21 @@ class GasExchangeModule(BaseModule):
         VA_dot = float(max(VA_dot, 0.02))
 
         VCO2 = VO2 * RQ * VCO2_mod
-        PaCO2_target = 0.863 * VCO2 / (VA_dot + 1e-3)
-        PaCO2_target *= (1.0 + 0.30 * shunt + 0.08 * sigma)
-        PaCO2_target = float(np.clip(PaCO2_target, 15.0, 105.0))
+        PaCO2_target_raw = 0.863 * VCO2 / (VA_dot + 1e-3)
+        PaCO2_target_raw *= (1.0 + 0.30 * shunt + 0.08 * sigma)
+
+        # v3.2 public-polish: avoid a visually obvious hard PaCO2 wall.
+        # Severe obstruction/shock should still generate marked hypercapnia,
+        # but public demo scenarios should not all converge to the same
+        # repeated 105 mmHg value.  Use a soft upper transition that preserves
+        # the low/mid-range response and asymptotically compresses extremes.
+        soft_start = 78.0
+        soft_span = 21.5
+        if PaCO2_target_raw > soft_start:
+            PaCO2_target = soft_start + soft_span * (1.0 - np.exp(-(PaCO2_target_raw - soft_start) / max(soft_span, 1.0)))
+        else:
+            PaCO2_target = PaCO2_target_raw
+        PaCO2_target = float(np.clip(PaCO2_target, 15.0, 103.0))
 
         PAO2_mean = self._alveolar_PO2(FiO2, PaCO2_target, RQ)
         PAO2_mean = float(np.clip(PAO2_mean, 15.0, 650.0))
@@ -536,7 +548,7 @@ class GasExchangeModule(BaseModule):
             "vq_low_vq_burden": float(low_vq_burden),
             "vq_high_vq_burden": float(high_vq_burden),
             "alveolar_ventilation_L_min": float(VA_dot),
-            "gas_exchange_revision": "v1.20_adaptive_three_zone_vq_etco2_v316",
-            "vq_adaptive_revision": 120,
+            "gas_exchange_revision": "v1.20_adaptive_three_zone_vq_etco2_v316_v3.2_public_polish_v320",
+            "vq_adaptive_revision": 320,
             "FiO2_delivered": float(FiO2),
         })

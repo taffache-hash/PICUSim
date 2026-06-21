@@ -23,11 +23,13 @@ def test_v319_extended_monitor_v2_has_eleven_collapsible_groups():
     assert "<summary><h3>${group.title}</h3>" in js
 
 
-def test_v319_extended_monitor_is_snapshot_only_no_polling_loop():
+def test_v319_extended_monitor_full_profile_refresh_is_panel_gated():
     js = (ROOT / 'ui' / 'app.js').read_text(encoding="utf-8")
     assert "const EXTENDED_MONITOR_REFRESH_MODE = 'snapshot-only'" in js
     assert 'function startExtendedMonitorSnapshot' in js
-    assert 'setInterval(() =>' not in js
+    assert 'function shouldRefreshFullProfilePanels()' in js
+    assert 'if (!shouldRefreshFullProfilePanels()) {' in js
+    assert 'stopExtendedMonitorSnapshot();' in js
     assert 'EXTENDED_MONITOR_POLL_MS' not in js
     assert "'bedside stream'" not in js
 

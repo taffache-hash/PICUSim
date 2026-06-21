@@ -43,14 +43,15 @@ class AcidBaseElectrolyteModule(BaseModule):
         "phosphate_mmol_L": 1.2,
         "renal_HCO3_recovery_h": 12.0,
         "renal_K_time_h": 6.0,
-        "lactate_acid_gain": 0.35,   # mmol HCO3 consumed per mmol lactate above 1.5
+        "lactate_acid_gain": 0.90,   # v3.2: stronger educational HCO3 consumption per mmol lactate above 1.5
         "chloride_acid_gain": 0.38,  # mmol HCO3 consumed per mmol Cl above 106
-        "sepsis_acid_gain": 0.08,    # extra metabolic acid from microcirculatory failure
+        "sepsis_acid_gain": 0.25,    # v3.2: extra metabolic acid from microcirculatory failure
         "bicarb_effective_fraction": 0.75,
         "hypertonic_Na_mmol_per_mL_3pct": 0.513,
         "saline_NaCl_mmol_per_mL": 0.154,
         "balanced_fluid_Cl_mmol_per_mL": 0.109,
         "acetate_buffer_fraction": 0.65,
+        "acute_metabolic_HCO3_tau_min": 12.0,  # v3.2: visible acute metabolic trend over educational scenarios
     }
 
     def __init__(self, params: dict | None = None):
@@ -87,10 +88,17 @@ class AcidBaseElectrolyteModule(BaseModule):
         ]
 
     def initialize(self, bus: PhysiologicalBus) -> None:
-        self.Na = float(bus.get("Na_mmol_L"))
-        self.K = float(bus.get("K_mmol_L"))
-        self.Cl = float(bus.get("Cl_mmol_L"))
-        self.HCO3 = float(bus.get("HCO3_mmol_L"))
+        # v3.2 public-polish deviation fix:
+        # In scenario-driven runs the ScenarioLoader usually writes acid-base
+        # values to the bus before module initialization.  In isolated/module
+        # tests, however, the bus may still contain generic defaults while
+        # scenario-specific baselines were passed through params.  Prefer the
+        # explicit module baselines here so hyperkalaemia/metabolic-acidosis
+        # scenarios cannot be silently reset to healthy defaults at init.
+        self.Na = float(self.params.get("Na_baseline", bus.get("Na_mmol_L")))
+        self.K = float(self.params.get("K_baseline", bus.get("K_mmol_L")))
+        self.Cl = float(self.params.get("Cl_baseline", bus.get("Cl_mmol_L")))
+        self.HCO3 = float(self.params.get("HCO3_baseline", bus.get("HCO3_mmol_L")))
         self._last_saline_mL = float(bus.get("normal_saline_mL"))
         self._last_balanced_mL = float(bus.get("balanced_crystalloid_mL"))
         self._last_bicarb_mmol = float(bus.get("bicarbonate_mmol"))
@@ -207,8 +215,14 @@ class AcidBaseElectrolyteModule(BaseModule):
         hco3_target -= 2.0 * leak
         hco3_target = float(np.clip(hco3_target, 8.0, 32.0))
 
-        # Renal compensation toward target / baseline: slow unless GFR preserved.
-        tau = float(self.params["renal_HCO3_recovery_h"]) * 3600.0 / max(renal_factor, 0.05)
+        # v3.2 public-polish: preserve slow renal compensation in near-normal
+        # scenarios, but allow clinically visible acute metabolic acidosis from
+        # lactate/microcirculatory failure/leak over several simulated minutes.
+        tau_renal = float(self.params["renal_HCO3_recovery_h"]) * 3600.0 / max(renal_factor, 0.05)
+        acute_driver = float(np.clip(lactate_excess / 4.0 + 0.80 * micro + 0.50 * leak, 0.0, 1.0))
+        tau_acute = float(self.params["acute_metabolic_HCO3_tau_min"]) * 60.0
+        tau = tau_renal * (1.0 - acute_driver) + tau_acute * acute_driver
+        tau = max(tau, 60.0)
         alpha = 1.0 - math.exp(-dt / tau)
         self.HCO3 += alpha * (hco3_target - self.HCO3)
         self.HCO3 = float(np.clip(self.HCO3, 5.0, 45.0))

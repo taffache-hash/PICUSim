@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pediatric-critical-care-physiology-sim"
-version = "3.1.0rc12"
-description = "Apache-2.0 release-candidate pediatric critical-care physiology simulation framework with final public release candidate; not for clinical use."
+version = "3.2.0"
+description = "Apache-2.0 v3.2.0 public release-candidate pediatric critical-care physiology simulation framework; not for clinical use."
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.9"

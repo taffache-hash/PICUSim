@@ -2279,7 +2279,7 @@ function updateBedside(st, envelope={}) {
   $('vPaCO2').textContent = fmt(st.PaCO2, 0);
   if ($('vEtCO2')) $('vEtCO2').textContent = fmt(st.EtCO2 ?? st.EtCO2_proxy, 0);
   $('vPaw').textContent = fmt(st.Paw, 0);
-  const fio2 = st.FiO2_delivered ?? st.FiO2;
+  const fio2 = st.controls?.FiO2 ?? st.FiO2 ?? st.FiO2_delivered;
   $('vFiO2').textContent = Number.isFinite(Number(fio2)) ? Number(fio2).toFixed(2) : '--';
   $('simClock').textContent = `t = ${fmt(envelope.time_s ?? st.time_s ?? st.t, 1)} s`;
   updateVisualAlarms(st);

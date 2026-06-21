@@ -137,6 +137,14 @@ class AdvancedSepsisModule(BaseModule):
         steroid_blunt = 1.0 - 0.22 * steroid_anti
         target_cyt *= float(np.clip(steroid_blunt, 0.72, 1.0))
 
+        # v3.2 public-polish deviation fix:
+        # Antibiotics/source control should not make infection biologically
+        # disappear within minutes, but in short teaching scenarios they should
+        # visibly stabilize the inflammatory trajectory.  This gently blunts
+        # the cytokine target without creating rapid cure.
+        treatment_blunt = 1.0 - 0.20 * antibiotic_effect - 0.15 * source_control
+        target_cyt *= float(np.clip(treatment_blunt, 0.65, 1.0))
+
         alpha = 1.0 - np.exp(-dt / float(self.params["cytokine_tau_s"]))
         self._cytokine += alpha * (target_cyt - self._cytokine)
         self._cytokine = float(np.clip(self._cytokine, 0.0, 1.0))
@@ -144,7 +152,12 @@ class AdvancedSepsisModule(BaseModule):
         w_vaso, w_myo = self._weights()
         vaso_treat = 0.42 * vaso / (0.08 + max(vaso, 0.0)) if vaso > 0 else 0.0
         hydro_treat = 0.22 * hydro_vaso_sens
-        catechol_treat = 0.12 * norad / (0.20 + max(norad, 0.0)) if norad > 0 else 0.0
+        # v3.2 public-polish deviation fix:
+        # Norepinephrine should be visibly therapeutic in short EPALS-style
+        # scenarios.  Keep the effect bounded and qualitative, but avoid a
+        # cytokine/vasoplegia term that completely masks the pressor response
+        # over 5-10 simulated minutes.
+        catechol_treat = 0.28 * norad / (0.18 + max(norad, 0.0)) if norad > 0 else 0.0
         vasoplegia = self._cytokine * w_vaso * (1.0 - vaso_treat - hydro_treat - catechol_treat)
         vasoplegia = float(np.clip(vasoplegia, 0.0, 0.90))
 

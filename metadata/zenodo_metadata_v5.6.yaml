@@ -1,4 +1,4 @@
-# Zenodo deposition metadata draft for PICUSim Step 5.9
+# Zenodo deposition metadata draft for PICUSim Step 5.6
 # DOI and record identifiers are intentionally absent until deposition.
 
 title: "PICUSim / Pediatric Critical Care Sim: modular pediatric critical-care physiology simulation framework"
@@ -7,8 +7,8 @@ publication_date: "2026-06-20"
 version: "3.1-step5.9-final-public-release-candidate"
 creators:
   - name: "Taffache, Paolo"
-    name_suffix: "MD"
-    affiliation: "IRCCS Azienda Ospedaliero-Universitaria Bologna"
+    affiliation: "Independent / to be confirmed before deposition"
+    orcid: ""
 description: >-
   PICUSim / Pediatric Critical Care Sim is a modular pediatric critical-care physiology simulation framework
   for education, scenario design, in-silico research prototyping, software testing and hypothesis generation.
@@ -27,15 +27,21 @@ keywords:
   - in-silico research
   - scenario-based training
   - FastAPI
-  - not for clinical use
+  - digital twin disclaimer
 language: eng
+related_identifiers:
+  - identifier: "OSF project URL pending Step 5.7"
+    relation: isSupplementTo
+    resource_type: project
+  - identifier: "Cureus/JMIR manuscript DOI pending Step 5.8/publication"
+    relation: isDocumentedBy
+    resource_type: publication
 notes: >-
-  Author: Paolo Taffache, MD. Affiliation: IRCCS Azienda Ospedaliero-Universitaria Bologna.
-  Zenodo DOI: 10.5281/zenodo.20777589. OSF URL and manuscript identifiers will be added only after public deposit identifiers exist.
-  Safety disclaimer must remain visible.
+  Prepared as a release-candidate archival software upload. Final DOI, ORCID, affiliation, related identifiers,
+  and public record URLs must be completed during actual Zenodo deposition. Safety disclaimer must remain visible.
 archive:
-  candidate_name: "GitHub release archive for tag v3.1-step5.9-zenodo3"
+  candidate_name: "pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip"
   checksum_algorithm: sha256
-  checksum_file: "GitHub/Zenodo generated archive; local Step 5.9 checksum documented separately"
+  checksum_file: "outputs/release_archives/pediatric_critical_care_sim_v3.1_step5.6_zenodo_candidate.zip.sha256"
   includes_reproducibility_outputs: true
   excludes_transient_caches: true

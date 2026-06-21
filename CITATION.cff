@@ -1,15 +1,15 @@
 cff-version: 1.2.0
 title: "PICUSim / Pediatric Critical Care Sim"
-message: "If you use PICUSim / Pediatric Critical Care Sim, please cite it using the metadata from this file. Not for clinical use."
+message: "If you use this v3.2.0 public package, cite the final Zenodo v3.2.0 version DOI once released. Not for clinical use."
 type: software
 authors:
   - family-names: "Taffache"
     given-names: "Paolo"
     name-suffix: "MD"
     affiliation: "IRCCS Azienda Ospedaliero-Universitaria Bologna"
-version: "3.1-step5.9-final-public-release-candidate"
-date-released: "2026-06-20"
-abstract: "Modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing, and hypothesis generation. Not for clinical use."
+version: "3.2.0-public"
+date-released: "2026-06-21"
+abstract: "Modular pediatric critical-care physiology simulation framework for education, scenario design, in-silico research prototyping, software testing, and hypothesis generation. The v3.2.0 public package includes targeted physiology, FiO2-control, public-package testing, validation-documentation and safety-documentation updates. Not for clinical use."
 keywords:
   - pediatric intensive care
   - critical care simulation
@@ -18,4 +18,5 @@ keywords:
   - in-silico research
 license: "Apache-2.0"
 repository-code: "https://github.com/taffache-hash/PICUSim"
-doi: "10.5281/zenodo.20777589"
+# Current published v3.1-step5.9 DOI: 10.5281/zenodo.20777589.
+# Add the new v3.2.0 Zenodo version DOI here only after final deposition.

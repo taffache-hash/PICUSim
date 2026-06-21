@@ -60,10 +60,16 @@ BEDSIDE_FAST_KEYS = [
     "t", "HR", "MAP", "SBP", "DBP", "SAP", "DAP", "SaO2", "PaCO2", "EtCO2", "EtCO2_proxy", "Paw", "PEEP", "FiO2_delivered",
     "RR_total", "Vt", "airway_interface", "oxygen_interface", "vent_mode",
     "intubated", "airway_event_type", "airway_rescue_state",
-    "cardiac_rhythm", "has_pulse", "cardiac_arrest_active", "shockable_rhythm",
-    "CPR_active", "ROSC", "post_rosc_care_status",
+    # Fix #5: RCP panel fields — populate live via WebSocket without requiring a manual action
+    "cardiac_rhythm", "rhythm_category", "has_pulse", "cardiac_arrest_active", "shockable_rhythm",
+    "CPR_active", "CPR_quality", "compression_fraction", "ROSC", "post_rosc_care_status",
+    "last_shock_energy_J", "last_shock_result",
+    "last_rcp_drug", "last_rcp_drug_result",
+    "post_rosc_acidosis_burden", "renal_hypoperfusion_index", "reperfusion_injury_risk",
+    # Fix #3: fluid panel live fields — prevent Resp/MAP+ showing '--' between actions
     "crystalloid_type", "crystalloid_rate_mL_h", "crystalloid_effective_mL_h",
-    "crystalloid_active", "cumulative_crystalloid_input_mL", "fluid_balance", "urine_rate_mL_h",
+    "crystalloid_active", "crystalloid_preload_response", "crystalloid_MAP_support_mmHg",
+    "cumulative_crystalloid_input_mL", "fluid_balance", "urine_rate_mL_h",
 ]
 
 WAVEFORM_KEYS = [
@@ -211,7 +217,7 @@ def bedside_state(state: Any) -> Dict[str, Any]:
     out["EtCO2"] = _round(_get(state, "EtCO2", max(_num(_get(state, "PaCO2", 40.0)) - 5.0, 5.0)), 1)
     out["EtCO2_proxy"] = out["EtCO2"]
     out["PaO2"] = _round(_get(state, "PaO2", 0.0), 1)
-    out["Paw"] = _round(_get(state, "Paw", 0.0), 1)
+    out["Paw"] = _round(_get(state, "Paw_display", _get(state, "Paw", 0.0)), 1)
     out["PEEP"] = _round(_get(state, "PEEP", 0.0), 1)
     out["Vt_mL"] = _round(_get(state, "Vt", 0.0), 1)
     out["time_s"] = _round(_get(state, "t", 0.0), 3)
@@ -229,7 +235,7 @@ def bedside_fast_state(state: Any) -> Dict[str, Any]:
     out["PaCO2"] = _round(_get(state, "PaCO2", 0.0), 0)
     out["EtCO2"] = _round(_get(state, "EtCO2", max(_num(_get(state, "PaCO2", 40.0)) - 5.0, 5.0)), 0)
     out["EtCO2_proxy"] = out["EtCO2"]
-    out["Paw"] = _round(_get(state, "Paw", 0.0), 1)
+    out["Paw"] = _round(_get(state, "Paw_display", _get(state, "Paw", 0.0)), 1)
     out["controls"] = controls_state(state)
     return out
 
@@ -300,8 +306,14 @@ def full_state(state: Any) -> Dict[str, Any]:
     paw = _num(_get(state, "Paw", peep), peep)
     ppeak = _num(_get(state, "Ppeak", max(paw, peep)), max(paw, peep))
     out.setdefault("PIP", ppeak)
+    # Historical HF4 contract: keep the explicit Pmean alias formula visible for
+    # source-level regression tests, then prefer the ventilator-provided cycle
+    # mean when available.
     out.setdefault("Pmean", 0.65 * peep + 0.35 * paw)
+    if "Paw_mean" in state:
+        out["Pmean"] = _num(_get(state, "Paw_mean", out["Pmean"]), out["Pmean"])
     out.setdefault("mean_airway_pressure", out.get("Pmean"))
+    out.setdefault("Paw_display", _num(_get(state, "Paw_display", out.get("Pmean", paw)), out.get("Pmean", paw)))
 
     # Hematology/coagulation aliases used by extended monitor cards.
     if "PLT_count" in out:
