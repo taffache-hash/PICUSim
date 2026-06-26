@@ -1,0 +1,57 @@
+name: Build PICUSim Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib plotly pyyaml pandas fastapi "uvicorn[standard]" pyinstaller
+        shell: pwsh
+
+      - name: Read version
+        id: version
+        run: |
+          $ver = (Get-Content VERSION -Raw).Trim()
+          echo "version=$ver" >> $env:GITHUB_OUTPUT
+        shell: pwsh
+
+      - name: Build EXE with PyInstaller
+        run: pyinstaller PICUSim.spec
+        shell: pwsh
+
+      - name: Verify EXE
+        run: |
+          if (!(Test-Path "dist\PICUSim.exe")) { Write-Error "EXE not found!"; exit 1 }
+          $mb = [math]::Round((Get-Item "dist\PICUSim.exe").Length/1MB, 1)
+          Write-Output "PICUSim.exe OK — $mb MB"
+        shell: pwsh
+
+      - name: Package into ZIP
+        run: |
+          $ver = "${{ steps.version.outputs.version }}"
+          Compress-Archive -Path dist\PICUSim.exe -DestinationPath "PICUSim-v$ver-windows-x64.zip"
+        shell: pwsh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PICUSim-windows-x64
+          path: PICUSim-*.zip
+          retention-days: 30
